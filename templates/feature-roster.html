@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Feature Roster — Product Highlights</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+  <style>
+    :root {
+      --bg: #0A0A0A;
+      --surface: #141414;
+      --border: rgba(255,255,255,0.06);
+      --primary: #FFDFFF; /* Soft Pink / White */
+      --accent: #E99A00;
+      --text: #ffffff;
+      --muted: #888888;
+      --fd: 'Outfit', sans-serif;
+      --fb: 'Inter', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--fb); width: 1100px; padding: 80px; }
+
+    header { margin-bottom: 64px; border-bottom: 1px solid var(--border); padding-bottom: 32px; }
+    h1 { font-family: var(--fd); font-size: 52px; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .subtitle { color: var(--muted); font-size: 18px; max-width: 600px; }
+
+    .roster { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .feature {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      transition: transform 0.2s;
+    }
+    .icon-wrap {
+      width: 56px; height: 56px; border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; color: var(--accent);
+    }
+    .feature h3 { font-family: var(--fd); font-size: 24px; }
+    .feature p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+    .footer { margin-top: 64px; text-align: center; color: var(--muted); font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>PREMIUM FEATURES</h1>
+    <p class="subtitle">Experience the next generation of productivity tools designed for modern teams.</p>
+  </header>
+
+  <div class="roster">
+    <div class="feature">
+      <div class="icon-wrap"><i class="ph-duotone ph-lightning"></i></div>
+      <div class="f-content">
+        <h3>Instant Sync</h3>
+        <p>Real-time collaboration across all devices with zero latency. Your data is always where you need it.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="icon-wrap"><i class="ph-duotone ph-shield-check"></i></div>
+      <div class="f-content">
+        <h3>End-to-End Encryption</h3>
+        <p>Your privacy is our priority. Every bit of data is encrypted before it ever leaves your machine.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="icon-wrap"><i class="ph-duotone ph-browser"></i></div>
+      <div class="f-content">
+        <h3>Universal Access</h3>
+        <p>Whether on web, mobile, or desktop, experience a seamless interface tailored to your workflow.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="icon-wrap"><i class="ph-duotone ph-users"></i></div>
+      <div class="f-content">
+        <h3>Team Management</h3>
+        <p>Advanced permissions and role-based access control to keep your organization running smoothly.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">v2.4 LTS — ENTERPRISE READY</div>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Data Story — KPI Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+  <style>
+    :root {
+      --bg: #0A0F1A;
+      --surface: #101622;
+      --border: rgba(255,255,255,0.08);
+      --primary: #00E5C7;
+      --secondary: #9B5DE5;
+      --text: #ffffff;
+      --muted: #8AA0C4;
+      --fd: 'DM Sans', sans-serif;
+      --fb: 'DM Sans', sans-serif;
+      --fmono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--fb); width: 1100px; padding: 64px; }
+
+    header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; border-bottom: 1px solid var(--border); padding-bottom: 32px; }
+    h1 { font-size: 48px; letter-spacing: -0.02em; }
+    .subtitle { color: var(--muted); font-size: 16px; margin-top: 8px; }
+    .badge { background: rgba(0, 229, 199, 0.1); color: var(--primary); padding: 8px 16px; border-radius: 8px; font-family: var(--fmono); font-size: 14px; }
+
+    /* Main Stats Board */
+    .hero-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px;
+    }
+    .hero-stat-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+      padding: 40px; display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden;
+    }
+    .hero-stat-card::after {
+      content: ''; position: absolute; right: -20px; bottom: -20px;
+      width: 120px; height: 120px; border-radius: 50%;
+      background: var(--primary); filter: blur(60px); opacity: 0.15;
+    }
+    .stat-title { font-size: 14px; text-transform: uppercase; font-weight: 700; color: var(--muted); letter-spacing: 0.1em; }
+    .stat-number { font-family: var(--fmono); font-size: 64px; color: var(--text); }
+    .stat-trend { display: flex; align-items: center; gap: 4px; color: var(--primary); font-size: 14px; font-weight: 700; }
+
+    /* Secondary Grid */
+    .data-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 40px; }
+    .data-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 24px; display: flex; flex-direction: column; gap: 16px;
+    }
+    .d-header { display: flex; align-items: center; justify-content: space-between; color: var(--muted); }
+    .d-header i { font-size: 24px; }
+    .d-val { font-family: var(--fmono); font-size: 32px; }
+
+    /* Progress Bar Chart */
+    .chart-section {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+      padding: 40px;
+    }
+    .chart-title { font-size: 18px; font-weight: 700; margin-bottom: 32px; }
+    .bar-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+    .bar-labels { display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); font-family: var(--fmono); }
+    .bar-bg { width: 100%; height: 12px; background: rgba(255,255,255,0.05); border-radius: 6px; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--primary); border-radius: 6px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <h1>Q4 PERFORMANCE</h1>
+      <p class="subtitle">Network analytics and growth metrics.</p>
+    </div>
+    <div class="badge">REPORT_ID: 994-Alpha</div>
+  </header>
+
+  <!-- Hero Stats -->
+  <div class="hero-stats">
+    <div class="hero-stat-card">
+      <div class="stat-title">Total Value Locked</div>
+      <div class="stat-number">$1.42B</div>
+      <div class="stat-trend"><i class="ph-bold ph-trend-up"></i> +24.5% QoQ</div>
+    </div>
+    <div class="hero-stat-card" style="border-top: 4px solid var(--secondary);">
+      <div class="stat-title">Active Wallets</div>
+      <div class="stat-number">845K</div>
+      <div class="stat-trend" style="color:var(--secondary);"><i class="ph-bold ph-trend-up"></i> +12% QoQ</div>
+    </div>
+  </div>
+
+  <!-- Secondary Metrics -->
+  <div class="data-grid">
+    <div class="data-card">
+      <div class="d-header"><span>Daily TXs</span> <i class="ph-duotone ph-arrows-left-right"></i></div>
+      <div class="d-val">1.2M</div>
+    </div>
+    <div class="data-card">
+      <div class="d-header"><span>Avg Finality</span> <i class="ph-duotone ph-timer"></i></div>
+      <div class="d-val">400ms</div>
+    </div>
+    <div class="data-card">
+      <div class="d-header"><span>Gas Cost</span> <i class="ph-duotone ph-gas-pump"></i></div>
+      <div class="d-val">$0.001</div>
+    </div>
+  </div>
+
+  <!-- Horizontal Bar Chart -->
+  <div class="chart-section">
+    <div class="chart-title">User Allocation by Region</div>
+    
+    <div class="bar-row">
+      <div class="bar-labels"><span>North America</span> <span>45%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width: 45%;"></div></div>
+    </div>
+    
+    <div class="bar-row">
+      <div class="bar-labels"><span>Europe</span> <span>30%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width: 30%; background: var(--secondary);"></div></div>
+    </div>
+    
+    <div class="bar-row" style="margin-bottom:0;">
+      <div class="bar-labels"><span>APAC</span> <span>25%</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width: 25%; background: var(--text);"></div></div>
+    </div>
+  </div>
+
+</body>
+</html>

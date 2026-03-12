@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{PROJECT_NAME}} — How It Works</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#07080C;--surface:#0D0F16;--border:#181B25;
+      --amber:#E99A00;--amber-hi:#F0B63A;
+      --mint:#00E88A;--blue:#4DA0F8;
+      --text:#F2F2EE;--muted:#7A8090;
+      --fd:'Bebas Neue',sans-serif;
+      --fb:'Montserrat',sans-serif;
+    }
+    body{background:var(--bg);font-family:var(--fb);color:var(--text);width:1100px;padding:48px 56px;display:flex;flex-direction:column;gap:36px}
+
+    /* brand strip */
+    .brand{display:flex;align-items:center;justify-content:space-between}
+    .brand-name{font-family:var(--fd);font-size:24px;letter-spacing:.1em;color:var(--amber)}
+    .brand-tag{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:4px 12px;border-radius:20px}
+    .logo-slot{width:72px;height:26px;background:var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--muted)}
+
+    /* title */
+    .title-block{display:flex;flex-direction:column;gap:8px}
+    .title-eyebrow{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+    h1{font-family:var(--fd);font-size:58px;line-height:.92;letter-spacing:.02em;text-transform:uppercase}
+    h1 em{color:var(--amber);font-style:normal}
+    .title-sub{font-size:13.5px;color:var(--muted);line-height:1.6;font-weight:500;max-width:580px;margin-top:4px}
+
+    /* steps */
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+    .steps::after{content:'';position:absolute;top:36px;left:calc(12.5%);width:75%;height:1.5px;background:linear-gradient(to right,var(--amber),var(--amber-hi),var(--amber));opacity:.35;z-index:0}
+
+    .step{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:0 12px;position:relative;z-index:1}
+
+    .step-num{
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      border: 1.5px solid var(--amber);
+      background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+      gap: 1px;
+      box-shadow: 0 0 20px rgba(233,154,0,.2);
+      flex-shrink: 0;
+    }
+    .step-n{font-family:var(--fd);font-size:26px;line-height:1;color:var(--amber)}
+    .step-icon{font-size:14px;color:var(--amber);opacity:.7}
+
+    .step-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text)}
+    .step-desc{font-size:12px;color:var(--muted);line-height:1.6;font-weight:500}
+
+    /* connector arrows between columns */
+    .step:not(:last-child)::after{
+      content:'›';
+      position:absolute;
+      top:36px;right:-8px;
+      transform:translateY(-50%);
+      font-size:20px;color:var(--amber);
+      z-index:2;
+    }
+
+    /* stats bar */
+    .stats-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+    .stat-cell{padding:16px 22px;border-right:1px solid var(--border);display:flex;align-items:center;gap:14px}
+    .stat-cell:last-child{border-right:none}
+    .stat-icon{font-size:22px;color:var(--amber);flex-shrink:0}
+    .stat-body{display:flex;flex-direction:column;gap:2px}
+    .stat-val{font-family:var(--fd);font-size:26px;line-height:1;color:var(--amber);letter-spacing:.02em}
+    .stat-lbl{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+    /* footer */
+    .footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:20px}
+    .footer-note{font-size:10px;color:var(--muted)}
+    .footer-cta{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:rgba(233,154,0,.08);border:1px solid rgba(233,154,0,.3);padding:6px 18px;border-radius:4px}
+  </style>
+</head>
+<body>
+
+  <!-- BRAND -->
+  <div class="brand">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="brand-name">{{PROJECT_NAME}}</div>
+      <div class="brand-tag">{{PROCESS_TAG}}</div>
+    </div>
+    <div class="logo-slot">LOGO</div>
+  </div>
+
+  <!-- TITLE -->
+  <div class="title-block">
+    <div class="title-eyebrow">STEP-BY-STEP GUIDE</div>
+    <h1>HOW TO <em>{{ACTION_NAME}}</em></h1>
+    <div class="title-sub">{{PROCESS_DESCRIPTION}}</div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">
+        <div class="step-n">01</div>
+        <i class="ph ph-wallet step-icon"></i>
+      </div>
+      <div class="step-title">{{STEP_1_TITLE}}</div>
+      <div class="step-desc">{{STEP_1_DESC}}</div>
+    </div>
+    <div class="step">
+      <div class="step-num">
+        <div class="step-n">02</div>
+        <i class="ph ph-link-simple step-icon"></i>
+      </div>
+      <div class="step-title">{{STEP_2_TITLE}}</div>
+      <div class="step-desc">{{STEP_2_DESC}}</div>
+    </div>
+    <div class="step">
+      <div class="step-num">
+        <div class="step-n">03</div>
+        <i class="ph ph-coins step-icon"></i>
+      </div>
+      <div class="step-title">{{STEP_3_TITLE}}</div>
+      <div class="step-desc">{{STEP_3_DESC}}</div>
+    </div>
+    <div class="step">
+      <div class="step-num">
+        <div class="step-n">04</div>
+        <i class="ph ph-trophy step-icon"></i>
+      </div>
+      <div class="step-title">{{STEP_4_TITLE}}</div>
+      <div class="step-desc">{{STEP_4_DESC}}</div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-cell">
+      <i class="ph-fill ph-clock stat-icon"></i>
+      <div class="stat-body">
+        <div class="stat-val">{{TIME_REQUIRED}}</div>
+        <div class="stat-lbl">Time to Complete</div>
+      </div>
+    </div>
+    <div class="stat-cell">
+      <i class="ph-fill ph-shield-check stat-icon"></i>
+      <div class="stat-body">
+        <div class="stat-val">{{REQUIREMENT}}</div>
+        <div class="stat-lbl">What You Need</div>
+      </div>
+    </div>
+    <div class="stat-cell">
+      <i class="ph-fill ph-star stat-icon"></i>
+      <div class="stat-body">
+        <div class="stat-val">{{REWARD}}</div>
+        <div class="stat-lbl">Reward</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-note">{{DISCLAIMER}} · {{URL}}</div>
+    <div class="footer-cta">{{CTA_TEXT}} →</div>
+  </div>
+
+</body>
+</html>

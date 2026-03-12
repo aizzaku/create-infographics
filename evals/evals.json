@@ -1,0 +1,49 @@
+{
+  "skill_name": "create-infographics",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create an infographic for Twitter showing the top 5 programming languages in 2025 by usage: Python 29.8%, JavaScript 24.5%, TypeScript 12.1%, Java 9.7%, Rust 4.2%. Make it bold and modern — I want it to pop in a feed.",
+      "expected_output": "A Twitter-sized (1200px wide) infographic as HTML + PNG showing the 5 languages with their percentages. Bold, distinctive design with horizontal bars or visual elements for each language. Phosphor icons used (no emojis). All 5 languages and all 5 percentages visible.",
+      "files": [],
+      "expectations": [
+        "An HTML file is produced containing the infographic",
+        "All five programming languages are present: Python, JavaScript, TypeScript, Java, Rust",
+        "All five percentage values are present: 29.8%, 24.5%, 12.1%, 9.7%, 4.2%",
+        "The design uses a distinctive display font (not Inter, Roboto, or Arial)",
+        "Phosphor Icons CDN script is included — no emojis used as UI icons",
+        "The infographic width is set to 1200px (Twitter platform size) or explicitly uses Twitter dimensions",
+        "A PNG file is produced"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Make a one-pager infographic explaining how our SaaS product 'Dataflow' works. Our brand color is #00C9A7. Steps: 1) Sign up & verify email, 2) Connect your data sources (CSV, API, or database), 3) Our AI analyzes and structures your data automatically, 4) Customize your dashboard with drag-and-drop, 5) Invite your team & set permissions. Keep it clean and professional — this is for our website.",
+      "expected_output": "A branded how-it-works infographic featuring the company name 'Dataflow', the brand teal color #00C9A7 (or close), and all 5 numbered steps. Clean, professional look for website use.",
+      "files": [],
+      "expectations": [
+        "An HTML file is produced containing the infographic",
+        "The company name 'Dataflow' appears prominently in the infographic",
+        "The brand color #00C9A7 (or a close teal approximation) is used in the design",
+        "All five steps are present with their content (sign up, connect data sources, AI analysis, dashboard customization, invite team)",
+        "The steps are presented as a numbered sequence (1 through 5)",
+        "The design has a light or neutral background (not dark mode) appropriate for a website",
+        "A PNG file is produced"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I need an infographic comparing remote work vs in-office work. Data: Remote — 22% higher self-reported productivity, saves avg 4.5 hrs/week commuting, 67% report collaboration challenges, 38% feel isolated. In-office — 31% more impromptu collaboration, 44% report more distractions, 28% lower stress from commuting. Use a light, editorial look. No dark background please.",
+      "expected_output": "A side-by-side comparison infographic with two columns (Remote vs In-Office). Light background. All key statistics present: 22%, 4.5 hrs, 67%, 38%, 31%, 44%, 28%. Clean editorial aesthetic.",
+      "files": [],
+      "expectations": [
+        "An HTML file is produced containing the infographic",
+        "The infographic has a two-column or side-by-side structure contrasting remote and in-office work",
+        "All seven statistics are present: 22%, 4.5 hrs, 67%, 38%, 31%, 44%, 28%",
+        "The background is light (white, off-white, or light gray) — not dark",
+        "Both 'Remote' and 'In-Office' (or equivalent labels) are clearly labeled as separate sections",
+        "A PNG file is produced"
+      ]
+    }
+  ]
+}

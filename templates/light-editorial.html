@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} — Infographic</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400&display=swap"
+        rel="stylesheet">
+    <!-- Phosphor Icons — free MIT icon library -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+    <style>
+        /* === THEME: Light Editorial === */
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --primary: #0f172a;
+            --secondary: #475569;
+            --accent: #0ea5e9;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Source Sans 3', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --text-hero: clamp(48px, 6vw, 72px);
+            --text-h1: clamp(26px, 3vw, 38px);
+            --text-h2: clamp(17px, 2vw, 22px);
+            --text-body: clamp(14px, 1.4vw, 16px);
+            --text-caption: clamp(11px, 1vw, 13px);
+            --text-stat: clamp(32px, 4vw, 52px);
+
+            --radius-card: 8px;
+            --radius-sm: 4px;
+            --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #eef2f7;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .infographic {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            max-width: 1100px;
+            width: 100%;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        /* --- Hero --- */
+        .hero {
+            padding: 72px 56px 56px;
+            border-bottom: 1px solid var(--border);
+            animation: fadeUp 0.6s ease both;
+        }
+
+        .hero-overline {
+            font-family: var(--font-mono);
+            font-size: var(--text-caption);
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: var(--text-hero);
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: var(--text-h2);
+            color: var(--text-muted);
+            max-width: 640px;
+            line-height: 1.5;
+        }
+
+        /* --- Stats Bar --- */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-bottom: 1px solid var(--border);
+            animation: fadeUp 0.6s ease 0.15s both;
+        }
+
+        .stat {
+            padding: 28px 24px;
+            text-align: center;
+            border-right: 1px solid var(--border);
+        }
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: var(--text-stat);
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: var(--text-caption);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        /* --- Content Sections --- */
+        .content-section {
+            padding: 48px 56px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .content-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: var(--text-h1);
+            font-weight: 700;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+        }
+
+        /* --- Feature Grid --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+            transition: transform 0.2s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-number {
+            font-family: var(--font-display);
+            font-size: 36px;
+            color: var(--accent);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .feature-card h3 {
+            font-size: var(--text-h2);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            font-size: var(--text-body);
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* --- Callout --- */
+        .callout {
+            background: #f0f9ff;
+            border-left: 4px solid var(--accent);
+            padding: 20px 24px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin-top: 24px;
+        }
+
+        .callout p {
+            font-size: var(--text-body);
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            padding: 28px 56px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--text-caption);
+            color: var(--text-muted);
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card:nth-child(1) {
+            animation: fadeUp 0.5s ease 0.3s both;
+        }
+
+        .feature-card:nth-child(2) {
+            animation: fadeUp 0.5s ease 0.4s both;
+        }
+
+        .feature-card:nth-child(3) {
+            animation: fadeUp 0.5s ease 0.5s both;
+        }
+
+        .feature-card:nth-child(4) {
+            animation: fadeUp 0.5s ease 0.6s both;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 40px 24px;
+            }
+
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .content-section {
+                padding: 32px 24px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer {
+                padding: 20px 24px;
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="infographic">
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-overline">{{OVERLINE}}</div>
+            <h1>{{TITLE}}</h1>
+            <p>{{SUBTITLE}}</p>
+        </section>
+
+        <!-- STATS -->
+        <section class="stats-bar">
+            <div class="stat">
+                <div class="stat-value">{{STAT_1_VALUE}}</div>
+                <div class="stat-label">{{STAT_1_LABEL}}</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">{{STAT_2_VALUE}}</div>
+                <div class="stat-label">{{STAT_2_LABEL}}</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">{{STAT_3_VALUE}}</div>
+                <div class="stat-label">{{STAT_3_LABEL}}</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">{{STAT_4_VALUE}}</div>
+                <div class="stat-label">{{STAT_4_LABEL}}</div>
+            </div>
+        </section>
+
+        <!-- CONTENT -->
+        <section class="content-section">
+            <h2 class="section-title">{{SECTION_TITLE}}</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-number">01</div>
+                    <h3>{{FEATURE_TITLE}}</h3>
+                    <p>{{FEATURE_DESC}}</p>
+                </div>
+                <!-- Repeat as needed -->
+            </div>
+            <div class="callout">
+                <p>{{CALLOUT_TEXT}}</p>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <span>{{FOOTER_LEFT}}</span>
+            <span>{{FOOTER_RIGHT}}</span>
+        </footer>
+
+    </div>
+</body>
+
+</html>

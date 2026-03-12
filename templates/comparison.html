@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Comparison — A vs B</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+  <style>
+    :root {
+      --bg: #0D0D0D;
+      --surface: #141414;
+      --border: rgba(255,255,255,0.06);
+      --primary: #00D4FF; /* Cyan (Brand A) */
+      --secondary: #FF2D55; /* Pink/Red (Brand B) */
+      --text: #ffffff;
+      --muted: #888888;
+      --fd: 'Space Grotesk', sans-serif;
+      --fb: 'Inter', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--fb); width: 1100px; padding: 64px; }
+
+    header { text-align: center; margin-bottom: 48px; }
+    h1 { font-family: var(--fd); font-size: 48px; margin-bottom: 8px; }
+    .subtitle { color: var(--muted); font-size: 16px; }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      position: relative;
+    }
+
+    /* VS Badge */
+    .vs-badge {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%) translateY(-24px);
+      width: 48px; height: 48px;
+      background: var(--bg); border: 2px solid var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--fd); font-weight: 700; color: var(--muted);
+      z-index: 10;
+    }
+
+    .column {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      position: relative;
+    }
+
+    /* Brand headers */
+    .brand-head { display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
+    .b-icon { font-size: 32px; }
+    .brand-head h2 { font-family: var(--fd); font-size: 32px; }
+    
+    .col-a .b-icon, .col-a h2 { color: var(--primary); }
+    .col-b .b-icon, .col-b h2 { color: var(--secondary); }
+    .col-a { border-top: 4px solid var(--primary); }
+    .col-b { border-top: 4px solid var(--secondary); }
+
+    .feature-list { display: flex; flex-direction: column; gap: 24px; }
+    .feature-item { display: flex; flex-direction: column; gap: 8px; }
+    .f-label { font-size: 12px; text-transform: uppercase; font-weight: 700; color: var(--muted); letter-spacing: 0.05em; }
+    .f-val { font-family: var(--fd); font-size: 20px; }
+
+    .check-list { display: flex; flex-direction: column; gap: 16px; }
+    .check-item { display: flex; align-items: center; gap: 12px; font-size: 15px; }
+    .col-a .check-item i { color: var(--primary); font-size: 20px; }
+    .col-b .check-item i { color: var(--secondary); font-size: 20px; }
+
+    .conclusion { margin-top: 48px; text-align: center; border-top: 1px solid var(--border); padding-top: 32px; }
+    .conclusion h3 { font-family: var(--fd); font-size: 24px; color: var(--text); margin-bottom: 8px; }
+    .conclusion p { color: var(--muted); font-size: 15px; max-width: 600px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>PROTOCOL COMPARISON</h1>
+    <p class="subtitle">Evaluating the performance and security of next-gen rollups.</p>
+  </header>
+
+  <div class="comparison-grid">
+    <div class="vs-badge">VS</div>
+
+    <!-- Column A -->
+    <div class="column col-a">
+      <div class="brand-head">
+        <i class="ph-fill ph-hexagon b-icon"></i>
+        <h2>OpStack</h2>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item">
+          <span class="f-label">Throughput (TPS)</span>
+          <span class="f-val">4,000+ TPS</span>
+        </div>
+        <div class="feature-item">
+          <span class="f-label">Finality Time</span>
+          <span class="f-val">~2 Seconds</span>
+        </div>
+        <div class="feature-item">
+          <span class="f-label">Gas Fees</span>
+          <span class="f-val">$0.001 Avg</span>
+        </div>
+      </div>
+      <div class="check-list" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
+        <div class="check-item"><i class="ph-fill ph-check-circle"></i> EVM Equivalency</div>
+        <div class="check-item"><i class="ph-fill ph-check-circle"></i> Decentralized Sequencer</div>
+        <div class="check-item"><i class="ph-fill ph-check-circle"></i> Native Account Abstraction</div>
+      </div>
+    </div>
+
+    <!-- Column B -->
+    <div class="column col-b">
+      <div class="brand-head">
+        <i class="ph-fill ph-square b-icon"></i>
+        <h2>ZK-Rollups</h2>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item">
+          <span class="f-label">Throughput (TPS)</span>
+          <span class="f-val">2,000+ TPS</span>
+        </div>
+        <div class="feature-item">
+          <span class="f-label">Finality Time</span>
+          <span class="f-val">Instant (Zero-Knowledge)</span>
+        </div>
+        <div class="feature-item">
+          <span class="f-label">Gas Fees</span>
+          <span class="f-val">$0.01 Avg</span>
+        </div>
+      </div>
+      <div class="check-list" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
+        <div class="check-item"><i class="ph-fill ph-check-circle"></i> Cryptographic Proofs</div>
+        <div class="check-item"><i class="ph-fill ph-x-circle" style="color:var(--muted);"></i> EVM Compatibility (Partial)</div>
+        <div class="check-item"><i class="ph-fill ph-check-circle"></i> Capital Efficiency</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="conclusion">
+    <h3>The Verdict</h3>
+    <p>OpStack excels in pure EVM compatibility and developer experience, while ZK-Sync offers superior mathematical security and instant finality at the cost of higher immediate overhead.</p>
+  </div>
+
+</body>
+</html>

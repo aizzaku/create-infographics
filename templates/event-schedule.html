@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Event Schedule — Launch / Conference</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+  <style>
+    :root {
+      --bg: #0D0D0D;
+      --surface: #121212;
+      --border: #222;
+      --primary: #FF4D00; /* Vibrant Orange */
+      --text: #ffffff;
+      --muted: #777;
+      --fd: 'Syne', sans-serif;
+      --fb: 'Plus Jakarta Sans', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--fb); width: 1100px; padding: 80px; }
+
+    h1 { font-family: var(--fd); font-size: 80px; text-transform: uppercase; line-height: 0.9; margin-bottom: 40px; }
+    h1 span { color: var(--primary); }
+
+    .schedule { display: flex; flex-direction: column; gap: 8px; }
+    .session {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px 40px;
+      display: grid;
+      grid-template-columns: 180px 1fr 140px;
+      align-items: center;
+      gap: 32px;
+    }
+    .time { font-family: var(--fd); font-size: 20px; color: var(--primary); }
+    .info h3 { font-family: var(--fd); font-size: 24px; margin-bottom: 4px; text-transform: uppercase; }
+    .info p { color: var(--muted); font-size: 14px; font-weight: 500; }
+    .speaker { text-align: right; font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--muted); }
+
+    .highlight { border-color: var(--primary); }
+
+    .bottom-bar { margin-top: 64px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid var(--text); padding-top: 24px; }
+    .location { font-family: var(--fd); font-size: 18px; text-transform: uppercase; }
+    .cta { background: var(--text); color: var(--bg); padding: 8px 24px; font-family: var(--fd); font-weight: 800; font-size: 14px; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+
+  <h1>EVENT <span>AGENDA</span></h1>
+
+  <div class="schedule">
+    <div class="session">
+      <div class="time">09:00 AM</div>
+      <div class="info">
+        <h3>Opening Keynote</h3>
+        <p>The future of decentralized design and agentic workflows.</p>
+      </div>
+      <div class="speaker">Sarah J. Miller</div>
+    </div>
+    <div class="session highlight">
+      <div class="time">11:30 AM</div>
+      <div class="info">
+        <h3>Workshop: AI Logic</h3>
+        <p>Deep dive into configuring custom skills for autonomous agents.</p>
+      </div>
+      <div class="speaker">Marcus Chen</div>
+    </div>
+    <div class="session">
+      <div class="time">02:00 PM</div>
+      <div class="info">
+        <h3>Breakout Sessions</h3>
+        <p>Multiple tracks including security hardening and UI patterns.</p>
+      </div>
+      <div class="speaker">Track Leads</div>
+    </div>
+    <div class="session">
+      <div class="time">05:00 PM</div>
+      <div class="info">
+        <h3>Closing Ceremony</h3>
+        <p>Awards, networking drinks, and final project reveals.</p>
+      </div>
+      <div class="speaker">Executive Team</div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="location">PIER 27, SAN FRANCISCO / OCT 12</div>
+    <div class="cta">Register Now</div>
+  </div>
+
+</body>
+</html>

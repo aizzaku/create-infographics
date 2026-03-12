@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}} — Infographic</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <!-- Phosphor Icons — free MIT icon library -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <style>
+    /* === THEME: Dark Modern === */
+    :root {
+      --bg: #0d0d0d;
+      --surface: #1a1a1a;
+      --primary: #f97316;
+      --secondary: #fb923c;
+      --accent: #fbbf24;
+      --text: #fafafa;
+      --text-muted: #a3a3a3;
+      --border: #262626;
+
+      --font-display: 'DM Serif Display', serif;
+      --font-body: 'Outfit', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --text-hero: clamp(48px, 6vw, 80px);
+      --text-h1: clamp(28px, 3.5vw, 42px);
+      --text-h2: clamp(18px, 2vw, 24px);
+      --text-body: clamp(13px, 1.4vw, 16px);
+      --text-caption: clamp(11px, 1vw, 13px);
+      --text-stat: clamp(32px, 4vw, 56px);
+
+      --radius-card: 12px;
+      --radius-sm: 6px;
+      --shadow-card: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #080808;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .infographic {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      max-width: 1100px;
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(249, 115, 22, 0.05);
+    }
+
+    /* --- Hero --- */
+    .hero {
+      padding: 64px 48px;
+      text-align: center;
+      position: relative;
+      background: radial-gradient(ellipse at 50% 0%, rgba(249,115,22,0.08) 0%, transparent 60%);
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      color: var(--primary);
+      background: rgba(249,115,22,0.1);
+      border: 1px solid rgba(249,115,22,0.2);
+      padding: 4px 14px;
+      border-radius: 9999px;
+      margin-bottom: 24px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: var(--text-hero);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: var(--text-h2);
+      color: var(--text-muted);
+      font-weight: 300;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* --- Stats Bar --- */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      animation: fadeUp 0.6s ease 0.15s both;
+    }
+
+    .stat {
+      padding: 32px 24px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-value {
+      font-family: var(--font-mono);
+      font-size: var(--text-stat);
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: var(--text-caption);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* --- Feature Grid --- */
+    .features {
+      padding: 48px;
+    }
+
+    .features-title {
+      font-family: var(--font-display);
+      font-size: var(--text-h1);
+      margin-bottom: 32px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 28px;
+      transition: transform 0.2s, border-color 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(249,115,22,0.3);
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-family: var(--font-body);
+      font-size: var(--text-h2);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: var(--text-body);
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .feature-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      background: rgba(251,191,36,0.1);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      margin-top: 12px;
+    }
+
+    /* --- Footer --- */
+    .footer {
+      padding: 32px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--text-caption);
+      color: var(--text-muted);
+    }
+
+    /* --- Animations --- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .feature-card:nth-child(1) { animation: fadeUp 0.5s ease 0.3s both; }
+    .feature-card:nth-child(2) { animation: fadeUp 0.5s ease 0.4s both; }
+    .feature-card:nth-child(3) { animation: fadeUp 0.5s ease 0.5s both; }
+    .feature-card:nth-child(4) { animation: fadeUp 0.5s ease 0.6s both; }
+    .feature-card:nth-child(5) { animation: fadeUp 0.5s ease 0.7s both; }
+    .feature-card:nth-child(6) { animation: fadeUp 0.5s ease 0.8s both; }
+
+    /* --- Responsive --- */
+    @media (max-width: 768px) {
+      .hero { padding: 40px 24px; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .features { padding: 32px 24px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .footer { padding: 24px; flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="infographic">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-badge">{{BADGE_TEXT}}</div>
+      <h1>{{TITLE}}</h1>
+      <p>{{SUBTITLE}}</p>
+    </section>
+
+    <!-- STATS BAR -->
+    <section class="stats-bar">
+      <div class="stat">
+        <div class="stat-value">{{STAT_1_VALUE}}</div>
+        <div class="stat-label">{{STAT_1_LABEL}}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">{{STAT_2_VALUE}}</div>
+        <div class="stat-label">{{STAT_2_LABEL}}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">{{STAT_3_VALUE}}</div>
+        <div class="stat-label">{{STAT_3_LABEL}}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">{{STAT_4_VALUE}}</div>
+        <div class="stat-label">{{STAT_4_LABEL}}</div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+      <h2 class="features-title">{{SECTION_TITLE}}</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="ph-duotone ph-rocket" style="font-size:28px;"></i></div>
+          <h3>{{FEATURE_TITLE}}</h3>
+          <p>{{FEATURE_DESC}}</p>
+          <span class="feature-tag">{{TAG}}</span>
+        </div>
+        <!-- Repeat feature-card blocks as needed -->
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <span>{{FOOTER_LEFT}}</span>
+      <span>{{FOOTER_RIGHT}}</span>
+    </footer>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{GAME_NAME}} — Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <style>
+    /* ══════════════════════════════════════════
+       THEME: Game Overview — Emerald Gaming
+       ══════════════════════════════════════════ */
+    :root {
+      --bg:          #0A0F0A;
+      --bg-secondary:#0D130D;
+      --surface:     #111A11;
+      --primary:     #00E5A0;
+      --primary-rgb: 0,229,160;
+      --secondary:   #7CFC00;
+      --accent:      #FFD700;
+      --text:        #FFFFFF;
+      --muted:       #7A9A7A;
+      --border:      rgba(0,229,160,0.1);
+      --border-card: rgba(255,255,255,0.07);
+
+      --font-display: 'Rajdhani', sans-serif;
+      --font-body:    'Inter', sans-serif;
+      --font-mono:    'JetBrains Mono', monospace;
+
+      --text-hero:    clamp(40px, 5.5vw, 72px);
+      --text-h1:      clamp(20px, 2.8vw, 34px);
+      --text-h2:      clamp(15px, 1.8vw, 20px);
+      --text-body:    clamp(13px, 1.4vw, 15px);
+      --text-caption: clamp(10px, 1vw,  12px);
+      --text-stat:    clamp(26px, 3.5vw, 42px);
+
+      --radius-card:  10px;
+      --radius-sm:    4px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #060908;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+      font-family: var(--font-body);
+    }
+
+    .infographic {
+      background: var(--bg);
+      color: var(--text);
+      max-width: 1100px;
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 80px rgba(0,229,160,0.05);
+    }
+
+    /* ── HERO (split-layout) ─────────────────── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      min-height: 220px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(0,229,160,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-content {
+      padding: 40px 40px 40px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      background: rgba(0,229,160,0.08);
+      border: 1px solid rgba(0,229,160,0.2);
+      padding: 4px 12px;
+      border-radius: 20px;
+      width: fit-content;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: var(--text-hero);
+      font-weight: 700;
+      line-height: 1.0;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    .hero h1 span { color: var(--primary); }
+    .hero-bullets {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .hero-bullet {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: var(--text-body);
+      color: var(--muted);
+    }
+    .hero-bullet i { color: var(--primary); font-size: 14px; }
+    .hero-visual {
+      background: linear-gradient(135deg, var(--surface) 0%, #0D1A0D 100%);
+      border-left: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Replace with actual game art: <img src="{{ART_PATH}}" style="width:100%;height:100%;object-fit:cover;"> */
+    .hero-visual-placeholder {
+      font-size: 80px;
+      opacity: 0.15;
+    }
+
+    /* ── STATS BAR ───────────────────────────── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--border-card);
+    }
+    .stat-item {
+      padding: 18px 24px;
+      border-right: 1px solid var(--border-card);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-icon {
+      font-size: 16px;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: var(--text-stat);
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+      text-shadow: 0 0 16px rgba(0,229,160,0.3);
+    }
+    .stat-label {
+      font-size: var(--text-caption);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-top: 3px;
+    }
+
+    /* ── FEATURES GRID ───────────────────────── */
+    .features-section {
+      padding: 32px 36px;
+      border-bottom: 1px solid var(--border-card);
+    }
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: var(--text-h1);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 20px;
+      color: var(--muted);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      transition: border-color 0.3s, transform 0.2s;
+    }
+    .feature-card:hover {
+      border-color: var(--border);
+      transform: translateY(-2px);
+    }
+    .feature-card-icon {
+      font-size: 24px;
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: block;
+      filter: drop-shadow(0 0 6px rgba(0,229,160,0.4));
+    }
+    .feature-card h3 {
+      font-family: var(--font-display);
+      font-size: var(--text-h2);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 6px;
+    }
+    .feature-card p {
+      font-size: var(--text-body);
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── HOW TO PLAY ─────────────────────────── */
+    .howto-section {
+      padding: 28px 36px;
+      border-bottom: 1px solid var(--border-card);
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 22px;
+      left: 40px;
+      right: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--primary), transparent);
+    }
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 0 16px;
+    }
+    .step-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(0,229,160,0.1);
+      border: 1px solid var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      flex-shrink: 0;
+      box-shadow: 0 0 12px rgba(0,229,160,0.2);
+    }
+    .step-label {
+      font-family: var(--font-display);
+      font-size: var(--text-h2);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .step-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── FOOTER ─────────────────────────────── */
+    .footer {
+      padding: 14px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.5;
+    }
+
+    /* ── ANIMATIONS ─────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero           { animation: fadeUp 0.5s ease 0.0s both; }
+    .stats-bar      { animation: fadeUp 0.5s ease 0.1s both; }
+    .features-section { animation: fadeUp 0.5s ease 0.2s both; }
+    .howto-section  { animation: fadeUp 0.5s ease 0.3s both; }
+  </style>
+</head>
+<body>
+<div class="infographic">
+
+  <!-- HERO: Left content + Right game art -->
+  <div class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">
+        <i class="ph ph-game-controller"></i>
+        {{GENRE}} · {{PLATFORM}}
+      </span>
+      <h1>{{GAME_NAME}}<br><span>Overview</span></h1>
+      <div class="hero-bullets">
+        <div class="hero-bullet"><i class="ph-fill ph-check-circle"></i> {{BULLET_1}}</div>
+        <div class="hero-bullet"><i class="ph-fill ph-check-circle"></i> {{BULLET_2}}</div>
+        <div class="hero-bullet"><i class="ph-fill ph-check-circle"></i> {{BULLET_3}}</div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <!-- Replace with: <img src="{{GAME_ART}}" style="width:100%;height:100%;object-fit:cover;"> -->
+      <div class="hero-visual-placeholder"><i class="ph ph-sword"></i></div>
+    </div>
+  </div>
+
+  <!-- STATS BAR: 4 key metrics -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-icon"><i class="ph ph-users"></i></div>
+      <div class="stat-value">{{PLAYERS}}</div>
+      <div class="stat-label">Active Players</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon"><i class="ph ph-currency-circle-dollar"></i></div>
+      <div class="stat-value">{{TOKEN_PRICE}}</div>
+      <div class="stat-label">Token Price</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon"><i class="ph ph-trophy"></i></div>
+      <div class="stat-value">{{REWARD_POOL}}</div>
+      <div class="stat-label">Reward Pool</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon"><i class="ph ph-calendar"></i></div>
+      <div class="stat-value">{{SEASON}}</div>
+      <div class="stat-label">Current Season</div>
+    </div>
+  </div>
+
+  <!-- FEATURES: 2×3 card grid -->
+  <div class="features-section">
+    <div class="section-heading">Core Features</div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="ph-duotone ph-sword feature-card-icon"></i>
+        <h3>{{FEATURE_1_TITLE}}</h3>
+        <p>{{FEATURE_1_DESC}}</p>
+      </div>
+      <div class="feature-card">
+        <i class="ph-duotone ph-coins feature-card-icon"></i>
+        <h3>{{FEATURE_2_TITLE}}</h3>
+        <p>{{FEATURE_2_DESC}}</p>
+      </div>
+      <div class="feature-card">
+        <i class="ph-duotone ph-users feature-card-icon"></i>
+        <h3>{{FEATURE_3_TITLE}}</h3>
+        <p>{{FEATURE_3_DESC}}</p>
+      </div>
+      <div class="feature-card">
+        <i class="ph-duotone ph-chart-line-up feature-card-icon"></i>
+        <h3>{{FEATURE_4_TITLE}}</h3>
+        <p>{{FEATURE_4_DESC}}</p>
+      </div>
+      <div class="feature-card">
+        <i class="ph-duotone ph-shield-check feature-card-icon"></i>
+        <h3>{{FEATURE_5_TITLE}}</h3>
+        <p>{{FEATURE_5_DESC}}</p>
+      </div>
+      <div class="feature-card">
+        <i class="ph-duotone ph-globe feature-card-icon"></i>
+        <h3>{{FEATURE_6_TITLE}}</h3>
+        <p>{{FEATURE_6_DESC}}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW TO PLAY: 4 numbered steps -->
+  <div class="howto-section">
+    <div class="section-heading">How to Play</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-label">{{STEP_1_TITLE}}</div>
+        <div class="step-desc">{{STEP_1_DESC}}</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-label">{{STEP_2_TITLE}}</div>
+        <div class="step-desc">{{STEP_2_DESC}}</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-label">{{STEP_3_TITLE}}</div>
+        <div class="step-desc">{{STEP_3_DESC}}</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-label">{{STEP_4_TITLE}}</div>
+        <div class="step-desc">{{STEP_4_DESC}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>{{FOOTER_SOURCE}} • {{DATE}}</span>
+    <span>Not financial advice. DYOR.</span>
+  </footer>
+
+</div>
+</body>
+</html>

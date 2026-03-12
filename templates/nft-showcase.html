@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{COLLECTION_NAME}} — NFT Showcase</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Press+Start+2P&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#050A14;--surface:#08101E;--border:#0E1A2E;
+      --cyan:#1AA8B8;--cyan-hi:#42F3EE;--gold:#F6B629;
+      --purple:#C44BFF;--green:#32D06E;
+      --text:#F4F3E9;--muted:#788A9A;
+      --fd:'Orbitron',monospace;--fp:'Press Start 2P',monospace;
+      --fb:'Montserrat',sans-serif;
+    }
+    body{background:var(--bg);font-family:var(--fb);color:var(--text);width:1100px;padding:12px}
+    .frame{border:2px solid var(--cyan);box-shadow:0 0 40px rgba(26,168,184,.12);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+
+    /* header */
+    .hdr{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;background:linear-gradient(to right,rgba(26,168,184,.15),transparent);border-bottom:1px solid var(--cyan)}
+    .hdr-name{font-family:var(--fp);font-size:13px;color:var(--cyan-hi);letter-spacing:.05em}
+    .chain-badge{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--text);background:rgba(255,255,255,.06);border:1px solid var(--border);padding:4px 12px;border-radius:20px}
+    .logo-slot{width:60px;height:24px;background:var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--muted)}
+    .hdr-right{display:flex;align-items:center;gap:16px}
+
+    /* hero grid */
+    .hero{display:grid;grid-template-columns:280px 1fr 1fr;border-bottom:1px solid var(--border);min-height:220px}
+    .art{background:linear-gradient(135deg,#0A1428,#0E1E38);border-right:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;color:var(--cyan);opacity:.5}
+    .art i{font-size:48px}
+    .info{padding:22px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+    .tag-badge{display:inline-flex;align-items:center;background:rgba(66,243,238,.1);border:1px solid var(--cyan-hi);padding:4px 10px;border-radius:4px;font-family:var(--fp);font-size:7px;color:var(--cyan-hi);letter-spacing:.06em;margin-bottom:4px}
+    .nft-title{font-family:var(--fd);font-size:26px;font-weight:800;line-height:1.1;text-transform:uppercase}
+    .nft-desc{font-size:11.5px;color:var(--muted);line-height:1.6;font-weight:500;flex:1}
+    .mint-row{display:flex;align-items:baseline;gap:8px;margin-top:auto}
+    .mint-lbl{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+    .mint-val{font-family:var(--fd);font-size:18px;font-weight:700;color:var(--gold)}
+    .stats-col{padding:22px;display:flex;flex-direction:column;gap:12px}
+    .srow{display:flex;align-items:baseline;gap:8px}
+    .slbl{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);width:64px;flex-shrink:0}
+    .sval{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--cyan-hi)}
+    .sval.gold{color:var(--gold)}.sval.green{color:var(--green)}
+
+    /* supply bar */
+    .sbar{display:flex;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .scell{flex:1;padding:12px 22px;border-right:1px solid var(--border);display:flex;align-items:center;gap:10px}
+    .scell:last-child{border-right:none}
+    .scell i{font-size:18px;color:var(--cyan)}
+    .smeta{display:flex;flex-direction:column;gap:1px}
+    .sval2{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--text)}
+    .skey{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+    /* table */
+    .table-sec{padding:20px 28px}
+    .table-title{font-family:var(--fp);font-size:8px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+    .rtable{width:100%;border-collapse:separate;border-spacing:0}
+    .rtable th{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:8px 14px;text-align:left;border-bottom:1px solid var(--border)}
+    .th-c{color:#9A9A9A}.th-u{color:#4AC7FF}.th-r{color:var(--purple)}.th-l{color:var(--gold)}
+    .rtable td{font-size:12px;font-weight:500;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.03)}
+    .rtable tr:last-child td{border-bottom:none}
+    .rlbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .vc{color:#9A9A9A}.vu{color:#4AC7FF}.vr{color:var(--purple)}.vl{color:var(--gold);font-weight:700}
+
+    /* footer */
+    .ftr{padding:12px 28px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(26,168,184,.04)}
+    .ftr-note{font-size:10px;color:var(--muted)}
+    .ftr-brand{font-family:var(--fp);font-size:8px;color:var(--cyan);letter-spacing:.1em}
+  </style>
+</head>
+<body>
+<div class="frame">
+  <div class="hdr">
+    <div class="hdr-name">{{COLLECTION_NAME}}</div>
+    <div class="hdr-right">
+      <div class="chain-badge">{{BLOCKCHAIN}}</div>
+      <div class="logo-slot">LOGO</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="art"><i class="ph ph-image-square"></i></div>
+    <div class="info">
+      <div class="tag-badge">{{COLLECTION_TAG}}</div>
+      <div class="nft-title">{{COLLECTION_FULL_NAME}}</div>
+      <div class="nft-desc">{{COLLECTION_DESCRIPTION}}</div>
+      <div class="mint-row"><div class="mint-lbl">Mint Price</div><div class="mint-val">{{MINT_PRICE}}</div></div>
+    </div>
+    <div class="stats-col">
+      <div class="srow"><div class="slbl">Supply</div><div class="sval">{{TOTAL_SUPPLY}}</div></div>
+      <div class="srow"><div class="slbl">Chain</div><div class="sval">{{BLOCKCHAIN}}</div></div>
+      <div class="srow"><div class="slbl">Factions</div><div class="sval green">{{FACTION_COUNT}}</div></div>
+      <div class="srow"><div class="slbl">Traits</div><div class="sval">{{TRAIT_COUNT}}+</div></div>
+      <div class="srow"><div class="slbl">Royalty</div><div class="sval">{{ROYALTY_PCT}}</div></div>
+    </div>
+  </div>
+
+  <div class="sbar">
+    <div class="scell"><i class="ph ph-database"></i><div class="smeta"><div class="sval2">{{TOTAL_SUPPLY}}</div><div class="skey">Total Supply</div></div></div>
+    <div class="scell"><i class="ph ph-link"></i><div class="smeta"><div class="sval2">{{BLOCKCHAIN}}</div><div class="skey">Chain</div></div></div>
+    <div class="scell"><i class="ph ph-hourglass"></i><div class="smeta"><div class="sval2">{{MINT_DATE}}</div><div class="skey">Launch Date</div></div></div>
+    <div class="scell"><i class="ph ph-storefront"></i><div class="smeta"><div class="sval2">{{MARKETPLACE}}</div><div class="skey">Marketplace</div></div></div>
+  </div>
+
+  <div class="table-sec">
+    <div class="table-title">// RARITY & UTILITY BREAKDOWN</div>
+    <table class="rtable">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="th-c">COMMON</th>
+          <th class="th-u">UNCOMMON</th>
+          <th class="th-r">RARE</th>
+          <th class="th-l">LEGENDARY</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="rlbl">SUPPLY</td><td class="vc">{{COMMON_SUPPLY}}</td><td class="vu">{{UNCOMMON_SUPPLY}}</td><td class="vr">{{RARE_SUPPLY}}</td><td class="vl">{{LEGENDARY_SUPPLY}}</td></tr>
+        <tr><td class="rlbl">{{UTILITY_1}}</td><td class="vc">{{U1_COMMON}}</td><td class="vu">{{U1_UNCOMMON}}</td><td class="vr">{{U1_RARE}}</td><td class="vl">{{U1_LEGENDARY}}</td></tr>
+        <tr><td class="rlbl">{{UTILITY_2}}</td><td class="vc">{{U2_COMMON}}</td><td class="vu">{{U2_UNCOMMON}}</td><td class="vr">{{U2_RARE}}</td><td class="vl">{{U2_LEGENDARY}}</td></tr>
+        <tr><td class="rlbl">{{UTILITY_3}}</td><td class="vc">{{U3_COMMON}}</td><td class="vu">{{U3_UNCOMMON}}</td><td class="vr">{{U3_RARE}}</td><td class="vl">{{U3_LEGENDARY}}</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ftr">
+    <div class="ftr-note">{{DISCLAIMER}} · Not financial advice.</div>
+    <div class="ftr-brand">{{PROJECT_NAME}}</div>
+  </div>
+</div>
+</body>
+</html>

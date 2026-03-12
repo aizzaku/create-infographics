@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{PROJECT_NAME}} — {{MECHANISM_NAME}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #060608;
+      --surface:   #0E0F14;
+      --border:    #1C1E26;
+      --amber:     #E99A00;
+      --amber-hi:  #F0B63A;
+      --node-a:    #4DA0F8;   /* input node */
+      --node-b:    #E99A00;   /* central node — amber */
+      --node-c:    #37E59F;   /* output node */
+      --text:      #F4F2EE;
+      --muted:     #8A8A9A;
+      --glow-a:    rgba(77,160,248,0.25);
+      --glow-b:    rgba(233,154,0,0.30);
+      --glow-c:    rgba(55,229,159,0.25);
+
+      --font-display:'Bebas Neue', sans-serif;
+      --font-body:   'Montserrat', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: var(--font-body);
+      color: var(--text);
+      width: 1100px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header strip ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--amber);
+      box-shadow: 0 0 8px var(--amber);
+    }
+    .header-brand {
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 0.1em;
+      color: var(--text);
+    }
+    .header-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .logo-slot {
+      width: 80px; height: 28px;
+      background: var(--border);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; color: var(--muted); letter-spacing: 0.1em;
+    }
+
+    /* ── Hero: title + subtitle ── */
+    .hero {
+      padding: 36px 48px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: 60px;
+      line-height: 0.92;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .hero h1 em {
+      color: var(--amber);
+      font-style: normal;
+    }
+    .hero-sub {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      max-width: 560px;
+    }
+
+    /* ── Flow diagram ── */
+    .flow {
+      padding: 8px 48px 32px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .flow-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+    }
+    .node-box {
+      border-radius: 10px;
+      border: 1.5px solid;
+      padding: 14px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      min-width: 140px;
+      position: relative;
+    }
+    .node-box.input {
+      border-color: var(--node-a);
+      background: rgba(77,160,248,0.06);
+      box-shadow: 0 0 20px var(--glow-a);
+    }
+    .node-box.central {
+      border-color: var(--node-b);
+      background: rgba(233,154,0,0.08);
+      box-shadow: 0 0 28px var(--glow-b);
+      min-width: 180px;
+      padding: 18px 24px;
+    }
+    .node-box.output {
+      border-color: var(--node-c);
+      background: rgba(55,229,159,0.06);
+      box-shadow: 0 0 20px var(--glow-c);
+    }
+
+    .node-icon {
+      font-size: 22px;
+    }
+    .node-icon.a { color: var(--node-a); }
+    .node-icon.b { color: var(--node-b); }
+    .node-icon.c { color: var(--node-c); }
+
+    .node-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .node-title.a { color: var(--node-a); }
+    .node-title.b { color: var(--node-b); }
+    .node-title.c { color: var(--node-c); }
+
+    .node-value {
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 0.04em;
+      color: var(--text);
+    }
+    .node-sub {
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* Arrow */
+    .flow-arrow {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 0 8px;
+    }
+    .arrow-line {
+      width: 100%;
+      height: 1.5px;
+      background: linear-gradient(to right, var(--border), var(--amber-hi), var(--border));
+      position: relative;
+    }
+    .arrow-line::after {
+      content: '';
+      position: absolute;
+      right: -1px; top: -4px;
+      width: 0; height: 0;
+      border-left: 8px solid var(--amber-hi);
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+    }
+    .arrow-label {
+      position: absolute;
+      top: -18px;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── Bottom: info panels ── */
+    .info-row {
+      padding: 0 48px 44px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .info-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .panel-heading {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .panel-heading i { font-size: 14px; }
+
+    .bullet-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .bullet-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 12.5px;
+      color: var(--text);
+      line-height: 1.5;
+      font-weight: 500;
+    }
+    .bullet-item::before {
+      content: '›';
+      color: var(--amber);
+      font-size: 16px;
+      line-height: 1.2;
+      flex-shrink: 0;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 14px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-note {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 16px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────────────── -->
+  <div class="header">
+    <div class="header-left">
+      <div class="brand-dot"></div>
+      <div class="header-brand">{{PROJECT_NAME}}</div>
+      <div class="header-tag">{{MECHANISM_TAG}}</div>
+    </div>
+    <div class="logo-slot">LOGO</div>
+  </div>
+
+  <!-- ── HERO ───────────────────────────────────────────── -->
+  <div class="hero">
+    <h1>HOW <em>{{MECHANISM_NAME}}</em><br/>WORKS</h1>
+    <div class="hero-sub">{{ONE_LINE_DESCRIPTION}}</div>
+  </div>
+
+  <!-- ── FLOW DIAGRAM ───────────────────────────────────── -->
+  <div class="flow">
+
+    <div class="flow-node">
+      <div class="node-box input">
+        <i class="ph ph-coins node-icon a"></i>
+        <div class="node-title a">{{INPUT_LABEL}}</div>
+        <div class="node-value">{{INPUT_VALUE}}</div>
+        <div class="node-sub">{{INPUT_SUB}}</div>
+      </div>
+    </div>
+
+    <div class="flow-arrow">
+      <div class="arrow-line"></div>
+      <div class="arrow-label">stake</div>
+    </div>
+
+    <div class="flow-node">
+      <div class="node-box central">
+        <i class="ph-fill ph-vault node-icon b"></i>
+        <div class="node-title b">{{PLATFORM_NAME}}</div>
+        <div class="node-value">{{PLATFORM_STAT}}</div>
+        <div class="node-sub">{{PLATFORM_SUB}}</div>
+      </div>
+    </div>
+
+    <div class="flow-arrow">
+      <div class="arrow-line"></div>
+      <div class="arrow-label">earn</div>
+    </div>
+
+    <div class="flow-node">
+      <div class="node-box output">
+        <i class="ph ph-trophy node-icon c"></i>
+        <div class="node-title c">{{OUTPUT_LABEL}}</div>
+        <div class="node-value">{{OUTPUT_VALUE}}</div>
+        <div class="node-sub">{{OUTPUT_SUB}}</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── INFO PANELS ────────────────────────────────────── -->
+  <div class="info-row">
+
+    <div class="info-panel">
+      <div class="panel-heading">
+        <i class="ph ph-list-checks"></i>
+        REQUIREMENTS
+      </div>
+      <div class="bullet-list">
+        <div class="bullet-item">{{REQUIREMENT_1}}</div>
+        <div class="bullet-item">{{REQUIREMENT_2}}</div>
+        <div class="bullet-item">{{REQUIREMENT_3}}</div>
+        <div class="bullet-item">{{REQUIREMENT_4}}</div>
+      </div>
+    </div>
+
+    <div class="info-panel">
+      <div class="panel-heading">
+        <i class="ph ph-star"></i>
+        REWARDS & BENEFITS
+      </div>
+      <div class="bullet-list">
+        <div class="bullet-item">{{BENEFIT_1}}</div>
+        <div class="bullet-item">{{BENEFIT_2}}</div>
+        <div class="bullet-item">{{BENEFIT_3}}</div>
+        <div class="bullet-item">{{BENEFIT_4}}</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <div class="footer">
+    <div class="footer-note">{{DISCLAIMER_NOTE}}</div>
+    <div class="footer-logo">{{PROJECT_NAME}}</div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Timeline — Roadmap / History</title>
+  <!-- Standard Fonts for General Purpose -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+  <style>
+    /* Design Tokens */
+    :root {
+      --bg: #0D0D0D;
+      --surface: #13151A;
+      --border: rgba(255,255,255,0.08);
+      --primary: #00D4FF;
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.6);
+      --fd: 'Space Grotesk', sans-serif;
+      --fb: 'Inter', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--fb); width: 1100px; padding: 80px; }
+
+    header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 80px; }
+    h1 { font-family: var(--fd); font-size: 56px; line-height: 1; margin-bottom: 8px; }
+    .subtitle { color: var(--muted); font-size: 18px; }
+
+    /* Timeline Structure */
+    .timeline { position: relative; padding-left: 120px; }
+    .timeline::before { content: ''; position: absolute; left: 120px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+
+    .event { position: relative; padding-bottom: 64px; }
+    .event:last-child { padding-bottom: 0; }
+
+    /* Date Label */
+    .date {
+      position: absolute; left: -120px; top: 0; width: 100px;
+      text-align: right; font-family: var(--fd); font-size: 14px; font-weight: 700;
+      color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em;
+    }
+
+    /* Node */
+    .node {
+      position: absolute; left: -2px; top: 8px; width: 6px; height: 6px;
+      background: var(--primary); border-radius: 50%;
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    /* Content */
+    .content { padding-left: 48px; max-width: 600px; }
+    .content h3 { font-family: var(--fd); font-size: 24px; margin-bottom: 12px; }
+    .content p { color: var(--muted); font-size: 16px; line-height: 1.6; }
+
+    /* Tags */
+    .tags { display: flex; gap: 8px; margin-top: 16px; }
+    .tag { font-size: 10px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 4px; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <h1>PROJECT ROADMAP</h1>
+      <p class="subtitle">Key milestones and development timeline.</p>
+    </div>
+    <div style="text-align: right; color: var(--muted); font-size: 14px; font-weight: 600;">
+      EST. COMPLETION Q4 2026
+    </div>
+  </header>
+
+  <div class="timeline">
+    <!-- Events -->
+    <div class="event">
+      <div class="date">Q1 2026</div>
+      <div class="node"></div>
+      <div class="content">
+        <h3>Foundation & Alpha</h3>
+        <p>Core engine development and initial stress testing with early community contributors.</p>
+        <div class="tags">
+          <span class="tag">Alpha</span>
+          <span class="tag">Security</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="date">Q2 2026</div>
+      <div class="node"></div>
+      <div class="content">
+        <h3>SDK Release</h3>
+        <p>Opening up the API to 3rd party developers. Documentation site goes live under docs.example.com.</p>
+        <div class="tags">
+          <span class="tag">DevEx</span>
+          <span class="tag">API</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="date">Q3 2026</div>
+      <div class="node"></div>
+      <div class="content">
+        <h3>Integration Web</h3>
+        <p>Major partnership announcements and native integrations with core industry leaders.</p>
+        <div class="tags">
+          <span class="tag">Growth</span>
+          <span class="tag">Partners</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

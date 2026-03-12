@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{PROJECT_NAME}} — Airdrop Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #07090C;
+      --surface:     #0F1218;
+      --border:      #1E2430;
+      --amber:       #E99A00;
+      --amber-hi:    #F0B63A;
+      --amber-dim:   #9A6800;
+      --text:        #F2F2F0;
+      --muted:       #8A8A8A;
+      --grey-bar:    #C8C8C8;
+      --grey-mid:    #7A7A7A;
+      --grey-dark:   #3A3A3A;
+
+      --font-display:'Teko', sans-serif;
+      --font-body:   'Montserrat', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: var(--font-body);
+      color: var(--text);
+      width: 1100px;
+      min-height: 618px;
+      padding: 52px 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* ── Headline ── */
+    .headline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .headline-category {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .headline h1 {
+      font-family: var(--font-display);
+      font-size: 88px;
+      font-weight: 700;
+      line-height: 0.88;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      color: var(--amber);
+    }
+    .headline h1 span.pct {
+      color: var(--text);
+    }
+
+    /* ── Body: rules + vesting side-by-side ── */
+    .body-zone {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 48px;
+      align-items: start;
+      flex: 1;
+    }
+
+    /* Rules list */
+    .rules {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-top: 4px;
+    }
+    .rule-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .rule-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--amber);
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+    .rule-text {
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.55;
+      color: var(--text);
+    }
+    .rule-text strong {
+      color: var(--amber);
+      font-weight: 700;
+    }
+    .rule-text .highlight-2 { color: #61B8FF; }
+    .rule-text .highlight-3 { color: #E29B6C; }
+
+    /* Right: vesting widget */
+    .vesting-widget {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .vesting-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .pct-badge {
+      background: var(--amber);
+      color: #000;
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 700;
+      padding: 4px 14px 2px;
+      line-height: 1;
+      text-transform: uppercase;
+      border-radius: 4px;
+    }
+    .vesting-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* Timeline bar */
+    .vesting-bar-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .vesting-bar {
+      display: flex;
+      gap: 3px;
+      height: 36px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .bar-seg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.7);
+      flex-shrink: 0;
+    }
+    .bar-seg.tge  { background: var(--amber); width: 60px; }
+    .bar-seg.lock { background: var(--grey-dark); width: 80px; color: var(--muted); }
+    .bar-seg.v1   { background: var(--grey-mid); flex: 1; }
+    .bar-seg.v2   { background: #B0B0B0; flex: 1; }
+    .bar-seg.v3   { background: var(--grey-bar); flex: 1; }
+    .bar-seg.full { background: var(--amber); flex: 1; color: #000; }
+
+    /* unlock ramp overlay */
+    .bar-seg.ramp {
+      flex: 3;
+      background: linear-gradient(to right, var(--grey-dark), var(--amber-dim));
+      position: relative;
+      clip-path: polygon(0 100%, 0 100%, 100% 0%, 100% 100%);
+    }
+
+    .vesting-axis {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    .vesting-note {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .vesting-note strong { color: var(--amber); }
+
+    /* ── Bottom callout ── */
+    .bottom-callout {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+    .callout-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .callout-amount {
+      font-family: var(--font-display);
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--amber);
+      letter-spacing: 0.01em;
+    }
+    .callout-ticker {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: 0.04em;
+    }
+    .callout-meta {
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADLINE ───────────────────────────────────────── -->
+  <div class="headline">
+    <div class="headline-category">{{PROJECT_NAME}} · Token Distribution</div>
+    <h1>COMMUNITY AIRDROP <span class="pct">(25%)</span></h1>
+  </div>
+
+  <!-- ── BODY ──────────────────────────────────────────── -->
+  <div class="body-zone">
+
+    <!-- Allocation rules -->
+    <div class="rules">
+      <div class="rule-item">
+        <div class="rule-dot"></div>
+        <div class="rule-text">
+          <strong>25% of total supply</strong> reserved for community airdrop — rewarding early supporters
+          and ecosystem participants across all qualifying wallets
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-dot"></div>
+        <div class="rule-text">
+          Holders of <span class="highlight-2">{{COLLECTION_A}}</span> and
+          <span class="highlight-3">{{COLLECTION_B}}</span> NFTs are eligible for
+          <strong>enhanced allocations</strong> based on rarity tier
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-dot"></div>
+        <div class="rule-text">
+          <strong>10% unlocked at TGE</strong> — remaining 90% released linearly over
+          <strong>18 months</strong> with no cliff period
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-dot"></div>
+        <div class="rule-text">
+          Snapshot taken at block <strong>#{{SNAPSHOT_BLOCK}}</strong> —
+          wallets must hold minimum qualifying balance at snapshot time
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-dot"></div>
+        <div class="rule-text">
+          Claimable via official portal — KYC required for allocations above
+          <strong>{{KYC_THRESHOLD}} {{TICKER}}</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vesting widget -->
+    <div class="vesting-widget">
+      <div class="vesting-header">
+        <div class="pct-badge">10%</div>
+        <div class="vesting-label">Unlocked<br/>at TGE</div>
+      </div>
+      <div class="vesting-bar-wrap">
+        <div class="vesting-bar">
+          <div class="bar-seg tge">TGE<br/>10%</div>
+          <div class="bar-seg ramp"></div>
+          <div class="bar-seg full">100%</div>
+        </div>
+        <div class="vesting-axis">
+          <span>TGE</span>
+          <span>M3</span>
+          <span>M6</span>
+          <span>M12</span>
+          <span>M18</span>
+        </div>
+      </div>
+      <div class="vesting-note">
+        <strong>Linear vesting</strong> — tokens unlock daily after TGE.<br/>
+        No sudden unlocks. No cliff.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── BOTTOM CALLOUT ─────────────────────────────────── -->
+  <div class="bottom-callout">
+    <div class="callout-label">Total<br/>Airdrop</div>
+    <div class="callout-amount">{{AIRDROP_AMOUNT}}</div>
+    <div class="callout-ticker">{{TICKER}}</div>
+    <div class="callout-meta">
+      out of <strong>{{TOTAL_SUPPLY}}</strong> total supply<br/>
+      TGE: <strong>{{TGE_DATE}}</strong>
+    </div>
+  </div>
+
+</body>
+</html>

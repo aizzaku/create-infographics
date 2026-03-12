@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} — Infographic</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400&display=swap"
+        rel="stylesheet">
+    <!-- Phosphor Icons — free MIT icon library -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+    <style>
+        /* === THEME: Branded Minimal === */
+        :root {
+            --bg: #ffffff;
+            --surface: #f8f9fb;
+            --primary: var(--brand-primary, #2563eb);
+            --secondary: var(--brand-secondary, #1e40af);
+            --accent: var(--brand-accent, #f59e0b);
+            --text: #111827;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'IBM Plex Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --text-hero: clamp(42px, 5vw, 64px);
+            --text-h1: clamp(24px, 3vw, 36px);
+            --text-h2: clamp(16px, 1.8vw, 22px);
+            --text-body: clamp(13px, 1.3vw, 15px);
+            --text-caption: clamp(11px, 1vw, 13px);
+            --text-stat: clamp(28px, 3.5vw, 48px);
+
+            --radius-card: 12px;
+            --radius-sm: 6px;
+            --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #f1f3f5;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .infographic {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            max-width: 1100px;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        /* --- Header with Logo --- */
+        .header {
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            animation: fadeUp 0.4s ease both;
+        }
+
+        .header-logo img {
+            height: 36px;
+            width: auto;
+        }
+
+        .header-date {
+            font-family: var(--font-mono);
+            font-size: var(--text-caption);
+            color: var(--text-muted);
+        }
+
+        /* --- Hero --- */
+        .hero {
+            padding: 56px 48px;
+            animation: fadeUp 0.6s ease 0.1s both;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: var(--text-hero);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: var(--text-h2);
+            color: var(--text-muted);
+            max-width: 600px;
+            line-height: 1.5;
+        }
+
+        /* --- Stats --- */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding: 0 48px 48px;
+            animation: fadeUp 0.6s ease 0.2s both;
+        }
+
+        .stat {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: var(--text-stat);
+            color: var(--primary);
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            font-size: var(--text-caption);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        /* --- Content Area --- */
+        .content {
+            padding: 0 48px 48px;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: var(--text-caption);
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .content-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 24px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .content-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        .content-card h3 {
+            font-family: var(--font-display);
+            font-size: var(--text-h2);
+            margin-bottom: 8px;
+        }
+
+        .content-card p {
+            font-size: var(--text-body);
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            padding: 24px 48px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--text-caption);
+            color: var(--text-muted);
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-card:nth-child(1) {
+            animation: fadeUp 0.5s ease 0.3s both;
+        }
+
+        .content-card:nth-child(2) {
+            animation: fadeUp 0.5s ease 0.4s both;
+        }
+
+        .content-card:nth-child(3) {
+            animation: fadeUp 0.5s ease 0.5s both;
+        }
+
+        .content-card:nth-child(4) {
+            animation: fadeUp 0.5s ease 0.6s both;
+        }
+
+        @media (max-width: 768px) {
+
+            .header,
+            .hero,
+            .content,
+            .footer {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .stats-bar {
+                grid-template-columns: 1fr;
+                padding: 0 24px 32px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="infographic">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-logo">
+                <!-- <img src="{{LOGO_PATH}}" alt="Logo"> -->
+                <span
+                    style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--primary);">{{BRAND_NAME}}</span>
+            </div>
+            <div class="header-date">{{DATE}}</div>
+        </header>
+
+        <!-- HERO -->
+        <section class="hero">
+            <h1>{{TITLE}}</h1>
+            <p>{{SUBTITLE}}</p>
+        </section>
+
+        <!-- STATS -->
+        <section class="stats-bar">
+            <div class="stat">
+                <div class="stat-value">{{STAT_1_VALUE}}</div>
+                <div class="stat-label">{{STAT_1_LABEL}}</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">{{STAT_2_VALUE}}</div>
+                <div class="stat-label">{{STAT_2_LABEL}}</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">{{STAT_3_VALUE}}</div>
+                <div class="stat-label">{{STAT_3_LABEL}}</div>
+            </div>
+        </section>
+
+        <!-- CONTENT -->
+        <section class="content">
+            <div class="section-label">{{SECTION_LABEL}}</div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>{{ITEM_TITLE}}</h3>
+                    <p>{{ITEM_DESC}}</p>
+                </div>
+                <!-- Repeat as needed -->
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <span>{{FOOTER_LEFT}}</span>
+            <span>{{FOOTER_RIGHT}}</span>
+        </footer>
+
+    </div>
+</body>
+
+</html>

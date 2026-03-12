@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{PROJECT_NAME}} Tokenomics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <style>
+    /* ══════════════════════════════════════════
+       THEME: Token Economics — Amber Dark (your #1 type)
+       ══════════════════════════════════════════ */
+    :root {
+      --bg:          #0D0D0D;
+      --bg-secondary:#111111;
+      --surface:     #161616;
+      --primary:     #F5A623;
+      --primary-rgb: 245,166,35;
+      --secondary:   #E8943A;
+      --accent:      #FFD700;
+      --text:        #FFFFFF;
+      --muted:       #8B8B8B;
+      --border:      rgba(255,255,255,0.08);
+      --border-accent: rgba(245,166,35,0.25);
+
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Inter', sans-serif;
+      --font-mono:    'Space Mono', monospace;
+
+      --text-hero:    clamp(36px, 5vw,  64px);
+      --text-h1:      clamp(22px, 3vw,  36px);
+      --text-h2:      clamp(16px, 2vw,  22px);
+      --text-body:    clamp(13px, 1.4vw,15px);
+      --text-caption: clamp(10px, 1vw,  12px);
+      --text-stat:    clamp(28px, 4vw,  48px);
+      --text-mono:    clamp(11px, 1.2vw,13px);
+
+      --radius-card:  10px;
+      --radius-sm:    4px;
+      --radius-badge: 20px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #080808;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+      font-family: var(--font-body);
+    }
+
+    .infographic {
+      background: var(--bg);
+      color: var(--text);
+      max-width: 1100px;
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 80px rgba(245,166,35,0.06);
+    }
+
+    /* ── HEADER ─────────────────────────────── */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-logo img { height: 36px; width: auto; }
+    .header-project {
+      font-family: var(--font-display);
+      font-size: 24px;
+      letter-spacing: 0.04em;
+      color: var(--text);
+    }
+    .header-badge {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      background: rgba(245,166,35,0.1);
+      border: 1px solid rgba(245,166,35,0.2);
+      padding: 4px 12px;
+      border-radius: var(--radius-badge);
+    }
+
+    /* ── STATS STRIP ─────────────────────────── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat-item {
+      padding: 20px 28px;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: var(--text-stat);
+      color: var(--primary);
+      line-height: 1;
+      text-shadow: 0 0 20px rgba(245,166,35,0.3);
+    }
+    .stat-label {
+      font-size: var(--text-caption);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 4px;
+    }
+
+    /* ── CHART + ALLOCATIONS ────────────────── */
+    .allocation-section {
+      display: grid;
+      grid-template-columns: 1fr 300px 1fr;
+      gap: 0;
+      padding: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Donut chart column */
+    .chart-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .chart-donut-wrapper { position: relative; }
+    .chart-donut { display: block; }
+
+    /* Allocation columns */
+    .alloc-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: center;
+    }
+    .alloc-col.right { padding-left: 24px; }
+    .alloc-col.left  { padding-right: 24px; }
+
+    .alloc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: border-color 0.3s;
+    }
+    .alloc-card:hover { border-color: var(--border-accent); }
+    .alloc-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .alloc-info { flex: 1; }
+    .alloc-name {
+      font-size: var(--text-caption);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .alloc-pct {
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: var(--text);
+      line-height: 1.1;
+    }
+    .alloc-amount {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    /* ── VESTING TIMELINE ───────────────────── */
+    .vesting-section {
+      padding: 24px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: var(--text-h2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 20px;
+      color: var(--muted);
+    }
+    .vesting-rows { display: flex; flex-direction: column; gap: 12px; }
+    .vesting-row {
+      display: grid;
+      grid-template-columns: 140px 1fr 70px;
+      align-items: center;
+      gap: 12px;
+    }
+    .vesting-label {
+      font-size: var(--text-caption);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .vesting-track {
+      height: 8px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 4px;
+      overflow: visible;
+      position: relative;
+    }
+    .vesting-fill {
+      height: 100%;
+      border-radius: 4px;
+      box-shadow: 0 0 8px rgba(245,166,35,0.35);
+    }
+    .vesting-pct {
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      color: var(--text);
+      text-align: right;
+    }
+
+    /* ── FOOTER ─────────────────────────────── */
+    .footer {
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.6;
+    }
+
+    /* ── ANIMATIONS ─────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .header       { animation: fadeUp 0.5s ease 0.0s both; }
+    .stats-strip  { animation: fadeUp 0.5s ease 0.1s both; }
+    .allocation-section { animation: fadeUp 0.5s ease 0.2s both; }
+    .vesting-section    { animation: fadeUp 0.5s ease 0.3s both; }
+  </style>
+</head>
+<body>
+<div class="infographic">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-logo">
+      <!-- Replace src with actual logo path: <img src="{{LOGO_PATH}}" alt="{{PROJECT_NAME}}"> -->
+      <div class="header-project">{{PROJECT_NAME}}</div>
+    </div>
+    <span class="header-badge">TOKENOMICS</span>
+  </header>
+
+  <!-- STATS STRIP: 3 key metrics across the top -->
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stat-value">{{TOTAL_SUPPLY}}</div>
+      <div class="stat-label">Total Supply</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">{{TGE_PRICE}}</div>
+      <div class="stat-label">TGE Price</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">{{FDV}}</div>
+      <div class="stat-label">FDV</div>
+    </div>
+  </div>
+
+  <!-- ALLOCATION: Left cards | Donut chart | Right cards -->
+  <div class="allocation-section">
+
+    <!-- LEFT ALLOCATIONS -->
+    <div class="alloc-col left">
+      <div class="alloc-card">
+        <div class="alloc-dot" style="background:#F5A623;"></div>
+        <div class="alloc-info">
+          <div class="alloc-name">Community / Airdrop</div>
+          <div class="alloc-pct">35%</div>
+          <div class="alloc-amount">350M {{TOKEN}}</div>
+        </div>
+      </div>
+      <div class="alloc-card">
+        <div class="alloc-dot" style="background:#00E5A0;"></div>
+        <div class="alloc-info">
+          <div class="alloc-name">Ecosystem Fund</div>
+          <div class="alloc-pct">25%</div>
+          <div class="alloc-amount">250M {{TOKEN}}</div>
+        </div>
+      </div>
+      <div class="alloc-card">
+        <div class="alloc-dot" style="background:#00D4FF;"></div>
+        <div class="alloc-info">
+          <div class="alloc-name">Team & Advisors</div>
+          <div class="alloc-pct">20%</div>
+          <div class="alloc-amount">200M {{TOKEN}}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DONUT CHART (SVG inline, r=80, circumference=502.65) -->
+    <!-- Formula: dasharray = pct/100 * 502.65, dashoffset = -cumulative_prev -->
+    <div class="chart-col">
+      <svg viewBox="0 0 200 200" width="260" height="260" class="chart-donut">
+        <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="30"/>
+        <!-- Segment 1: 35% → 175.93 -->
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#F5A623" stroke-width="30"
+          stroke-dasharray="175.93 326.72" stroke-dashoffset="0" transform="rotate(-90 100 100)"/>
+        <!-- Segment 2: 25% → 125.66 -->
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#00E5A0" stroke-width="30"
+          stroke-dasharray="125.66 376.99" stroke-dashoffset="-175.93" transform="rotate(-90 100 100)"/>
+        <!-- Segment 3: 20% → 100.53 -->
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#00D4FF" stroke-width="30"
+          stroke-dasharray="100.53 402.12" stroke-dashoffset="-301.59" transform="rotate(-90 100 100)"/>
+        <!-- Segment 4: 20% → 100.53 -->
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#E63946" stroke-width="30"
+          stroke-dasharray="100.53 402.12" stroke-dashoffset="-402.12" transform="rotate(-90 100 100)"/>
+        <!-- Center -->
+        <circle cx="100" cy="100" r="54" fill="#0D0D0D"/>
+        <text x="100" y="94" text-anchor="middle" font-family="'Inter',sans-serif"
+          font-size="11" fill="#8B8B8B" font-weight="500" letter-spacing="1" text-transform="uppercase">TOKEN</text>
+        <text x="100" y="116" text-anchor="middle" font-family="'Bebas Neue',sans-serif"
+          font-size="26" fill="#FFFFFF" letter-spacing="2">{{TICKER}}</text>
+      </svg>
+    </div>
+
+    <!-- RIGHT ALLOCATIONS -->
+    <div class="alloc-col right">
+      <div class="alloc-card">
+        <div class="alloc-dot" style="background:#E63946;"></div>
+        <div class="alloc-info">
+          <div class="alloc-name">Private Sale</div>
+          <div class="alloc-pct">12%</div>
+          <div class="alloc-amount">120M {{TOKEN}}</div>
+        </div>
+      </div>
+      <div class="alloc-card">
+        <div class="alloc-dot" style="background:#9B5DE5;"></div>
+        <div class="alloc-info">
+          <div class="alloc-name">Public Sale / IDO</div>
+          <div class="alloc-pct">5%</div>
+          <div class="alloc-amount">50M {{TOKEN}}</div>
+        </div>
+      </div>
+      <div class="alloc-card">
+        <div class="alloc-dot" style="background:#FFD700;"></div>
+        <div class="alloc-info">
+          <div class="alloc-name">Liquidity / Reserve</div>
+          <div class="alloc-pct">8%</div>
+          <div class="alloc-amount">80M {{TOKEN}}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- VESTING SCHEDULE -->
+  <div class="vesting-section">
+    <div class="section-title">
+      <i class="ph ph-lock" style="font-size:16px; color:var(--primary); margin-right:8px; vertical-align:middle;"></i>
+      Vesting Schedule
+    </div>
+    <div class="vesting-rows">
+      <div class="vesting-row">
+        <div class="vesting-label">Community</div>
+        <div class="vesting-track">
+          <div class="vesting-fill" style="width:35%; background:linear-gradient(90deg,#F5A623,#E8943A);"></div>
+        </div>
+        <div class="vesting-pct">TGE 10% → 12M</div>
+      </div>
+      <div class="vesting-row">
+        <div class="vesting-label">Ecosystem</div>
+        <div class="vesting-track">
+          <div class="vesting-fill" style="width:20%; background:linear-gradient(90deg,#00E5A0,#00C87A);"></div>
+        </div>
+        <div class="vesting-pct">6M cliff → 24M</div>
+      </div>
+      <div class="vesting-row">
+        <div class="vesting-label">Team</div>
+        <div class="vesting-track">
+          <div class="vesting-fill" style="width:10%; background:linear-gradient(90deg,#00D4FF,#0099CC);"></div>
+        </div>
+        <div class="vesting-pct">12M cliff → 36M</div>
+      </div>
+      <div class="vesting-row">
+        <div class="vesting-label">Private Sale</div>
+        <div class="vesting-track">
+          <div class="vesting-fill" style="width:25%; background:linear-gradient(90deg,#E63946,#C22030);"></div>
+        </div>
+        <div class="vesting-pct">TGE 5% → 18M</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>{{FOOTER_SOURCE}} • {{DATE}}</span>
+    <span>Not financial advice. DYOR.</span>
+  </footer>
+
+</div>
+</body>
+</html>
