@@ -8,21 +8,19 @@ Outputs are indistinguishable from hand-crafted designer work: distinctive typog
 
 ## Installation
 
-### Claude Code (recommended)
-
-```bash
-claude skills install https://github.com/aizzaku/create-infographics
-```
-
-This copies the skill into `~/.claude/skills/create-infographics/` and makes it available in all projects automatically.
-
-### Manual
-
 Clone the repository into your Claude skills directory:
 
+**Global** (available in all projects):
 ```bash
 git clone https://github.com/aizzaku/create-infographics ~/.claude/skills/create-infographics
 ```
+
+**Project-local** (this project only):
+```bash
+git clone https://github.com/aizzaku/create-infographics .claude/skills/create-infographics
+```
+
+Claude Code automatically discovers the skill on next launch — no restart or registration needed.
 
 ### PNG / PDF export (optional)
 
