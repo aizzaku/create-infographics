@@ -8,19 +8,29 @@ Outputs are indistinguishable from hand-crafted designer work: distinctive typog
 
 ## Installation
 
-Clone the repository into your Claude skills directory:
-
-**Global** (available in all projects):
-```bash
-git clone https://github.com/aizzaku/create-infographics ~/.claude/skills/create-infographics
-```
+### Via npx (recommended)
 
 **Project-local** (this project only):
 ```bash
-git clone https://github.com/aizzaku/create-infographics .claude/skills/create-infographics
+npx skills add aizzaku/create-infographics
 ```
 
-Claude Code automatically discovers the skill on next launch — no restart or registration needed.
+**Global** (available in all projects):
+```bash
+npx skills add aizzaku/create-infographics -g
+```
+
+The CLI ([vercel-labs/skills](https://github.com/vercel-labs/skills)) installs to `.claude/skills/` or `~/.claude/skills/` automatically. Claude Code discovers the skill on next launch — no restart or registration needed.
+
+### Manual
+
+```bash
+# Global
+git clone https://github.com/aizzaku/create-infographics ~/.claude/skills/create-infographics
+
+# Project-local
+git clone https://github.com/aizzaku/create-infographics .claude/skills/create-infographics
+```
 
 ### PNG / PDF export (optional)
 
