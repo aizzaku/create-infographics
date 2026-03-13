@@ -159,11 +159,46 @@ def export_pdf(html_path: str, output_path: str, width: int = 1100, serve: bool 
     print(f"PDF exported: {output_path}")
 
 
+def export_svg(pdf_path: str, output_path: str) -> bool:
+    """
+    Convert PDF to SVG for Figma / Illustrator / Affinity import.
+
+    Tries Inkscape first (better output), falls back to pdf2svg.
+    Returns True if successful, False if neither tool is available.
+    """
+    import shutil
+    import subprocess
+
+    if shutil.which("inkscape"):
+        result = subprocess.run(
+            ["inkscape", "--export-type=svg", pdf_path, "-o", output_path],
+            capture_output=True
+        )
+        if result.returncode == 0:
+            print(f"SVG exported: {output_path}  (via Inkscape — shapes + text as paths)")
+            return True
+
+    if shutil.which("pdf2svg"):
+        result = subprocess.run(
+            ["pdf2svg", pdf_path, output_path],
+            capture_output=True
+        )
+        if result.returncode == 0:
+            print(f"SVG exported: {output_path}  (via pdf2svg — shapes + text as paths)")
+            return True
+
+    print("SVG export skipped — neither Inkscape nor pdf2svg found.")
+    print("  Figma alternative: drag the .pdf directly into Figma (File → Place Image, or just drop it).")
+    print("  Install Inkscape:  https://inkscape.org/release/  or  brew install inkscape")
+    print("  Install pdf2svg:   brew install pdf2svg  /  apt install pdf2svg")
+    return False
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Export HTML infographic to PNG/PDF")
+    parser = argparse.ArgumentParser(description="Export HTML infographic to PNG/PDF/SVG")
     parser.add_argument("--input",  "-i", required=True,  help="Path to HTML infographic file")
     parser.add_argument("--output", "-o", required=True,  help="Output path (no extension needed for format=all)")
-    parser.add_argument("--format", "-f", default="all",  choices=["png", "pdf", "all"], help="Export format (default: all)")
+    parser.add_argument("--format", "-f", default="all",  choices=["png", "pdf", "svg", "all"], help="Export format (default: all)")
     parser.add_argument("--width",  "-w", type=int, default=1100, help="Canvas width px (default: 1100)")
     parser.add_argument("--scale",  "-s", type=int, default=2,    help="DPI scale for PNG (default: 2 = retina)")
     parser.add_argument("--serve",        action="store_true", default=True,
@@ -182,15 +217,20 @@ def main():
         png_path = str(output_base) + ".png"
         export_png(args.input, png_path, args.width, args.scale, serve=args.serve)
 
-    if args.format in ("pdf", "all"):
+    if args.format in ("pdf", "svg", "all"):
         pdf_path = str(output_base) + ".pdf"
         export_pdf(args.input, pdf_path, args.width, serve=args.serve)
+
+    if args.format in ("svg", "all"):
+        svg_path = str(output_base) + ".svg"
+        export_svg(pdf_path, svg_path)
 
     if args.format == "all":
         print(f"\nAll formats exported:")
         print(f"  HTML: {args.input}")
         print(f"  PNG:  {str(output_base)}.png")
         print(f"  PDF:  {str(output_base)}.pdf")
+        print(f"  SVG:  {str(output_base)}.svg  ← open in Figma / Illustrator / Affinity")
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@
 
 | Chart Type | Method | When |
 |-----------|--------|------|
-| Donut / Pie | Inline SVG | Token allocation, any % breakdown ≤ 8 segments |
+| Pie (full) | Inline SVG | Token allocation, any % breakdown ≤ 8 segments |
 | Horizontal bar | Pure CSS | Vesting schedule, comparative bars, allocation strips |
 | Vertical bar | Chart.js | Multi-period comparisons, time-series bars |
 | Line chart | Chart.js | Price over time, growth curves, trend lines |
@@ -16,95 +16,109 @@
 
 ---
 
-## 1. SVG Donut Chart (Token Allocation — Your Most-Used)
+## 1. SVG Pie Chart (Token Allocation — Your Most-Used)
 
 This is the central chart in 35% of your infographics. Build it inline as SVG so it works in PNG/PDF with zero dependencies.
 
-### How SVG Stroke-Dasharray Works
-- Circle circumference = `2 × π × r` — for r=80: **502.65**
-- Each segment: `dasharray = "portion_of_502 rest_of_502"` and `dashoffset = -cumulative_offset`
+**No donut hole. Full solid wedges.**
 
-### Template (4-segment example)
+### Color Rule
+
+**Never use arbitrary rainbow colors.** Two options, in priority order:
+
+1. **Primary shades (preferred):** Derive all segment colors from HSL shades of the brand primary.
+   Example for amber `#F5A623` (HSL 37°, 91%, 55%):
+   ```
+   Shade 1 (lightest): hsl(37, 85%, 70%)  → #F7C26B
+   Shade 2 (primary):  hsl(37, 91%, 55%)  → #F5A623  ← fullest
+   Shade 3:            hsl(37, 76%, 40%)  → #C4841A
+   Shade 4 (darkest):  hsl(37, 75%, 27%)  → #7A5211
+   ```
+   Spread evenly across lightness — always enough contrast between adjacent segments.
+
+2. **Brand complementary (max 2–3 hues):** Only if the brand has defined secondary/accent colors. Never invent colors not in the brand palette. Never exceed 3 distinct hues total — fill remaining segments with shades.
+
+### How SVG Pie Wedges Work
+
+Each segment is a filled `<path>` wedge from the center:
+```
+M cx cy          — move to center
+L x1 y1          — line to arc start point
+A r r 0 [large-arc] 1 x2 y2   — arc to end point (clockwise)
+Z                — close back to center
+```
+
+Point on circle at angle θ (0° = right, increases clockwise in SVG):
+```
+x = cx + r * cos(θ * π/180)
+y = cy + r * sin(θ * π/180)
+```
+
+Start angle: **−90°** (12 o'clock). Add each segment's degrees (`pct/100 * 360`) to advance.
+`large-arc-flag` = `1` if segment > 50%, else `0`.
+
+### Segment Calculator
+
+```
+segment_degrees  = percentage / 100 * 360
+start_angle      = -90 + (sum of all previous segments' degrees)
+end_angle        = start_angle + segment_degrees
+x1 = 100 + 90 * cos(start_angle * π/180)
+y1 = 100 + 90 * sin(start_angle * π/180)
+x2 = 100 + 90 * cos(end_angle * π/180)
+y2 = 100 + 90 * sin(end_angle * π/180)
+large-arc-flag   = segment_degrees > 180 ? 1 : 0
+```
+
+### Template (4-segment example — amber primary shades)
+
+Segments: Community 35%, Ecosystem 25%, Team 20%, Private Sale 20%
 
 ```html
-<div class="chart-donut-wrapper">
-  <svg viewBox="0 0 200 200" width="280" height="280" class="chart-donut">
-    <!-- Track (background ring) -->
-    <circle cx="100" cy="100" r="80"
-      fill="none"
-      stroke="rgba(255,255,255,0.06)"
-      stroke-width="28"/>
+<div class="chart-pie-wrapper">
+  <svg viewBox="0 0 200 200" width="280" height="280" class="chart-pie">
+    <!-- Thin separator gaps between segments via stroke -->
+    <circle cx="100" cy="100" r="90" fill="#0D0D0D" stroke="none"/>
 
-    <!-- Segment 1: Community/Airdrop — e.g. 35% = 175.9 of 502.65 -->
-    <circle cx="100" cy="100" r="80"
-      fill="none"
-      stroke="#F5A623"
-      stroke-width="28"
-      stroke-dasharray="175.9 326.75"
-      stroke-dashoffset="0"
-      stroke-linecap="butt"
-      transform="rotate(-90 100 100)"/>
+    <!-- Segment 1: Community/Airdrop — 35% → 126° → start -90°, end 36° -->
+    <!-- x1=100.0,y1=10.0 → x2=172.8,y2=152.9 -->
+    <path d="M 100 100 L 100.0 10.0 A 90 90 0 0 1 172.8 152.9 Z"
+      fill="#F7C26B" stroke="#0D0D0D" stroke-width="1.5"/>
 
-    <!-- Segment 2: Ecosystem Fund — e.g. 25% = 125.66 of 502.65 -->
-    <circle cx="100" cy="100" r="80"
-      fill="none"
-      stroke="#00E5A0"
-      stroke-width="28"
-      stroke-dasharray="125.66 376.99"
-      stroke-dashoffset="-175.9"
-      stroke-linecap="butt"
-      transform="rotate(-90 100 100)"/>
+    <!-- Segment 2: Ecosystem Fund — 25% → 90° → start 36°, end 126° -->
+    <!-- x2=47.1,y2=172.8 -->
+    <path d="M 100 100 L 172.8 152.9 A 90 90 0 0 1 47.1 172.8 Z"
+      fill="#F5A623" stroke="#0D0D0D" stroke-width="1.5"/>
 
-    <!-- Segment 3: Team — e.g. 20% = 100.53 -->
-    <circle cx="100" cy="100" r="80"
-      fill="none"
-      stroke="#00D4FF"
-      stroke-width="28"
-      stroke-dasharray="100.53 402.12"
-      stroke-dashoffset="-301.56"
-      stroke-linecap="butt"
-      transform="rotate(-90 100 100)"/>
+    <!-- Segment 3: Team — 20% → 72° → start 126°, end 198° -->
+    <!-- x2=14.4,y2=72.2 -->
+    <path d="M 100 100 L 47.1 172.8 A 90 90 0 0 1 14.4 72.2 Z"
+      fill="#C4841A" stroke="#0D0D0D" stroke-width="1.5"/>
 
-    <!-- Segment 4: Private Sale — e.g. 20% = 100.53 -->
-    <circle cx="100" cy="100" r="80"
-      fill="none"
-      stroke="#E63946"
-      stroke-width="28"
-      stroke-dasharray="100.53 402.12"
-      stroke-dashoffset="-402.12"
-      stroke-linecap="butt"
-      transform="rotate(-90 100 100)"/>
-
-    <!-- Center logo/text -->
-    <circle cx="100" cy="100" r="52" fill="#0D0D0D"/>
-    <!-- Place project logo here via <image> or abbreviation text -->
-    <text x="100" y="96" text-anchor="middle"
-      font-family="'Bebas Neue', sans-serif"
-      font-size="14" fill="#8B8B8B" letter-spacing="1">TOKEN</text>
-    <text x="100" y="114" text-anchor="middle"
-      font-family="'Bebas Neue', sans-serif"
-      font-size="22" fill="#FFFFFF">$TKN</text>
+    <!-- Segment 4: Private Sale — 20% → 72° → start 198°, end 270° → closes to 100,10 -->
+    <path d="M 100 100 L 14.4 72.2 A 90 90 0 0 1 100.0 10.0 Z"
+      fill="#7A5211" stroke="#0D0D0D" stroke-width="1.5"/>
   </svg>
 
   <!-- Legend -->
   <div class="chart-legend">
     <div class="legend-item">
-      <span class="legend-dot" style="background:#F5A623;"></span>
+      <span class="legend-dot" style="background:#F7C26B;"></span>
       <span class="legend-label">COMMUNITY / AIRDROP</span>
       <span class="legend-pct">35%</span>
     </div>
     <div class="legend-item">
-      <span class="legend-dot" style="background:#00E5A0;"></span>
+      <span class="legend-dot" style="background:#F5A623;"></span>
       <span class="legend-label">ECOSYSTEM FUND</span>
       <span class="legend-pct">25%</span>
     </div>
     <div class="legend-item">
-      <span class="legend-dot" style="background:#00D4FF;"></span>
+      <span class="legend-dot" style="background:#C4841A;"></span>
       <span class="legend-label">TEAM & ADVISORS</span>
       <span class="legend-pct">20%</span>
     </div>
     <div class="legend-item">
-      <span class="legend-dot" style="background:#E63946;"></span>
+      <span class="legend-dot" style="background:#7A5211;"></span>
       <span class="legend-label">PRIVATE SALE</span>
       <span class="legend-pct">20%</span>
     </div>
@@ -115,7 +129,7 @@ This is the central chart in 35% of your infographics. Build it inline as SVG so
 ### CSS
 
 ```css
-.chart-donut-wrapper {
+.chart-pie-wrapper {
   display: flex;
   align-items: center;
   gap: 32px;
@@ -156,14 +170,6 @@ This is the central chart in 35% of your infographics. Build it inline as SVG so
   font-size: 18px;
   color: var(--text);
 }
-```
-
-### Segment Calculator
-
-Given total circumference = 502.65 (r=80):
-```
-dasharray_length = percentage / 100 * 502.65
-dashoffset       = -(sum of all previous segments' dasharray_lengths)
 ```
 
 ---

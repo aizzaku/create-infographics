@@ -3,46 +3,50 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "Create an infographic for Twitter showing the top 5 programming languages in 2025 by usage: Python 29.8%, JavaScript 24.5%, TypeScript 12.1%, Java 9.7%, Rust 4.2%. Make it bold and modern — I want it to pop in a feed.",
-      "expected_output": "A Twitter-sized (1200px wide) infographic as HTML + PNG showing the 5 languages with their percentages. Bold, distinctive design with horizontal bars or visual elements for each language. Phosphor icons used (no emojis). All 5 languages and all 5 percentages visible.",
+      "prompt": "Create a dark-mode infographic showing a startup's funding timeline. Company: NovaPay. Milestones: Jan 2020 — Founded, $0. Mar 2021 — Pre-seed, $500K from angel investors. Nov 2021 — Seed, $3.2M led by Sequoia. Aug 2022 — Series A, $18M led by a16z. Feb 2024 — Series B, $55M led by Tiger Global. Format it for LinkedIn.",
+      "expected_output": "A single self-contained HTML file containing a dark-background timeline infographic. All 5 milestones with exact dates and dollar amounts present. LinkedIn dimensions (1200x627px). No fabricated data.",
       "files": [],
-      "expectations": [
+      "assertions": [
         "An HTML file is produced containing the infographic",
-        "All five programming languages are present: Python, JavaScript, TypeScript, Java, Rust",
-        "All five percentage values are present: 29.8%, 24.5%, 12.1%, 9.7%, 4.2%",
-        "The design uses a distinctive display font (not Inter, Roboto, or Arial)",
-        "Phosphor Icons CDN script is included — no emojis used as UI icons",
-        "The infographic width is set to 1200px (Twitter platform size) or explicitly uses Twitter dimensions",
-        "A PNG file is produced"
+        "All five funding milestones are present: Founded ($0), Pre-seed ($500K), Seed ($3.2M), Series A ($18M), Series B ($55M)",
+        "All five dates/periods are represented: Jan 2020, Mar 2021, Nov 2021, Aug 2022, Feb 2024",
+        "All three investor names appear: Sequoia, a16z, Tiger Global (attributed to the correct rounds)",
+        "The infographic uses a dark background (dark mode default when not specified otherwise)",
+        "The design uses a distinctive display font — NOT Inter, Roboto, Arial, or Helvetica as the heading/display font",
+        "Phosphor Icons CDN script is included in the HTML",
+        "No dollar amounts, percentages, or statistics appear that were not provided in the prompt (no fabricated data)"
       ]
     },
     {
       "id": 2,
-      "prompt": "Make a one-pager infographic explaining how our SaaS product 'Dataflow' works. Our brand color is #00C9A7. Steps: 1) Sign up & verify email, 2) Connect your data sources (CSV, API, or database), 3) Our AI analyzes and structures your data automatically, 4) Customize your dashboard with drag-and-drop, 5) Invite your team & set permissions. Keep it clean and professional — this is for our website.",
-      "expected_output": "A branded how-it-works infographic featuring the company name 'Dataflow', the brand teal color #00C9A7 (or close), and all 5 numbered steps. Clean, professional look for website use.",
+      "prompt": "Make a token economics infographic for our DeFi project 'ArcDAO'. Token: ARC. Total supply: 1,000,000,000. Allocation: Team 15%, Investors 20%, Community Rewards 35%, Treasury 20%, Liquidity 10%. Brand color: #7C3AED (purple). Make it feel premium and crypto-native.",
+      "expected_output": "A self-contained HTML infographic with a donut/pie chart or visual breakdown showing the 5 token allocations with exact percentages. Brand color #7C3AED drives the palette. Crypto-native dark aesthetic.",
       "files": [],
-      "expectations": [
+      "assertions": [
         "An HTML file is produced containing the infographic",
-        "The company name 'Dataflow' appears prominently in the infographic",
-        "The brand color #00C9A7 (or a close teal approximation) is used in the design",
-        "All five steps are present with their content (sign up, connect data sources, AI analysis, dashboard customization, invite team)",
-        "The steps are presented as a numbered sequence (1 through 5)",
-        "The design has a light or neutral background (not dark mode) appropriate for a website",
-        "A PNG file is produced"
+        "All five allocation categories are present: Team (15%), Investors (20%), Community Rewards (35%), Treasury (20%), Liquidity (10%)",
+        "The total supply '1,000,000,000' or '1B' appears in the infographic",
+        "The brand color #7C3AED (purple) or a close approximation is used as the primary accent color",
+        "The token name 'ARC' and project name 'ArcDAO' both appear in the infographic",
+        "The five percentages sum to 100% visually (chart or table representation is complete and internally consistent)",
+        "No allocation percentages, amounts, or vesting terms appear that were not provided in the prompt (no fabricated data)",
+        "The design uses a distinctive display font — NOT Inter, Roboto, Arial, or Helvetica as the heading/display font"
       ]
     },
     {
       "id": 3,
-      "prompt": "I need an infographic comparing remote work vs in-office work. Data: Remote — 22% higher self-reported productivity, saves avg 4.5 hrs/week commuting, 67% report collaboration challenges, 38% feel isolated. In-office — 31% more impromptu collaboration, 44% report more distractions, 28% lower stress from commuting. Use a light, editorial look. No dark background please.",
-      "expected_output": "A side-by-side comparison infographic with two columns (Remote vs In-Office). Light background. All key statistics present: 22%, 4.5 hrs, 67%, 38%, 31%, 44%, 28%. Clean editorial aesthetic.",
+      "prompt": "I need a shareable infographic summarizing global remote work stats for 2024. Data: 16% of companies are fully remote worldwide. 62% of workers aged 22-65 work remotely at least occasionally. Top reasons people prefer remote: No commute 73%, Flexible schedule 68%, Better work-life balance 61%, Cost savings 42%. Productivity: 77% of remote workers report being more productive. Challenges: 20% struggle with loneliness, 17% with collaboration, 15% with communication. Use a professional dark look.",
+      "expected_output": "A dark-themed HTML infographic summarizing the remote work stats. All statistics faithfully reproduced. Data-story archetype with clear stat hierarchy.",
       "files": [],
-      "expectations": [
+      "assertions": [
         "An HTML file is produced containing the infographic",
-        "The infographic has a two-column or side-by-side structure contrasting remote and in-office work",
-        "All seven statistics are present: 22%, 4.5 hrs, 67%, 38%, 31%, 44%, 28%",
-        "The background is light (white, off-white, or light gray) — not dark",
-        "Both 'Remote' and 'In-Office' (or equivalent labels) are clearly labeled as separate sections",
-        "A PNG file is produced"
+        "The top-level stats are present: 16% (fully remote companies), 62% (workers remote at least occasionally), 77% (productivity improvement)",
+        "All four remote preference reasons with correct percentages: No commute 73%, Flexible schedule 68%, Better work-life balance 61%, Cost savings 42%",
+        "All three challenge stats with correct percentages: Loneliness 20%, Collaboration 17%, Communication 15%",
+        "The background is dark (dark mode)",
+        "The design uses a distinctive display font — NOT Inter, Roboto, Arial, or Helvetica as the heading/display font",
+        "Phosphor Icons CDN script is included in the HTML",
+        "No statistics, percentages, or figures appear that were not provided in the prompt (no fabricated data or rounding)"
       ]
     }
   ]
