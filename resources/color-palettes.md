@@ -14,6 +14,22 @@
 
 ---
 
+## Per-Type Signature Palettes
+
+When the content type is known, use this as your starting palette before any brand extraction:
+
+| Type | Primary | Secondary | Background |
+|------|---------|-----------|------------|
+| **token-economics** | amber `#E99A00` | blue `#29B7FF` | `#080808` |
+| **crypto-explainer** | pink `#F59AC3` or purple `#A764F6` | gold `#F4BC2F` | `#080808` |
+| **game-overview** | amber `#F6A91A` or purple `#A94CFF` | complementary | `#070707` |
+| **ecosystem** | teal `#00E88A` | purple `#B98AFF` | `#080808` |
+| **airdrop-guide** | amber `#E79A00` | blue `#61B8FF` | `#080808` |
+
+Brand colors override these defaults — extract from the project logo first. Use the type palette only when the brand provides no strong color direction.
+
+---
+
 ## Brand Distinction Strategy
 
 To make an infographic stand out, **prioritize brand identity over industry norms**. 
@@ -100,7 +116,7 @@ border:     #1E1E3A
 background: #0A0A0A
 primary:    #E63946  (vivid red)
 accent:     #FF2D2D  (bright red)
-secondary:  #FFD700  (gold)
+secondary:  #E99A00  (amber gold — canonical)
 text:       #FFFFFF
 muted:      #9A9A9A
 border:     #2D1515
@@ -115,7 +131,7 @@ border:     #2D1515
 background: #0D0D0D
 primary:    #E91E8C  (hot pink)
 secondary:  #FF69B4  (soft pink)
-accent:     #FFD700  (gold)
+accent:     #E99A00  (amber gold — canonical)
 text:       #FFFFFF
 muted:      #8B8B8B
 border:     #2D1A26
@@ -146,7 +162,7 @@ glow:       #00E5A0
 background: #0D0D12
 primary:    #9B5DE5  (purple)
 secondary:  #E535AB  (magenta)
-accent:     #FFD700  (gold)
+accent:     #E99A00  (amber gold — canonical)
 text:       #FFFFFF
 muted:      #A0A0B0
 border:     #1E1E28
@@ -192,7 +208,7 @@ border:     #2A2018
 background: #0A1628
 primary:    #00E5C7  (cyan)
 secondary:  #FF9500  (orange)
-accent:     #FFD700  (gold)
+accent:     #E99A00  (amber gold — canonical)
 text:       #FFFFFF
 muted:      #3A5A7C
 border:     #1A3A5C

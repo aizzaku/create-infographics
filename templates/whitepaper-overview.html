@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{PROJECT_NAME}} — Whitepaper Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #080808;
+    --bg-card:      #0F0F0F;
+    --bg-section:   #111111;
+    --primary:      #4ECBFF;
+    --primary-rgb:  78,203,255;
+    --secondary:    #B98AFF;
+    --secondary-rgb:185,138,255;
+    --accent:       #00E88A;
+    --accent-rgb:   0,232,138;
+    --text:         #FFFFFF;
+    --muted:        #888888;
+    --border:       rgba(255,255,255,0.08);
+    --border-faint: rgba(255,255,255,0.04);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; width: 1080px;
+      margin: 0 auto; }
+
+  /* HERO */
+  .hero { display: grid; grid-template-columns: 1fr 320px; gap: 32px; padding: 40px 48px 36px; background: linear-gradient(135deg, rgba(78,203,255,0.05) 0%, transparent 60%); border-bottom: 2px solid var(--primary); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -60px; right: 180px; width: 280px; height: 280px; border-radius: 50%; background: radial-gradient(circle, rgba(78,203,255,0.08) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 3px; background: rgba(78,203,255,0.10); border: 1px solid rgba(78,203,255,0.28); font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--primary); margin-bottom: 14px; }
+  .hero-eyebrow span { width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: 62px; letter-spacing: 2px; line-height: 0.92; color: var(--text); margin-bottom: 18px; }
+  .hero-title em { color: var(--primary); font-style: normal; }
+  .hero-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .hero-bullets li { display: flex; align-items: flex-start; gap: 8px; font-size: 11.5px; font-weight: 500; color: var(--muted); line-height: 1.4; }
+  .hero-bullets li::before { content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0; }
+  .hero-card { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.22); padding: 20px 18px; align-self: start; }
+  .hero-card-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+  .hero-kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 14px; }
+  .hero-kpi { background: rgba(255,255,255,0.03); padding: 10px 11px; border: 1px solid var(--border-faint); }
+  .hero-kpi-val { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 1px; color: var(--primary); line-height: 1; }
+  .hero-kpi-val.sec { color: var(--secondary); }
+  .hero-kpi-val.acc { color: var(--accent); }
+  .hero-kpi-lbl { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+  .hero-note { font-size: 10px; font-weight: 500; color: var(--muted); line-height: 1.5; padding-top: 10px; border-top: 1px solid var(--border); }
+
+  /* STAT STRIP */
+  .stat-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; padding: 20px 48px 28px; }
+  .stat-box { background: var(--bg-card); border: 1px solid var(--border); padding: 12px 14px; position: relative; }
+  .stat-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--primary); }
+  .stat-box.sec::before { background: var(--secondary); }
+  .stat-box.acc::before { background: var(--accent); }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .stat-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .stat-sub { font-size: 9px; color: var(--muted); margin-top: 2px; }
+
+  /* SECTION LABEL */
+  .section-label { display: flex; align-items: center; gap: 14px; font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); padding: 0 48px 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ARROW CONNECTOR */
+  .arrow-connector { display: flex; align-items: center; gap: 10px; padding: 10px 48px 20px; }
+  .arrow-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(var(--primary-rgb),0.4), transparent); }
+  .arrow-icon { display: flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); padding: 4px 12px; border-radius: 3px; background: rgba(var(--primary-rgb),0.08); border: 1px solid rgba(var(--primary-rgb),0.22); }
+
+  /* PROBLEM / SOLUTION PANELS */
+  .prob-sol-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; padding: 0 48px 28px; }
+  .prob-panel { background: rgba(255,107,107,0.04); border: 1.5px solid rgba(255,107,107,0.22); padding: 18px 20px; }
+  .sol-panel  { background: rgba(0,232,138,0.04);   border: 1.5px solid rgba(0,232,138,0.22);   padding: 18px 20px; }
+  .ps-header { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+  .prob-panel .ps-header { color: #FF6B6B; }
+  .sol-panel  .ps-header { color: var(--accent); }
+  .ps-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .ps-list li { display: flex; align-items: flex-start; gap: 7px; font-size: 11.5px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .ps-list li::before { content: '✗'; color: #FF6B6B; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
+  .sol-panel .ps-list li::before { content: '✓'; color: var(--accent); }
+  .ps-list li span { color: var(--muted); }
+
+  /* ARCHITECTURE FLOW */
+  .flow-row { display: flex; align-items: stretch; gap: 2px; padding: 0 48px 28px; }
+  .flow-node { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.20); padding: 14px 14px; flex: 1; display: flex; flex-direction: column; gap: 5px; }
+  .flow-node.sec { border-color: rgba(var(--secondary-rgb),0.22); }
+  .flow-node.acc { border-color: rgba(var(--accent-rgb),0.22); }
+  .fn-layer { font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
+  .flow-node.sec .fn-layer { color: var(--secondary); }
+  .flow-node.acc .fn-layer { color: var(--accent); }
+  .fn-title { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 1px; color: var(--text); line-height: 1; }
+  .fn-desc { font-size: 10px; font-weight: 500; color: var(--muted); line-height: 1.4; }
+  .flow-arrow { display: flex; align-items: center; color: var(--primary); font-size: 18px; padding: 0 4px; opacity: 0.6; flex-shrink: 0; }
+
+  /* DENSE TABLE */
+  .table-wrap { margin: 0 48px 28px; border: 1px solid var(--border); overflow: hidden; }
+  .dense-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .dense-table thead tr { background: rgba(var(--primary-rgb),0.07); border-bottom: 1px solid rgba(var(--primary-rgb),0.22); }
+  .dense-table thead th { padding: 9px 12px; text-align: left; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
+  .dense-table.sec-h thead tr { background: rgba(var(--secondary-rgb),0.07); border-bottom-color: rgba(var(--secondary-rgb),0.22); }
+  .dense-table.sec-h thead th { color: var(--secondary); }
+  .dense-table tbody tr { border-bottom: 1px solid var(--border-faint); }
+  .dense-table tbody tr:last-child { border-bottom: none; }
+  .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .dense-table td { padding: 7px 12px; vertical-align: middle; font-weight: 500; }
+  .val-blue   { color: var(--primary);   font-weight: 700; }
+  .val-purple { color: var(--secondary); font-weight: 700; }
+  .val-green  { color: var(--accent);    font-weight: 700; }
+  .val-muted  { color: var(--muted);     font-weight: 500; }
+  .val-text   { color: var(--text);      font-weight: 500; }
+  .p-tag { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+  .p-blue   { background: rgba(78,203,255,0.10);  color: var(--primary);   border: 1px solid rgba(78,203,255,0.25); }
+  .p-purple { background: rgba(185,138,255,0.10); color: var(--secondary); border: 1px solid rgba(185,138,255,0.25); }
+  .p-green  { background: rgba(0,232,138,0.10);   color: var(--accent);    border: 1px solid rgba(0,232,138,0.25); }
+  .p-amber  { background: rgba(255,209,102,0.10); color: #FFD166;          border: 1px solid rgba(255,209,102,0.25); }
+  .p-red    { background: rgba(255,107,107,0.10); color: #FF6B6B;          border: 1px solid rgba(255,107,107,0.25); }
+
+  /* BULLET PANELS */
+  .panel-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 48px 28px; }
+  .bullet-panel { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.18); padding: 16px 18px; }
+  .bullet-panel.sec { border-color: rgba(var(--secondary-rgb),0.18); }
+  .bp-header { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--primary); padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+  .bullet-panel.sec .bp-header { color: var(--secondary); }
+  .bullet-panel ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .bullet-panel li { display: flex; align-items: flex-start; gap: 7px; font-size: 11.5px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .bullet-panel li::before { content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0; }
+  .bullet-panel.sec li::before { color: var(--secondary); }
+  .bullet-panel li span { color: var(--muted); }
+
+  /* CALLOUT STRIP */
+  .callout-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; padding: 0 48px 32px; }
+  .callout-box { padding: 14px 16px; border: 1px solid var(--border); border-left: 3px solid var(--primary); background: var(--bg-section); }
+  .callout-box.sec { border-left-color: var(--secondary); }
+  .callout-box.acc { border-left-color: var(--accent); }
+  .cb-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 6px; }
+  .callout-box.sec .cb-lbl { color: var(--secondary); }
+  .callout-box.acc .cb-lbl { color: var(--accent); }
+  .cb-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .cb-desc { font-size: 11px; font-weight: 500; color: var(--muted); line-height: 1.45; }
+
+  /* FOOTER */
+  .footer { display: flex; align-items: center; justify-content: space-between; padding: 18px 48px; border-top: 1px solid var(--border); background: rgba(var(--primary-rgb),0.02); }
+  .footer-left { display: flex; align-items: center; gap: 12px; }
+  .footer-logo { width: 30px; height: 30px; border-radius: 5px; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 14px; color: #000; }
+  .footer-name { font-size: 12px; font-weight: 700; color: var(--text); letter-spacing: 1px; }
+  .footer-tag  { font-size: 9px; color: var(--muted); font-weight: 500; }
+  .footer-right { display: flex; align-items: center; gap: 14px; }
+  .f-badge { padding: 3px 10px; border-radius: 3px; border: 1px solid var(--border); font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .footer-date { font-size: 10px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span></span>WHITEPAPER SUMMARY</div>
+      <div class="hero-title"><em>{{PROJECT_NAME}}</em><br>EXPLAINED</div>
+      <ul class="hero-bullets">
+        <li>{{PROTOCOL_CATEGORY}} protocol built to solve {{CORE_PROBLEM}} in the {{MARKET_SEGMENT}} sector</li>
+        <li>Key innovation: {{KEY_INNOVATION}} — differentiated from competitors via {{DIFFERENTIATOR}}</li>
+        <li>{{TOKEN_SUPPLY}} token supply · {{BLOCKCHAIN}} · audited by {{AUDITOR_1}} + {{AUDITOR_2}}</li>
+        <li>Whitepaper v{{WP_VERSION}} published {{WP_DATE}} · {{WP_PAGES}} pages</li>
+      </ul>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-lbl">Protocol Snapshot</div>
+      <div class="hero-kpi-grid">
+        <div class="hero-kpi">
+          <div class="hero-kpi-val">{{TOKEN_SUPPLY}}</div>
+          <div class="hero-kpi-lbl">Max Supply</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val sec">{{CONSENSUS}}</div>
+          <div class="hero-kpi-lbl">Consensus</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val acc">{{TPS}}</div>
+          <div class="hero-kpi-lbl">Target TPS</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val">{{FINALITY}}</div>
+          <div class="hero-kpi-lbl">Finality</div>
+        </div>
+      </div>
+      <div class="hero-note">v{{WP_VERSION}} · {{BLOCKCHAIN}} · {{LAUNCH_STATUS}}</div>
+    </div>
+  </div>
+
+  <!-- STAT STRIP -->
+  <div class="stat-strip">
+    <div class="stat-box">
+      <div class="stat-val">{{TOKEN_SUPPLY}}</div>
+      <div class="stat-lbl">Token Supply</div>
+      <div class="stat-sub">Maximum cap</div>
+    </div>
+    <div class="stat-box acc">
+      <div class="stat-val">{{TPS}}</div>
+      <div class="stat-lbl">Target TPS</div>
+      <div class="stat-sub">Throughput target</div>
+    </div>
+    <div class="stat-box sec">
+      <div class="stat-val">{{AUDITS}}</div>
+      <div class="stat-lbl">Security Audits</div>
+      <div class="stat-sub">By top-tier firms</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val">{{TEAM_SIZE}}</div>
+      <div class="stat-lbl">Core Team</div>
+      <div class="stat-sub">Full-time builders</div>
+    </div>
+  </div>
+
+  <!-- PROBLEM / SOLUTION -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ PROBLEM → SOLUTION</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">PROBLEM &amp; SOLUTION</div>
+  <div class="prob-sol-row">
+    <div class="prob-panel">
+      <div class="ps-header">Problems With Current Solutions</div>
+      <ul class="ps-list">
+        <li>{{PROBLEM_1}} <span>— existing systems fail due to {{PROBLEM_1_REASON}}</span></li>
+        <li>{{PROBLEM_2}} <span>— {{PROBLEM_2_DETAIL}}</span></li>
+        <li>{{PROBLEM_3}} <span>— {{PROBLEM_3_DETAIL}}</span></li>
+        <li>{{PROBLEM_4}} <span>— {{PROBLEM_4_DETAIL}}</span></li>
+        <li>{{PROBLEM_5}} <span>— {{PROBLEM_5_DETAIL}}</span></li>
+      </ul>
+    </div>
+    <div class="sol-panel">
+      <div class="ps-header">{{PROJECT_NAME}} Solution</div>
+      <ul class="ps-list">
+        <li>{{SOLUTION_1}} <span>— achieves this via {{SOLUTION_1_MECHANISM}}</span></li>
+        <li>{{SOLUTION_2}} <span>— {{SOLUTION_2_DETAIL}}</span></li>
+        <li>{{SOLUTION_3}} <span>— {{SOLUTION_3_DETAIL}}</span></li>
+        <li>{{SOLUTION_4}} <span>— {{SOLUTION_4_DETAIL}}</span></li>
+        <li>{{SOLUTION_5}} <span>— {{SOLUTION_5_DETAIL}}</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ARCHITECTURE FLOW -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ TECHNICAL ARCHITECTURE</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">PROTOCOL LAYERS</div>
+  <div class="flow-row">
+    <div class="flow-node">
+      <div class="fn-layer">LAYER 0</div>
+      <div class="fn-title">Network</div>
+      <div class="fn-desc">{{LAYER_0_DESC}}</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node sec">
+      <div class="fn-layer">LAYER 1</div>
+      <div class="fn-title">Consensus</div>
+      <div class="fn-desc">{{LAYER_1_DESC}}</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node acc">
+      <div class="fn-layer">LAYER 2</div>
+      <div class="fn-title">Execution</div>
+      <div class="fn-desc">{{LAYER_2_DESC}}</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <div class="fn-layer">LAYER 3</div>
+      <div class="fn-title">Application</div>
+      <div class="fn-desc">{{LAYER_3_DESC}}</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node sec">
+      <div class="fn-layer">LAYER 4</div>
+      <div class="fn-title">Interface</div>
+      <div class="fn-desc">{{LAYER_4_DESC}}</div>
+    </div>
+  </div>
+
+  <!-- TECHNICAL CLAIMS TABLE -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ KEY TECHNICAL CLAIMS</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">WHITEPAPER CLAIMS &amp; STATUS</div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th>Claim</th>
+          <th>Category</th>
+          <th>Target</th>
+          <th>Current</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="val-text">Transaction throughput</td>
+          <td><span class="p-tag p-blue">PERFORMANCE</span></td>
+          <td class="val-blue">{{TPS_TARGET}} TPS</td>
+          <td class="val-green">{{TPS_CURRENT}} TPS</td>
+          <td><span class="p-tag p-green">✓ MET</span></td>
+        </tr>
+        <tr>
+          <td class="val-text">Finality time</td>
+          <td><span class="p-tag p-blue">PERFORMANCE</span></td>
+          <td class="val-blue">{{FINALITY_TARGET}}</td>
+          <td class="val-green">{{FINALITY_CURRENT}}</td>
+          <td><span class="p-tag p-green">✓ MET</span></td>
+        </tr>
+        <tr>
+          <td class="val-text">Decentralization (validators)</td>
+          <td><span class="p-tag p-purple">SECURITY</span></td>
+          <td class="val-purple">{{VALIDATOR_TARGET}}+</td>
+          <td class="val-green">{{VALIDATOR_CURRENT}}</td>
+          <td><span class="p-tag p-green">✓ MET</span></td>
+        </tr>
+        <tr>
+          <td class="val-text">Transaction cost</td>
+          <td><span class="p-tag p-blue">PERFORMANCE</span></td>
+          <td class="val-blue">&lt;${{TX_COST_TARGET}}</td>
+          <td class="val-green">${{TX_COST_CURRENT}}</td>
+          <td><span class="p-tag p-green">✓ MET</span></td>
+        </tr>
+        <tr>
+          <td class="val-text">Cross-chain interop</td>
+          <td><span class="p-tag p-purple">FEATURES</span></td>
+          <td class="val-purple">{{BRIDGE_TARGET}} chains</td>
+          <td class="val-blue">{{BRIDGE_CURRENT}} chains</td>
+          <td><span class="p-tag p-amber">→ IN PROGRESS</span></td>
+        </tr>
+        <tr>
+          <td class="val-text">ZK-proof integration</td>
+          <td><span class="p-tag p-purple">FEATURES</span></td>
+          <td class="val-purple">{{ZK_TARGET}}</td>
+          <td class="val-muted">Testnet</td>
+          <td><span class="p-tag p-amber">→ IN PROGRESS</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- COMPETITOR COMPARISON TABLE -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ COMPETITOR COMPARISON</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">VS. EXISTING SOLUTIONS</div>
+  <div class="table-wrap">
+    <table class="dense-table sec-h">
+      <thead>
+        <tr>
+          <th>Protocol</th>
+          <th>TPS</th>
+          <th>Finality</th>
+          <th>Tx Cost</th>
+          <th>Decentralization</th>
+          <th>EVM Compatible</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="val-blue" style="font-weight:800">{{PROJECT_NAME}} ★</td>
+          <td class="val-green">{{TPS}}</td>
+          <td class="val-green">{{FINALITY}}</td>
+          <td class="val-green">${{TX_COST}}</td>
+          <td class="val-green">{{VALIDATOR_COUNT}} validators</td>
+          <td class="val-green">Full</td>
+        </tr>
+        <tr>
+          <td class="val-text">Ethereum</td>
+          <td class="val-muted">~15</td>
+          <td class="val-muted">~13 min</td>
+          <td class="val-muted">$1–50</td>
+          <td class="val-green">800k+ validators</td>
+          <td class="val-green">Native</td>
+        </tr>
+        <tr>
+          <td class="val-text">Solana</td>
+          <td class="val-green">65,000</td>
+          <td class="val-muted">~400ms</td>
+          <td class="val-green">$0.001</td>
+          <td class="val-muted">~1,800 validators</td>
+          <td class="val-muted">No (SVM)</td>
+        </tr>
+        <tr>
+          <td class="val-text">Polygon PoS</td>
+          <td class="val-muted">7,000</td>
+          <td class="val-muted">~2 min</td>
+          <td class="val-green">$0.01</td>
+          <td class="val-muted">~100 validators</td>
+          <td class="val-green">Full</td>
+        </tr>
+        <tr>
+          <td class="val-text">Arbitrum One</td>
+          <td class="val-muted">40,000</td>
+          <td class="val-muted">~1 week (L1)</td>
+          <td class="val-green">$0.1</td>
+          <td class="val-muted">L2 / centralized seq.</td>
+          <td class="val-green">Full</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- INNOVATION & USE CASES PANELS -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ INNOVATION SUMMARY</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">TECHNICAL INNOVATIONS &amp; USE CASES</div>
+  <div class="panel-row">
+    <div class="bullet-panel">
+      <div class="bp-header">Key Innovations</div>
+      <ul>
+        <li><strong>{{INNOVATION_1}}</strong> <span>— {{INNOVATION_1_DESC}}</span></li>
+        <li><strong>{{INNOVATION_2}}</strong> <span>— {{INNOVATION_2_DESC}}</span></li>
+        <li><strong>{{INNOVATION_3}}</strong> <span>— {{INNOVATION_3_DESC}}</span></li>
+        <li><strong>{{INNOVATION_4}}</strong> <span>— {{INNOVATION_4_DESC}}</span></li>
+        <li><strong>{{INNOVATION_5}}</strong> <span>— {{INNOVATION_5_DESC}}</span></li>
+      </ul>
+    </div>
+    <div class="bullet-panel sec">
+      <div class="bp-header">Primary Use Cases</div>
+      <ul>
+        <li><strong>{{USECASE_1}}</strong> <span>— {{USECASE_1_DESC}}</span></li>
+        <li><strong>{{USECASE_2}}</strong> <span>— {{USECASE_2_DESC}}</span></li>
+        <li><strong>{{USECASE_3}}</strong> <span>— {{USECASE_3_DESC}}</span></li>
+        <li><strong>{{USECASE_4}}</strong> <span>— {{USECASE_4_DESC}}</span></li>
+        <li><strong>{{USECASE_5}}</strong> <span>— {{USECASE_5_DESC}}</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CALLOUT STRIP -->
+  <div class="callout-strip">
+    <div class="callout-box">
+      <div class="cb-lbl">Core Innovation</div>
+      <div class="cb-val">{{KEY_INNOVATION}}</div>
+      <div class="cb-desc">{{KEY_INNOVATION_DESC}}</div>
+    </div>
+    <div class="callout-box sec">
+      <div class="cb-lbl">Team Pedigree</div>
+      <div class="cb-val">{{TEAM_PEDIGREE}}</div>
+      <div class="cb-desc">{{TEAM_PEDIGREE_DESC}}</div>
+    </div>
+    <div class="callout-box acc">
+      <div class="cb-lbl">Funding Raised</div>
+      <div class="cb-val">${{FUNDING_RAISED}}</div>
+      <div class="cb-desc">From {{LEAD_INVESTOR}} and {{INVESTOR_COUNT}} total investors.</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <div class="footer-logo">{{TICKER_1}}</div>
+      <div>
+        <div class="footer-name">{{PROJECT_NAME}}</div>
+        <div class="footer-tag">{{TAGLINE}}</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="f-badge">{{CHAIN}}</div>
+      <div class="footer-date">{{WEBSITE}}</div>
+    </div>
+  </div>
+
+</body>
+</html>

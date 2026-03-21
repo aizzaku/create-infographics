@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{PROJECT_NAME}} — Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #080808;
+    --bg-card:      #0F0F0F;
+    --bg-section:   #111111;
+    --primary:      #B98AFF;
+    --primary-rgb:  185,138,255;
+    --secondary:    #00E88A;
+    --secondary-rgb:0,232,138;
+    --accent:       #FFD166;
+    --accent-rgb:   255,209,102;
+    --text:         #FFFFFF;
+    --muted:        #888888;
+    --border:       rgba(255,255,255,0.08);
+    --border-faint: rgba(255,255,255,0.04);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; width: 1080px;
+      margin: 0 auto; }
+
+  /* HERO */
+  .hero { display: grid; grid-template-columns: 1fr 310px; gap: 32px; padding: 40px 48px 36px; background: linear-gradient(135deg, rgba(185,138,255,0.05) 0%, transparent 60%); border-bottom: 2px solid var(--primary); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -60px; right: 180px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(185,138,255,0.09) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 3px; background: rgba(185,138,255,0.10); border: 1px solid rgba(185,138,255,0.28); font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--primary); margin-bottom: 14px; }
+  .hero-eyebrow span { width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: 72px; letter-spacing: 2px; line-height: 0.92; color: var(--text); margin-bottom: 18px; }
+  .hero-title em { color: var(--primary); font-style: normal; }
+  .hero-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .hero-bullets li { display: flex; align-items: flex-start; gap: 8px; font-size: 11.5px; font-weight: 500; color: var(--muted); line-height: 1.4; }
+  .hero-bullets li::before { content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0; }
+  .hero-card { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.22); padding: 20px 18px; align-self: start; }
+  .hero-card-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+  .hero-kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 14px; }
+  .hero-kpi { background: rgba(255,255,255,0.03); padding: 10px 11px; border: 1px solid var(--border-faint); }
+  .hero-kpi-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 1px; color: var(--primary); line-height: 1; }
+  .hero-kpi-val.sec { color: var(--secondary); }
+  .hero-kpi-val.acc { color: var(--accent); }
+  .hero-kpi-lbl { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+  .hero-note { font-size: 10px; font-weight: 500; color: var(--muted); line-height: 1.5; padding-top: 10px; border-top: 1px solid var(--border); }
+
+  /* STAT STRIP */
+  .stat-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; padding: 20px 48px 28px; }
+  .stat-box { background: var(--bg-card); border: 1px solid var(--border); padding: 12px 14px; position: relative; }
+  .stat-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--primary); }
+  .stat-box.sec::before { background: var(--secondary); }
+  .stat-box.acc::before { background: var(--accent); }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .stat-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .stat-sub { font-size: 9px; color: var(--muted); margin-top: 2px; }
+
+  /* SECTION LABEL */
+  .section-label { display: flex; align-items: center; gap: 14px; font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); padding: 0 48px 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ARROW CONNECTOR */
+  .arrow-connector { display: flex; align-items: center; gap: 10px; padding: 10px 48px 20px; }
+  .arrow-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(var(--primary-rgb),0.4), transparent); }
+  .arrow-icon { display: flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); padding: 4px 12px; border-radius: 3px; background: rgba(var(--primary-rgb),0.08); border: 1px solid rgba(var(--primary-rgb),0.22); }
+
+  /* DENSE TABLE */
+  .table-wrap { margin: 0 48px 28px; border: 1px solid var(--border); overflow: hidden; }
+  .dense-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .dense-table thead tr { background: rgba(var(--primary-rgb),0.07); border-bottom: 1px solid rgba(var(--primary-rgb),0.22); }
+  .dense-table thead th { padding: 9px 12px; text-align: left; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
+  .dense-table.sec-h thead tr { background: rgba(var(--secondary-rgb),0.07); border-bottom-color: rgba(var(--secondary-rgb),0.22); }
+  .dense-table.sec-h thead th { color: var(--secondary); }
+  .dense-table tbody tr { border-bottom: 1px solid var(--border-faint); }
+  .dense-table tbody tr:last-child { border-bottom: none; }
+  .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .dense-table td { padding: 7px 12px; vertical-align: middle; font-weight: 500; }
+  .val-purple { color: var(--primary);   font-weight: 700; }
+  .val-green  { color: var(--secondary); font-weight: 700; }
+  .val-amber  { color: var(--accent);    font-weight: 700; }
+  .val-muted  { color: var(--muted);     font-weight: 500; }
+  .val-text   { color: var(--text);      font-weight: 500; }
+  .p-tag { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+  .p-purple { background: rgba(185,138,255,0.10); color: var(--primary);   border: 1px solid rgba(185,138,255,0.25); }
+  .p-green  { background: rgba(0,232,138,0.10);   color: var(--secondary); border: 1px solid rgba(0,232,138,0.25); }
+  .p-amber  { background: rgba(255,209,102,0.10); color: var(--accent);    border: 1px solid rgba(255,209,102,0.25); }
+  .p-blue   { background: rgba(78,203,255,0.10);  color: #4ECBFF;          border: 1px solid rgba(78,203,255,0.25); }
+  .p-muted  { background: rgba(255,255,255,0.05); color: var(--muted);     border: 1px solid var(--border); }
+  .p-check  { background: rgba(0,232,138,0.12);   color: var(--secondary); border: 1px solid rgba(0,232,138,0.30); }
+
+  /* PHASE GRID */
+  .phase-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; padding: 0 48px 28px; }
+  .phase-card { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.18); padding: 16px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .phase-card.done { border-color: rgba(0,232,138,0.22); }
+  .phase-card.active { border-color: rgba(255,209,102,0.30); }
+  .phase-card.future { border-color: rgba(255,255,255,0.08); }
+  .phase-label { font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
+  .phase-card.done .phase-label { color: var(--secondary); }
+  .phase-card.active .phase-label { color: var(--accent); }
+  .phase-card.future .phase-label { color: var(--muted); }
+  .phase-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1px; color: var(--text); line-height: 1; }
+  .phase-quarter { font-size: 10px; font-weight: 700; color: var(--muted); letter-spacing: 1px; }
+  .phase-items { list-style: none; display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .phase-items li { display: flex; align-items: flex-start; gap: 6px; font-size: 10.5px; font-weight: 500; color: var(--text); line-height: 1.35; }
+  .phase-items li::before { content: '▸'; font-size: 8px; margin-top: 2px; flex-shrink: 0; color: var(--primary); }
+  .phase-card.done .phase-items li::before { content: '✓'; color: var(--secondary); }
+  .phase-card.active .phase-items li::before { content: '→'; color: var(--accent); }
+  .phase-card.future .phase-items li::before { color: var(--muted); }
+
+  /* BULLET PANELS */
+  .panel-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 48px 28px; }
+  .bullet-panel { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.18); padding: 16px 18px; }
+  .bullet-panel.sec { border-color: rgba(var(--secondary-rgb),0.18); }
+  .bullet-panel.acc { border-color: rgba(var(--accent-rgb),0.18); }
+  .bp-header { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--primary); padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+  .bullet-panel.sec .bp-header { color: var(--secondary); }
+  .bullet-panel.acc .bp-header { color: var(--accent); }
+  .bullet-panel ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .bullet-panel li { display: flex; align-items: flex-start; gap: 7px; font-size: 11.5px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .bullet-panel li::before { content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0; }
+  .bullet-panel.sec li::before { color: var(--secondary); }
+  .bullet-panel.acc li::before { color: var(--accent); }
+  .bullet-panel li span { color: var(--muted); }
+
+  /* CALLOUT STRIP */
+  .callout-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; padding: 0 48px 32px; }
+  .callout-box { padding: 14px 16px; border: 1px solid var(--border); border-left: 3px solid var(--primary); background: var(--bg-section); }
+  .callout-box.sec { border-left-color: var(--secondary); }
+  .callout-box.acc { border-left-color: var(--accent); }
+  .cb-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 6px; }
+  .callout-box.sec .cb-lbl { color: var(--secondary); }
+  .callout-box.acc .cb-lbl { color: var(--accent); }
+  .cb-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .cb-desc { font-size: 11px; font-weight: 500; color: var(--muted); line-height: 1.45; }
+
+  /* FOOTER */
+  .footer { display: flex; align-items: center; justify-content: space-between; padding: 18px 48px; border-top: 1px solid var(--border); background: rgba(var(--primary-rgb),0.02); }
+  .footer-left { display: flex; align-items: center; gap: 12px; }
+  .footer-logo { width: 30px; height: 30px; border-radius: 5px; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 14px; color: #000; }
+  .footer-name { font-size: 12px; font-weight: 700; color: var(--text); letter-spacing: 1px; }
+  .footer-tag  { font-size: 9px; color: var(--muted); font-weight: 500; }
+  .footer-right { display: flex; align-items: center; gap: 14px; }
+  .f-badge { padding: 3px 10px; border-radius: 3px; border: 1px solid var(--border); font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .footer-date { font-size: 10px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span></span>PROJECT ROADMAP</div>
+      <div class="hero-title"><em>{{YEAR}}</em><br>ROADMAP</div>
+      <ul class="hero-bullets">
+        <li>{{PHASES_TOTAL}} development phases across {{TIMELINE}} — from protocol launch to full decentralization</li>
+        <li>{{MILESTONES_DONE}} milestones completed · {{MILESTONES_ACTIVE}} in progress · {{MILESTONES_PENDING}} planned</li>
+        <li>Current phase: <strong>{{CURRENT_PHASE}}</strong> — {{CURRENT_PHASE_DESC}}</li>
+        <li>Target launch of {{KEY_FEATURE}} in {{LAUNCH_QUARTER}} — {{LAUNCH_NOTE}}</li>
+      </ul>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-lbl">Roadmap Progress</div>
+      <div class="hero-kpi-grid">
+        <div class="hero-kpi">
+          <div class="hero-kpi-val">{{PHASES_DONE}}/{{PHASES_TOTAL}}</div>
+          <div class="hero-kpi-lbl">Phases Done</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val sec">{{MILESTONES_DONE}}</div>
+          <div class="hero-kpi-lbl">Milestones</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val acc">{{TEAMS_BUILDING}}</div>
+          <div class="hero-kpi-lbl">Eng Teams</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val">{{DEVS_TOTAL}}</div>
+          <div class="hero-kpi-lbl">Contributors</div>
+        </div>
+      </div>
+      <div class="hero-note">Last updated: {{UPDATE_DATE}} · Public repo: {{GITHUB}}</div>
+    </div>
+  </div>
+
+  <!-- STAT STRIP -->
+  <div class="stat-strip">
+    <div class="stat-box acc">
+      <div class="stat-val">{{MILESTONES_DONE}}</div>
+      <div class="stat-lbl">Completed</div>
+      <div class="stat-sub">Milestones shipped</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val">{{MILESTONES_ACTIVE}}</div>
+      <div class="stat-lbl">In Progress</div>
+      <div class="stat-sub">Active development</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val">{{MILESTONES_PENDING}}</div>
+      <div class="stat-lbl">Planned</div>
+      <div class="stat-sub">Future milestones</div>
+    </div>
+    <div class="stat-box sec">
+      <div class="stat-val">{{DEVS_TOTAL}}</div>
+      <div class="stat-lbl">Contributors</div>
+      <div class="stat-sub">Active builders</div>
+    </div>
+  </div>
+
+  <!-- PHASE OVERVIEW -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ PHASE OVERVIEW</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">DEVELOPMENT PHASES</div>
+  <div class="phase-grid">
+    <div class="phase-card done">
+      <div class="phase-label">✓ COMPLETE</div>
+      <div class="phase-title">{{PHASE_1_NAME}}</div>
+      <div class="phase-quarter">{{PHASE_1_QUARTER}}</div>
+      <ul class="phase-items">
+        <li>{{PHASE_1_M1}}</li>
+        <li>{{PHASE_1_M2}}</li>
+        <li>{{PHASE_1_M3}}</li>
+        <li>{{PHASE_1_M4}}</li>
+      </ul>
+    </div>
+    <div class="phase-card done">
+      <div class="phase-label">✓ COMPLETE</div>
+      <div class="phase-title">{{PHASE_2_NAME}}</div>
+      <div class="phase-quarter">{{PHASE_2_QUARTER}}</div>
+      <ul class="phase-items">
+        <li>{{PHASE_2_M1}}</li>
+        <li>{{PHASE_2_M2}}</li>
+        <li>{{PHASE_2_M3}}</li>
+        <li>{{PHASE_2_M4}}</li>
+      </ul>
+    </div>
+    <div class="phase-card active">
+      <div class="phase-label">→ IN PROGRESS</div>
+      <div class="phase-title">{{PHASE_3_NAME}}</div>
+      <div class="phase-quarter">{{PHASE_3_QUARTER}}</div>
+      <ul class="phase-items">
+        <li>{{PHASE_3_M1}}</li>
+        <li>{{PHASE_3_M2}}</li>
+        <li>{{PHASE_3_M3}}</li>
+        <li>{{PHASE_3_M4}}</li>
+      </ul>
+    </div>
+    <div class="phase-card future">
+      <div class="phase-label">◦ PLANNED</div>
+      <div class="phase-title">{{PHASE_4_NAME}}</div>
+      <div class="phase-quarter">{{PHASE_4_QUARTER}}</div>
+      <ul class="phase-items">
+        <li>{{PHASE_4_M1}}</li>
+        <li>{{PHASE_4_M2}}</li>
+        <li>{{PHASE_4_M3}}</li>
+        <li>{{PHASE_4_M4}}</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- MILESTONE TABLE -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ MILESTONE TRACKER</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">DETAILED MILESTONE LOG</div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th>Milestone</th>
+          <th>Phase</th>
+          <th>Quarter</th>
+          <th>Category</th>
+          <th>Status</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="val-text">{{MILESTONE_1}}</td>
+          <td class="val-muted">Phase 1</td>
+          <td class="val-muted">{{M1_QUARTER}}</td>
+          <td><span class="p-tag p-blue">{{M1_CATEGORY}}</span></td>
+          <td><span class="p-tag p-check">✓ DONE</span></td>
+          <td class="val-muted">{{M1_NOTE}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{MILESTONE_2}}</td>
+          <td class="val-muted">Phase 1</td>
+          <td class="val-muted">{{M2_QUARTER}}</td>
+          <td><span class="p-tag p-purple">{{M2_CATEGORY}}</span></td>
+          <td><span class="p-tag p-check">✓ DONE</span></td>
+          <td class="val-muted">{{M2_NOTE}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{MILESTONE_3}}</td>
+          <td class="val-muted">Phase 2</td>
+          <td class="val-muted">{{M3_QUARTER}}</td>
+          <td><span class="p-tag p-blue">{{M3_CATEGORY}}</span></td>
+          <td><span class="p-tag p-check">✓ DONE</span></td>
+          <td class="val-muted">{{M3_NOTE}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{MILESTONE_4}}</td>
+          <td class="val-muted">Phase 2</td>
+          <td class="val-muted">{{M4_QUARTER}}</td>
+          <td><span class="p-tag p-green">{{M4_CATEGORY}}</span></td>
+          <td><span class="p-tag p-check">✓ DONE</span></td>
+          <td class="val-muted">{{M4_NOTE}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{MILESTONE_5}}</td>
+          <td class="val-muted">Phase 3</td>
+          <td class="val-muted">{{M5_QUARTER}}</td>
+          <td><span class="p-tag p-amber">{{M5_CATEGORY}}</span></td>
+          <td><span class="p-tag p-amber">→ ACTIVE</span></td>
+          <td class="val-muted">{{M5_NOTE}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{MILESTONE_6}}</td>
+          <td class="val-muted">Phase 3</td>
+          <td class="val-muted">{{M6_QUARTER}}</td>
+          <td><span class="p-tag p-purple">{{M6_CATEGORY}}</span></td>
+          <td><span class="p-tag p-amber">→ ACTIVE</span></td>
+          <td class="val-muted">{{M6_NOTE}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{MILESTONE_7}}</td>
+          <td class="val-muted">Phase 4</td>
+          <td class="val-muted">{{M7_QUARTER}}</td>
+          <td><span class="p-tag p-blue">{{M7_CATEGORY}}</span></td>
+          <td><span class="p-tag p-muted">◦ PLANNED</span></td>
+          <td class="val-muted">{{M7_NOTE}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{MILESTONE_8}}</td>
+          <td class="val-muted">Phase 4</td>
+          <td class="val-muted">{{M8_QUARTER}}</td>
+          <td><span class="p-tag p-green">{{M8_CATEGORY}}</span></td>
+          <td><span class="p-tag p-muted">◦ PLANNED</span></td>
+          <td class="val-muted">{{M8_NOTE}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- UPCOMING / LONG TERM PANELS -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ UPCOMING WORK</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">NEAR-TERM FOCUS &amp; LONG-TERM VISION</div>
+  <div class="panel-row">
+    <div class="bullet-panel acc">
+      <div class="bp-header">Next 6 Months</div>
+      <ul>
+        <li><strong>{{NTM_1}}</strong> <span>— {{NTM_1_DESC}}</span></li>
+        <li><strong>{{NTM_2}}</strong> <span>— {{NTM_2_DESC}}</span></li>
+        <li><strong>{{NTM_3}}</strong> <span>— {{NTM_3_DESC}}</span></li>
+        <li><strong>{{NTM_4}}</strong> <span>— {{NTM_4_DESC}}</span></li>
+        <li><strong>{{NTM_5}}</strong> <span>— {{NTM_5_DESC}}</span></li>
+      </ul>
+    </div>
+    <div class="bullet-panel">
+      <div class="bp-header">Long-Term Vision (2+ Years)</div>
+      <ul>
+        <li><strong>{{LT_1}}</strong> <span>— {{LT_1_DESC}}</span></li>
+        <li><strong>{{LT_2}}</strong> <span>— {{LT_2_DESC}}</span></li>
+        <li><strong>{{LT_3}}</strong> <span>— {{LT_3_DESC}}</span></li>
+        <li><strong>{{LT_4}}</strong> <span>— {{LT_4_DESC}}</span></li>
+        <li><strong>Full Decentralization</strong> <span>— no admin keys, DAO-controlled treasury and params</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CALLOUT STRIP -->
+  <div class="callout-strip">
+    <div class="callout-box sec">
+      <div class="cb-lbl">Completed</div>
+      <div class="cb-val">{{MILESTONES_DONE}} MILESTONES</div>
+      <div class="cb-desc">Shipped since {{LAUNCH_DATE}}. All major Phase 1 & 2 deliverables complete.</div>
+    </div>
+    <div class="callout-box acc">
+      <div class="cb-lbl">Current Focus</div>
+      <div class="cb-val">{{CURRENT_PHASE}}</div>
+      <div class="cb-desc">{{CURRENT_PHASE_FOCUS}} — targeting {{CURRENT_PHASE_DEADLINE}}.</div>
+    </div>
+    <div class="callout-box">
+      <div class="cb-lbl">Team Size</div>
+      <div class="cb-val">{{DEVS_TOTAL}} BUILDERS</div>
+      <div class="cb-desc">{{TEAMS_BUILDING}} focused engineering teams across {{TEAM_LOCATIONS}}.</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <div class="footer-logo">{{TICKER_1}}</div>
+      <div>
+        <div class="footer-name">{{PROJECT_NAME}}</div>
+        <div class="footer-tag">{{TAGLINE}}</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="f-badge">{{CHAIN}}</div>
+      <div class="footer-date">{{WEBSITE}}</div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,152 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Comparison — A vs B</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
-  <style>
-    :root {
-      --bg: #0D0D0D;
-      --surface: #141414;
-      --border: rgba(255,255,255,0.06);
-      --primary: #00D4FF; /* Cyan (Brand A) */
-      --secondary: #FF2D55; /* Pink/Red (Brand B) */
-      --text: #ffffff;
-      --muted: #888888;
-      --fd: 'Space Grotesk', sans-serif;
-      --fb: 'Inter', sans-serif;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: var(--fb); width: 1100px; padding: 64px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{SUBJECT_A}} vs {{SUBJECT_B}} — Comparison</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #080808;
+    --bg-card:      #0F0F0F;
+    --bg-section:   #111111;
+    --primary:      #00D4FF;
+    --primary-rgb:  0,212,255;
+    --secondary:    #FF4D6A;
+    --secondary-rgb:255,77,106;
+    --accent:       #00E88A;
+    --accent-rgb:   0,232,138;
+    --text:         #FFFFFF;
+    --muted:        #888888;
+    --border:       rgba(255,255,255,0.08);
+    --border-faint: rgba(255,255,255,0.04);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; width: 1080px;
+      margin: 0 auto; }
 
-    header { text-align: center; margin-bottom: 48px; }
-    h1 { font-family: var(--fd); font-size: 48px; margin-bottom: 8px; }
-    .subtitle { color: var(--muted); font-size: 16px; }
+  /* HERO */
+  .hero { display: grid; grid-template-columns: 1fr auto 1fr; gap: 2px; padding: 40px 48px 0; align-items: center; }
+  .hero-side { padding: 28px 24px; border: 1.5px solid rgba(var(--primary-rgb),0.25); background: rgba(var(--primary-rgb),0.04); }
+  .hero-side.b { border-color: rgba(var(--secondary-rgb),0.25); background: rgba(var(--secondary-rgb),0.04); }
+  .side-label { font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; }
+  .hero-side.b .side-label { color: var(--secondary); }
+  .side-name { font-family: 'Bebas Neue', sans-serif; font-size: 52px; letter-spacing: 2px; line-height: 0.92; color: var(--text); margin-bottom: 12px; }
+  .side-desc { font-size: 11px; font-weight: 500; color: var(--muted); line-height: 1.5; }
+  .hero-vs { width: 60px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 4px; flex-shrink: 0; }
+  .vs-circle { width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--border); background: var(--bg-card); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; color: var(--muted); }
 
-    .comparison-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-      position: relative;
-    }
+  /* SCORE STRIP */
+  .score-strip { display: grid; grid-template-columns: 1fr auto 1fr; gap: 2px; padding: 16px 48px 28px; }
+  .score-side { background: var(--bg-card); border: 1px solid rgba(var(--primary-rgb),0.20); padding: 14px 20px; display: flex; align-items: center; gap: 16px; }
+  .score-side.b { border-color: rgba(var(--secondary-rgb),0.20); }
+  .score-val { font-family: 'Bebas Neue', sans-serif; font-size: 48px; letter-spacing: 1px; color: var(--primary); line-height: 1; }
+  .score-side.b .score-val { color: var(--secondary); }
+  .score-meta { display: flex; flex-direction: column; gap: 2px; }
+  .score-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .score-sub { font-size: 10px; font-weight: 500; color: var(--muted); }
+  .score-mid { background: var(--bg-card); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; padding: 0 16px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
 
-    /* VS Badge */
-    .vs-badge {
-      position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%) translateY(-24px);
-      width: 48px; height: 48px;
-      background: var(--bg); border: 2px solid var(--border); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--fd); font-weight: 700; color: var(--muted);
-      z-index: 10;
-    }
+  /* SECTION LABEL */
+  .section-label { display: flex; align-items: center; gap: 14px; font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); padding: 0 48px 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    .column {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      position: relative;
-    }
+  /* ARROW CONNECTOR */
+  .arrow-connector { display: flex; align-items: center; gap: 10px; padding: 10px 48px 20px; }
+  .arrow-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(var(--primary-rgb),0.4), transparent); }
+  .arrow-icon { display: flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); padding: 4px 12px; border-radius: 3px; background: rgba(var(--primary-rgb),0.08); border: 1px solid rgba(var(--primary-rgb),0.22); }
 
-    /* Brand headers */
-    .brand-head { display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
-    .b-icon { font-size: 32px; }
-    .brand-head h2 { font-family: var(--fd); font-size: 32px; }
-    
-    .col-a .b-icon, .col-a h2 { color: var(--primary); }
-    .col-b .b-icon, .col-b h2 { color: var(--secondary); }
-    .col-a { border-top: 4px solid var(--primary); }
-    .col-b { border-top: 4px solid var(--secondary); }
+  /* HEAD-TO-HEAD TABLE */
+  .table-wrap { margin: 0 48px 28px; border: 1px solid var(--border); overflow: hidden; }
+  .dense-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .dense-table thead tr { background: var(--bg-card); border-bottom: 1px solid var(--border); }
+  .dense-table thead th { padding: 9px 12px; text-align: left; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .dense-table thead th.a { color: var(--primary); text-align: center; }
+  .dense-table thead th.b { color: var(--secondary); text-align: center; }
+  .dense-table thead th.mid { text-align: center; color: var(--muted); }
+  .dense-table tbody tr { border-bottom: 1px solid var(--border-faint); }
+  .dense-table tbody tr:last-child { border-bottom: none; }
+  .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .dense-table td { padding: 7px 12px; vertical-align: middle; font-weight: 500; }
+  .td-center { text-align: center; }
+  .td-mid { text-align: center; font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--muted); }
+  .val-a     { color: var(--primary);   font-weight: 700; text-align: center; }
+  .val-b     { color: var(--secondary); font-weight: 700; text-align: center; }
+  .val-tie   { color: var(--accent);    font-weight: 700; text-align: center; }
+  .val-muted { color: var(--muted);     font-weight: 500; }
+  .val-text  { color: var(--text);      font-weight: 600; }
+  .win-a { background: rgba(var(--primary-rgb),0.08) !important; }
+  .win-b { background: rgba(var(--secondary-rgb),0.08) !important; }
+  .p-tag { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+  .p-a   { background: rgba(0,212,255,0.10);  color: var(--primary);   border: 1px solid rgba(0,212,255,0.25); }
+  .p-b   { background: rgba(255,77,106,0.10);  color: var(--secondary); border: 1px solid rgba(255,77,106,0.25); }
+  .p-tie { background: rgba(0,232,138,0.10);   color: var(--accent);    border: 1px solid rgba(0,232,138,0.25); }
 
-    .feature-list { display: flex; flex-direction: column; gap: 24px; }
-    .feature-item { display: flex; flex-direction: column; gap: 8px; }
-    .f-label { font-size: 12px; text-transform: uppercase; font-weight: 700; color: var(--muted); letter-spacing: 0.05em; }
-    .f-val { font-family: var(--fd); font-size: 20px; }
+  /* VERDICT PANELS */
+  .verdict-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 48px 28px; }
+  .verdict-panel { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.22); padding: 16px 18px; }
+  .verdict-panel.b { border-color: rgba(var(--secondary-rgb),0.22); }
+  .vp-header { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--primary); padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+  .verdict-panel.b .vp-header { color: var(--secondary); }
+  .verdict-panel ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .verdict-panel li { display: flex; align-items: flex-start; gap: 7px; font-size: 11.5px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .verdict-panel li::before { content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0; }
+  .verdict-panel.b li::before { color: var(--secondary); }
+  .verdict-panel li span { color: var(--muted); }
 
-    .check-list { display: flex; flex-direction: column; gap: 16px; }
-    .check-item { display: flex; align-items: center; gap: 12px; font-size: 15px; }
-    .col-a .check-item i { color: var(--primary); font-size: 20px; }
-    .col-b .check-item i { color: var(--secondary); font-size: 20px; }
+  /* CALLOUT STRIP */
+  .callout-strip { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 0 48px 32px; }
+  .callout-box { padding: 14px 16px; border: 1px solid var(--border); border-left: 3px solid var(--primary); background: var(--bg-section); }
+  .callout-box.b { border-left-color: var(--secondary); }
+  .callout-box.n { border-left-color: var(--accent); }
+  .cb-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 6px; }
+  .callout-box.b .cb-lbl { color: var(--secondary); }
+  .callout-box.n .cb-lbl { color: var(--accent); }
+  .cb-val { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .cb-desc { font-size: 11px; font-weight: 500; color: var(--muted); line-height: 1.45; }
 
-    .conclusion { margin-top: 48px; text-align: center; border-top: 1px solid var(--border); padding-top: 32px; }
-    .conclusion h3 { font-family: var(--fd); font-size: 24px; color: var(--text); margin-bottom: 8px; }
-    .conclusion p { color: var(--muted); font-size: 15px; max-width: 600px; margin: 0 auto; }
-  </style>
+  /* FOOTER */
+  .footer { display: flex; align-items: center; justify-content: space-between; padding: 18px 48px; border-top: 1px solid var(--border); background: rgba(var(--primary-rgb),0.02); }
+  .footer-left { display: flex; align-items: center; gap: 12px; }
+  .footer-logo { width: 30px; height: 30px; border-radius: 5px; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 11px; color: #000; font-weight: 800; }
+  .footer-name { font-size: 12px; font-weight: 700; color: var(--text); letter-spacing: 1px; }
+  .footer-tag  { font-size: 9px; color: var(--muted); font-weight: 500; }
+  .footer-right { display: flex; align-items: center; gap: 14px; }
+  .f-badge { padding: 3px 10px; border-radius: 3px; border: 1px solid var(--border); font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .footer-date { font-size: 10px; color: var(--muted); }
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>PROTOCOL COMPARISON</h1>
-    <p class="subtitle">Evaluating the performance and security of next-gen rollups.</p>
-  </header>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-side">
+      <div class="side-label">Option A</div>
+      <div class="side-name">{{SUBJECT_A}}</div>
+      <div class="side-desc">{{SUBJECT_A_DESC}}</div>
+    </div>
+    <div class="hero-vs">
+      <div class="vs-circle">VS</div>
+    </div>
+    <div class="hero-side b">
+      <div class="side-label">Option B</div>
+      <div class="side-name">{{SUBJECT_B}}</div>
+      <div class="side-desc">{{SUBJECT_B_DESC}}</div>
+    </div>
+  </div>
 
-  <div class="comparison-grid">
-    <div class="vs-badge">VS</div>
-
-    <!-- Column A -->
-    <div class="column col-a">
-      <div class="brand-head">
-        <i class="ph-fill ph-hexagon b-icon"></i>
-        <h2>OpStack</h2>
-      </div>
-      <div class="feature-list">
-        <div class="feature-item">
-          <span class="f-label">Throughput (TPS)</span>
-          <span class="f-val">4,000+ TPS</span>
-        </div>
-        <div class="feature-item">
-          <span class="f-label">Finality Time</span>
-          <span class="f-val">~2 Seconds</span>
-        </div>
-        <div class="feature-item">
-          <span class="f-label">Gas Fees</span>
-          <span class="f-val">$0.001 Avg</span>
-        </div>
-      </div>
-      <div class="check-list" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
-        <div class="check-item"><i class="ph-fill ph-check-circle"></i> EVM Equivalency</div>
-        <div class="check-item"><i class="ph-fill ph-check-circle"></i> Decentralized Sequencer</div>
-        <div class="check-item"><i class="ph-fill ph-check-circle"></i> Native Account Abstraction</div>
+  <!-- SCORE STRIP -->
+  <div class="score-strip">
+    <div class="score-side">
+      <div class="score-val">{{SCORE_A}}</div>
+      <div class="score-meta">
+        <div class="score-label">{{SUBJECT_A}} Score</div>
+        <div class="score-sub">{{SCORE_A_SUMMARY}}</div>
       </div>
     </div>
-
-    <!-- Column B -->
-    <div class="column col-b">
-      <div class="brand-head">
-        <i class="ph-fill ph-square b-icon"></i>
-        <h2>ZK-Rollups</h2>
-      </div>
-      <div class="feature-list">
-        <div class="feature-item">
-          <span class="f-label">Throughput (TPS)</span>
-          <span class="f-val">2,000+ TPS</span>
-        </div>
-        <div class="feature-item">
-          <span class="f-label">Finality Time</span>
-          <span class="f-val">Instant (Zero-Knowledge)</span>
-        </div>
-        <div class="feature-item">
-          <span class="f-label">Gas Fees</span>
-          <span class="f-val">$0.01 Avg</span>
-        </div>
-      </div>
-      <div class="check-list" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
-        <div class="check-item"><i class="ph-fill ph-check-circle"></i> Cryptographic Proofs</div>
-        <div class="check-item"><i class="ph-fill ph-x-circle" style="color:var(--muted);"></i> EVM Compatibility (Partial)</div>
-        <div class="check-item"><i class="ph-fill ph-check-circle"></i> Capital Efficiency</div>
+    <div class="score-mid">OVERALL VERDICT</div>
+    <div class="score-side b">
+      <div class="score-val">{{SCORE_B}}</div>
+      <div class="score-meta">
+        <div class="score-label">{{SUBJECT_B}} Score</div>
+        <div class="score-sub">{{SCORE_B_SUMMARY}}</div>
       </div>
     </div>
   </div>
 
-  <div class="conclusion">
-    <h3>The Verdict</h3>
-    <p>OpStack excels in pure EVM compatibility and developer experience, while ZK-Sync offers superior mathematical security and instant finality at the cost of higher immediate overhead.</p>
+  <!-- HEAD-TO-HEAD TABLE -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ HEAD-TO-HEAD</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">FEATURE COMPARISON</div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th class="a">{{SUBJECT_A}}</th>
+          <th class="mid">Winner</th>
+          <th class="b">{{SUBJECT_B}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="win-a">
+          <td class="val-text">{{CAT_1}}</td>
+          <td class="val-a">{{A_CAT1}}</td>
+          <td class="td-mid"><span class="p-tag p-a">A WINS</span></td>
+          <td class="val-muted">{{B_CAT1}}</td>
+        </tr>
+        <tr class="win-b">
+          <td class="val-text">{{CAT_2}}</td>
+          <td class="val-muted">{{A_CAT2}}</td>
+          <td class="td-mid"><span class="p-tag p-b">B WINS</span></td>
+          <td class="val-b">{{B_CAT2}}</td>
+        </tr>
+        <tr class="win-a">
+          <td class="val-text">{{CAT_3}}</td>
+          <td class="val-a">{{A_CAT3}}</td>
+          <td class="td-mid"><span class="p-tag p-a">A WINS</span></td>
+          <td class="val-muted">{{B_CAT3}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{CAT_4}}</td>
+          <td class="val-muted">{{A_CAT4}}</td>
+          <td class="td-mid"><span class="p-tag p-tie">TIE</span></td>
+          <td class="val-muted">{{B_CAT4}}</td>
+        </tr>
+        <tr class="win-b">
+          <td class="val-text">{{CAT_5}}</td>
+          <td class="val-muted">{{A_CAT5}}</td>
+          <td class="td-mid"><span class="p-tag p-b">B WINS</span></td>
+          <td class="val-b">{{B_CAT5}}</td>
+        </tr>
+        <tr class="win-a">
+          <td class="val-text">{{CAT_6}}</td>
+          <td class="val-a">{{A_CAT6}}</td>
+          <td class="td-mid"><span class="p-tag p-a">A WINS</span></td>
+          <td class="val-muted">{{B_CAT6}}</td>
+        </tr>
+        <tr class="win-b">
+          <td class="val-text">{{CAT_7}}</td>
+          <td class="val-muted">{{A_CAT7}}</td>
+          <td class="td-mid"><span class="p-tag p-b">B WINS</span></td>
+          <td class="val-b">{{B_CAT7}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{CAT_8}}</td>
+          <td class="val-muted">{{A_CAT8}}</td>
+          <td class="td-mid"><span class="p-tag p-tie">TIE</span></td>
+          <td class="val-muted">{{B_CAT8}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- DETAILED SPECS TABLE -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ DETAILED SPECS</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">TECHNICAL SPECIFICATIONS</div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th>Specification</th>
+          <th class="a">{{SUBJECT_A}}</th>
+          <th class="b">{{SUBJECT_B}}</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="val-text">{{SPEC_1_NAME}}</td>
+          <td class="val-a">{{A_SPEC1}}</td>
+          <td class="val-b">{{B_SPEC1}}</td>
+          <td class="val-muted">{{SPEC_1_NOTE}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{SPEC_2_NAME}}</td>
+          <td class="val-a">{{A_SPEC2}}</td>
+          <td class="val-b">{{B_SPEC2}}</td>
+          <td class="val-muted">{{SPEC_2_NOTE}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{SPEC_3_NAME}}</td>
+          <td class="val-a">{{A_SPEC3}}</td>
+          <td class="val-b">{{B_SPEC3}}</td>
+          <td class="val-muted">{{SPEC_3_NOTE}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{SPEC_4_NAME}}</td>
+          <td class="val-a">{{A_SPEC4}}</td>
+          <td class="val-b">{{B_SPEC4}}</td>
+          <td class="val-muted">{{SPEC_4_NOTE}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{SPEC_5_NAME}}</td>
+          <td class="val-a">{{A_SPEC5}}</td>
+          <td class="val-b">{{B_SPEC5}}</td>
+          <td class="val-muted">{{SPEC_5_NOTE}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{SPEC_6_NAME}}</td>
+          <td class="val-a">{{A_SPEC6}}</td>
+          <td class="val-b">{{B_SPEC6}}</td>
+          <td class="val-muted">{{SPEC_6_NOTE}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- VERDICT PANELS -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ VERDICT</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">PROS &amp; CONS</div>
+  <div class="verdict-row">
+    <div class="verdict-panel">
+      <div class="vp-header">{{SUBJECT_A}} — Strengths</div>
+      <ul>
+        <li><strong>{{A_PRO_1}}</strong> <span>— {{A_PRO_1_DESC}}</span></li>
+        <li><strong>{{A_PRO_2}}</strong> <span>— {{A_PRO_2_DESC}}</span></li>
+        <li><strong>{{A_PRO_3}}</strong> <span>— {{A_PRO_3_DESC}}</span></li>
+        <li><strong>{{A_PRO_4}}</strong> <span>— {{A_PRO_4_DESC}}</span></li>
+        <li><strong>{{A_PRO_5}}</strong> <span>— {{A_PRO_5_DESC}}</span></li>
+      </ul>
+    </div>
+    <div class="verdict-panel b">
+      <div class="vp-header">{{SUBJECT_B}} — Strengths</div>
+      <ul>
+        <li><strong>{{B_PRO_1}}</strong> <span>— {{B_PRO_1_DESC}}</span></li>
+        <li><strong>{{B_PRO_2}}</strong> <span>— {{B_PRO_2_DESC}}</span></li>
+        <li><strong>{{B_PRO_3}}</strong> <span>— {{B_PRO_3_DESC}}</span></li>
+        <li><strong>{{B_PRO_4}}</strong> <span>— {{B_PRO_4_DESC}}</span></li>
+        <li><strong>{{B_PRO_5}}</strong> <span>— {{B_PRO_5_DESC}}</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CALLOUT STRIP -->
+  <div class="callout-strip">
+    <div class="callout-box">
+      <div class="cb-lbl">{{SUBJECT_A}} Best For</div>
+      <div class="cb-val">{{A_BEST_FOR}}</div>
+      <div class="cb-desc">{{A_BEST_FOR_DESC}}</div>
+    </div>
+    <div class="callout-box b">
+      <div class="cb-lbl">{{SUBJECT_B}} Best For</div>
+      <div class="cb-val">{{B_BEST_FOR}}</div>
+      <div class="cb-desc">{{B_BEST_FOR_DESC}}</div>
+    </div>
+    <div class="callout-box n">
+      <div class="cb-lbl">Overall Winner</div>
+      <div class="cb-val">{{WINNER}}</div>
+      <div class="cb-desc">{{WINNER_RATIONALE}}</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <div class="footer-logo">VS</div>
+      <div>
+        <div class="footer-name">{{SUBJECT_A}} vs {{SUBJECT_B}}</div>
+        <div class="footer-tag">{{COMPARISON_CONTEXT}}</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="f-badge">{{CATEGORY}}</div>
+      <div class="footer-date">{{REPORT_DATE}}</div>
+    </div>
   </div>
 
 </body>

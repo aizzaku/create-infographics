@@ -1,166 +1,426 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>{{PROJECT_NAME}} — How It Works</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --bg:#07080C;--surface:#0D0F16;--border:#181B25;
-      --amber:#E99A00;--amber-hi:#F0B63A;
-      --mint:#00E88A;--blue:#4DA0F8;
-      --text:#F2F2EE;--muted:#7A8090;
-      --fd:'Bebas Neue',sans-serif;
-      --fb:'Montserrat',sans-serif;
-    }
-    body{background:var(--bg);font-family:var(--fb);color:var(--text);width:1100px;padding:48px 56px;display:flex;flex-direction:column;gap:36px}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{PROJECT_NAME}} — How It Works</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #080808;
+    --bg-card:      #0F0F0F;
+    --bg-section:   #111111;
+    --primary:      #E99A00;
+    --primary-rgb:  233,154,0;
+    --secondary:    #4DA0F8;
+    --secondary-rgb:77,160,248;
+    --accent:       #00E88A;
+    --accent-rgb:   0,232,138;
+    --text:         #FFFFFF;
+    --muted:        #888888;
+    --border:       rgba(255,255,255,0.08);
+    --border-faint: rgba(255,255,255,0.04);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; width: 1080px;
+      margin: 0 auto; }
 
-    /* brand strip */
-    .brand{display:flex;align-items:center;justify-content:space-between}
-    .brand-name{font-family:var(--fd);font-size:24px;letter-spacing:.1em;color:var(--amber)}
-    .brand-tag{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:4px 12px;border-radius:20px}
-    .logo-slot{width:72px;height:26px;background:var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--muted)}
+  /* HERO */
+  .hero { display: grid; grid-template-columns: 1fr 300px; gap: 32px; padding: 40px 48px 36px; background: linear-gradient(135deg, rgba(233,154,0,0.06) 0%, transparent 60%); border-bottom: 2px solid var(--primary); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -60px; right: 180px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(233,154,0,0.09) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 3px; background: rgba(233,154,0,0.10); border: 1px solid rgba(233,154,0,0.28); font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--primary); margin-bottom: 14px; }
+  .hero-eyebrow span { width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: 68px; letter-spacing: 2px; line-height: 0.92; color: var(--text); margin-bottom: 18px; }
+  .hero-title em { color: var(--primary); font-style: normal; }
+  .hero-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .hero-bullets li { display: flex; align-items: flex-start; gap: 8px; font-size: 11.5px; font-weight: 500; color: var(--muted); line-height: 1.4; }
+  .hero-bullets li::before { content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0; }
+  .hero-card { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.22); padding: 20px 18px; align-self: start; }
+  .hero-card-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+  .hero-kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .hero-kpi { background: rgba(255,255,255,0.03); padding: 10px 11px; border: 1px solid var(--border-faint); }
+  .hero-kpi-val { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 1px; color: var(--primary); line-height: 1; }
+  .hero-kpi-val.sec { color: var(--secondary); }
+  .hero-kpi-val.acc { color: var(--accent); }
+  .hero-kpi-lbl { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
 
-    /* title */
-    .title-block{display:flex;flex-direction:column;gap:8px}
-    .title-eyebrow{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
-    h1{font-family:var(--fd);font-size:58px;line-height:.92;letter-spacing:.02em;text-transform:uppercase}
-    h1 em{color:var(--amber);font-style:normal}
-    .title-sub{font-size:13.5px;color:var(--muted);line-height:1.6;font-weight:500;max-width:580px;margin-top:4px}
+  /* STAT STRIP */
+  .stat-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; padding: 20px 48px 28px; }
+  .stat-box { background: var(--bg-card); border: 1px solid var(--border); padding: 12px 14px; position: relative; }
+  .stat-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--primary); }
+  .stat-box.sec::before { background: var(--secondary); }
+  .stat-box.acc::before { background: var(--accent); }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .stat-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .stat-sub { font-size: 9px; color: var(--muted); margin-top: 2px; }
 
-    /* steps */
-    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
-    .steps::after{content:'';position:absolute;top:36px;left:calc(12.5%);width:75%;height:1.5px;background:linear-gradient(to right,var(--amber),var(--amber-hi),var(--amber));opacity:.35;z-index:0}
+  /* SECTION LABEL */
+  .section-label { display: flex; align-items: center; gap: 14px; font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); padding: 0 48px 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    .step{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:0 12px;position:relative;z-index:1}
+  /* ARROW CONNECTOR */
+  .arrow-connector { display: flex; align-items: center; gap: 10px; padding: 10px 48px 20px; }
+  .arrow-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(var(--primary-rgb),0.4), transparent); }
+  .arrow-icon { display: flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); padding: 4px 12px; border-radius: 3px; background: rgba(var(--primary-rgb),0.08); border: 1px solid rgba(var(--primary-rgb),0.22); }
 
-    .step-num{
-      width: 72px; height: 72px;
-      border-radius: 50%;
-      border: 1.5px solid var(--amber);
-      background: var(--surface);
-      display: flex; align-items: center; justify-content: center;
-      flex-direction: column;
-      gap: 1px;
-      box-shadow: 0 0 20px rgba(233,154,0,.2);
-      flex-shrink: 0;
-    }
-    .step-n{font-family:var(--fd);font-size:26px;line-height:1;color:var(--amber)}
-    .step-icon{font-size:14px;color:var(--amber);opacity:.7}
+  /* STEP FLOW */
+  .flow-row { display: flex; align-items: stretch; gap: 2px; padding: 0 48px 28px; }
+  .flow-node { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.20); padding: 16px 16px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .flow-node.sec { border-color: rgba(var(--secondary-rgb),0.22); }
+  .flow-node.acc { border-color: rgba(var(--accent-rgb),0.22); }
+  .fn-step { font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
+  .flow-node.sec .fn-step { color: var(--secondary); }
+  .flow-node.acc .fn-step { color: var(--accent); }
+  .fn-num { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: rgba(233,154,0,0.15); line-height: 1; margin: -4px 0; }
+  .fn-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; color: var(--text); line-height: 1; }
+  .fn-desc { font-size: 10.5px; font-weight: 500; color: var(--muted); line-height: 1.45; }
+  .fn-tag { display: inline-block; margin-top: 6px; padding: 2px 7px; border-radius: 3px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; background: rgba(233,154,0,0.10); border: 1px solid rgba(233,154,0,0.25); color: var(--primary); }
+  .flow-node.sec .fn-tag { background: rgba(77,160,248,0.10); border-color: rgba(77,160,248,0.25); color: var(--secondary); }
+  .flow-node.acc .fn-tag { background: rgba(0,232,138,0.10); border-color: rgba(0,232,138,0.25); color: var(--accent); }
+  .flow-arrow { display: flex; align-items: center; color: var(--primary); font-size: 18px; padding: 0 4px; opacity: 0.6; flex-shrink: 0; }
 
-    .step-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text)}
-    .step-desc{font-size:12px;color:var(--muted);line-height:1.6;font-weight:500}
+  /* DENSE TABLE */
+  .table-wrap { margin: 0 48px 28px; border: 1px solid var(--border); overflow: hidden; }
+  .dense-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .dense-table thead tr { background: rgba(var(--primary-rgb),0.07); border-bottom: 1px solid rgba(var(--primary-rgb),0.22); }
+  .dense-table thead th { padding: 9px 12px; text-align: left; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
+  .dense-table.sec-h thead tr { background: rgba(var(--secondary-rgb),0.07); border-bottom-color: rgba(var(--secondary-rgb),0.22); }
+  .dense-table.sec-h thead th { color: var(--secondary); }
+  .dense-table tbody tr { border-bottom: 1px solid var(--border-faint); }
+  .dense-table tbody tr:last-child { border-bottom: none; }
+  .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .dense-table td { padding: 7px 12px; vertical-align: middle; font-weight: 500; }
+  .val-amber { color: var(--primary);   font-weight: 700; }
+  .val-blue  { color: var(--secondary); font-weight: 700; }
+  .val-green { color: var(--accent);    font-weight: 700; }
+  .val-muted { color: var(--muted);     font-weight: 500; }
+  .val-text  { color: var(--text);      font-weight: 500; }
+  .p-tag { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+  .p-amber { background: rgba(233,154,0,0.10);  color: var(--primary);   border: 1px solid rgba(233,154,0,0.25); }
+  .p-blue  { background: rgba(77,160,248,0.10);  color: var(--secondary); border: 1px solid rgba(77,160,248,0.25); }
+  .p-green { background: rgba(0,232,138,0.10);   color: var(--accent);    border: 1px solid rgba(0,232,138,0.25); }
+  .p-muted { background: rgba(255,255,255,0.05); color: var(--muted);     border: 1px solid var(--border); }
 
-    /* connector arrows between columns */
-    .step:not(:last-child)::after{
-      content:'›';
-      position:absolute;
-      top:36px;right:-8px;
-      transform:translateY(-50%);
-      font-size:20px;color:var(--amber);
-      z-index:2;
-    }
+  /* BULLET PANELS */
+  .panel-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 48px 28px; }
+  .bullet-panel { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.18); padding: 16px 18px; }
+  .bullet-panel.sec { border-color: rgba(var(--secondary-rgb),0.18); }
+  .bp-header { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--primary); padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+  .bullet-panel.sec .bp-header { color: var(--secondary); }
+  .bullet-panel ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .bullet-panel li { display: flex; align-items: flex-start; gap: 7px; font-size: 11.5px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .bullet-panel li::before { content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0; }
+  .bullet-panel.sec li::before { color: var(--secondary); }
+  .bullet-panel li span { color: var(--muted); }
 
-    /* stats bar */
-    .stats-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden}
-    .stat-cell{padding:16px 22px;border-right:1px solid var(--border);display:flex;align-items:center;gap:14px}
-    .stat-cell:last-child{border-right:none}
-    .stat-icon{font-size:22px;color:var(--amber);flex-shrink:0}
-    .stat-body{display:flex;flex-direction:column;gap:2px}
-    .stat-val{font-family:var(--fd);font-size:26px;line-height:1;color:var(--amber);letter-spacing:.02em}
-    .stat-lbl{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  /* CALLOUT STRIP */
+  .callout-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; padding: 0 48px 32px; }
+  .callout-box { padding: 14px 16px; border: 1px solid var(--border); border-left: 3px solid var(--primary); background: var(--bg-section); }
+  .callout-box.sec { border-left-color: var(--secondary); }
+  .callout-box.acc { border-left-color: var(--accent); }
+  .cb-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 6px; }
+  .callout-box.sec .cb-lbl { color: var(--secondary); }
+  .callout-box.acc .cb-lbl { color: var(--accent); }
+  .cb-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .cb-desc { font-size: 11px; font-weight: 500; color: var(--muted); line-height: 1.45; }
 
-    /* footer */
-    .footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:20px}
-    .footer-note{font-size:10px;color:var(--muted)}
-    .footer-cta{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:rgba(233,154,0,.08);border:1px solid rgba(233,154,0,.3);padding:6px 18px;border-radius:4px}
-  </style>
+  /* FOOTER */
+  .footer { display: flex; align-items: center; justify-content: space-between; padding: 18px 48px; border-top: 1px solid var(--border); background: rgba(var(--primary-rgb),0.02); }
+  .footer-left { display: flex; align-items: center; gap: 12px; }
+  .footer-logo { width: 30px; height: 30px; border-radius: 5px; background: var(--primary); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 14px; color: #000; }
+  .footer-name { font-size: 12px; font-weight: 700; color: var(--text); letter-spacing: 1px; }
+  .footer-tag  { font-size: 9px; color: var(--muted); font-weight: 500; }
+  .footer-right { display: flex; align-items: center; gap: 14px; }
+  .f-badge { padding: 3px 10px; border-radius: 3px; border: 1px solid var(--border); font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .footer-date { font-size: 10px; color: var(--muted); }
+</style>
 </head>
 <body>
 
-  <!-- BRAND -->
-  <div class="brand">
-    <div style="display:flex;align-items:center;gap:12px">
-      <div class="brand-name">{{PROJECT_NAME}}</div>
-      <div class="brand-tag">{{PROCESS_TAG}}</div>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span></span>EXPLAINER</div>
+      <div class="hero-title">HOW <em>{{PROJECT_NAME}}</em><br>WORKS</div>
+      <ul class="hero-bullets">
+        <li>{{PROCESS_BRIEF}} — a {{STEP_COUNT}}-step process from {{START_STATE}} to {{END_STATE}}</li>
+        <li>{{KEY_MECHANIC}} — the core mechanism that makes {{PROJECT_NAME}} work</li>
+        <li>{{SPEED_CLAIM}} · {{COST_CLAIM}} · {{SECURITY_CLAIM}}</li>
+        <li>{{DIFFERENTIATOR}} compared to traditional {{CATEGORY}} solutions</li>
+      </ul>
     </div>
-    <div class="logo-slot">LOGO</div>
-  </div>
-
-  <!-- TITLE -->
-  <div class="title-block">
-    <div class="title-eyebrow">STEP-BY-STEP GUIDE</div>
-    <h1>HOW TO <em>{{ACTION_NAME}}</em></h1>
-    <div class="title-sub">{{PROCESS_DESCRIPTION}}</div>
-  </div>
-
-  <!-- STEPS -->
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">
-        <div class="step-n">01</div>
-        <i class="ph ph-wallet step-icon"></i>
+    <div class="hero-card">
+      <div class="hero-card-lbl">At a Glance</div>
+      <div class="hero-kpi-grid">
+        <div class="hero-kpi">
+          <div class="hero-kpi-val">{{STEP_COUNT}}</div>
+          <div class="hero-kpi-lbl">Steps</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val sec">{{PROCESSING_TIME}}</div>
+          <div class="hero-kpi-lbl">Time</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val acc">{{COST}}</div>
+          <div class="hero-kpi-lbl">Cost</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val">{{USERS}}</div>
+          <div class="hero-kpi-lbl">Users</div>
+        </div>
       </div>
-      <div class="step-title">{{STEP_1_TITLE}}</div>
-      <div class="step-desc">{{STEP_1_DESC}}</div>
-    </div>
-    <div class="step">
-      <div class="step-num">
-        <div class="step-n">02</div>
-        <i class="ph ph-link-simple step-icon"></i>
-      </div>
-      <div class="step-title">{{STEP_2_TITLE}}</div>
-      <div class="step-desc">{{STEP_2_DESC}}</div>
-    </div>
-    <div class="step">
-      <div class="step-num">
-        <div class="step-n">03</div>
-        <i class="ph ph-coins step-icon"></i>
-      </div>
-      <div class="step-title">{{STEP_3_TITLE}}</div>
-      <div class="step-desc">{{STEP_3_DESC}}</div>
-    </div>
-    <div class="step">
-      <div class="step-num">
-        <div class="step-n">04</div>
-        <i class="ph ph-trophy step-icon"></i>
-      </div>
-      <div class="step-title">{{STEP_4_TITLE}}</div>
-      <div class="step-desc">{{STEP_4_DESC}}</div>
     </div>
   </div>
 
-  <!-- STATS -->
-  <div class="stats-bar">
-    <div class="stat-cell">
-      <i class="ph-fill ph-clock stat-icon"></i>
-      <div class="stat-body">
-        <div class="stat-val">{{TIME_REQUIRED}}</div>
-        <div class="stat-lbl">Time to Complete</div>
-      </div>
+  <!-- STAT STRIP -->
+  <div class="stat-strip">
+    <div class="stat-box">
+      <div class="stat-val">{{STAT_1}}</div>
+      <div class="stat-lbl">{{STAT_1_LABEL}}</div>
+      <div class="stat-sub">{{STAT_1_SUB}}</div>
     </div>
-    <div class="stat-cell">
-      <i class="ph-fill ph-shield-check stat-icon"></i>
-      <div class="stat-body">
-        <div class="stat-val">{{REQUIREMENT}}</div>
-        <div class="stat-lbl">What You Need</div>
-      </div>
+    <div class="stat-box sec">
+      <div class="stat-val">{{STAT_2}}</div>
+      <div class="stat-lbl">{{STAT_2_LABEL}}</div>
+      <div class="stat-sub">{{STAT_2_SUB}}</div>
     </div>
-    <div class="stat-cell">
-      <i class="ph-fill ph-star stat-icon"></i>
-      <div class="stat-body">
-        <div class="stat-val">{{REWARD}}</div>
-        <div class="stat-lbl">Reward</div>
-      </div>
+    <div class="stat-box acc">
+      <div class="stat-val">{{STAT_3}}</div>
+      <div class="stat-lbl">{{STAT_3_LABEL}}</div>
+      <div class="stat-sub">{{STAT_3_SUB}}</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val">{{STAT_4}}</div>
+      <div class="stat-lbl">{{STAT_4_LABEL}}</div>
+      <div class="stat-sub">{{STAT_4_SUB}}</div>
+    </div>
+  </div>
+
+  <!-- STEP FLOW -->
+  <div class="section-label">THE PROCESS</div>
+  <div class="flow-row">
+    <div class="flow-node">
+      <div class="fn-step">STEP 01</div>
+      <div class="fn-num">1</div>
+      <div class="fn-title">{{STEP_1_TITLE}}</div>
+      <div class="fn-desc">{{STEP_1_DESC}}</div>
+      <div class="fn-tag">{{STEP_1_TAG}}</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node sec">
+      <div class="fn-step">STEP 02</div>
+      <div class="fn-num">2</div>
+      <div class="fn-title">{{STEP_2_TITLE}}</div>
+      <div class="fn-desc">{{STEP_2_DESC}}</div>
+      <div class="fn-tag">{{STEP_2_TAG}}</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node acc">
+      <div class="fn-step">STEP 03</div>
+      <div class="fn-num">3</div>
+      <div class="fn-title">{{STEP_3_TITLE}}</div>
+      <div class="fn-desc">{{STEP_3_DESC}}</div>
+      <div class="fn-tag">{{STEP_3_TAG}}</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <div class="fn-step">STEP 04</div>
+      <div class="fn-num">4</div>
+      <div class="fn-title">{{STEP_4_TITLE}}</div>
+      <div class="fn-desc">{{STEP_4_DESC}}</div>
+      <div class="fn-tag">{{STEP_4_TAG}}</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node sec">
+      <div class="fn-step">STEP 05</div>
+      <div class="fn-num">5</div>
+      <div class="fn-title">{{STEP_5_TITLE}}</div>
+      <div class="fn-desc">{{STEP_5_DESC}}</div>
+      <div class="fn-tag">{{STEP_5_TAG}}</div>
+    </div>
+  </div>
+
+  <!-- MECHANICS TABLE -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ MECHANICS BREAKDOWN</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">HOW EACH STEP WORKS</div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th>Step</th>
+          <th>What Happens</th>
+          <th>Who / What</th>
+          <th>Time</th>
+          <th>Output</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="p-tag p-amber">01 — {{STEP_1_TITLE}}</span></td>
+          <td class="val-text">{{STEP_1_DETAIL}}</td>
+          <td class="val-muted">{{STEP_1_ACTOR}}</td>
+          <td class="val-amber">{{STEP_1_TIME}}</td>
+          <td class="val-muted">{{STEP_1_OUTPUT}}</td>
+          <td class="val-muted">{{STEP_1_NOTE}}</td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-blue">02 — {{STEP_2_TITLE}}</span></td>
+          <td class="val-text">{{STEP_2_DETAIL}}</td>
+          <td class="val-muted">{{STEP_2_ACTOR}}</td>
+          <td class="val-blue">{{STEP_2_TIME}}</td>
+          <td class="val-muted">{{STEP_2_OUTPUT}}</td>
+          <td class="val-muted">{{STEP_2_NOTE}}</td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-green">03 — {{STEP_3_TITLE}}</span></td>
+          <td class="val-text">{{STEP_3_DETAIL}}</td>
+          <td class="val-muted">{{STEP_3_ACTOR}}</td>
+          <td class="val-green">{{STEP_3_TIME}}</td>
+          <td class="val-muted">{{STEP_3_OUTPUT}}</td>
+          <td class="val-muted">{{STEP_3_NOTE}}</td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-amber">04 — {{STEP_4_TITLE}}</span></td>
+          <td class="val-text">{{STEP_4_DETAIL}}</td>
+          <td class="val-muted">{{STEP_4_ACTOR}}</td>
+          <td class="val-amber">{{STEP_4_TIME}}</td>
+          <td class="val-muted">{{STEP_4_OUTPUT}}</td>
+          <td class="val-muted">{{STEP_4_NOTE}}</td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-blue">05 — {{STEP_5_TITLE}}</span></td>
+          <td class="val-text">{{STEP_5_DETAIL}}</td>
+          <td class="val-muted">{{STEP_5_ACTOR}}</td>
+          <td class="val-blue">{{STEP_5_TIME}}</td>
+          <td class="val-muted">{{STEP_5_OUTPUT}}</td>
+          <td class="val-muted">{{STEP_5_NOTE}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TECHNICAL SPECS TABLE -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ TECHNICAL SPECS</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">SPECIFICATIONS</div>
+  <div class="table-wrap">
+    <table class="dense-table sec-h">
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Technology</th>
+          <th>Specification</th>
+          <th>Performance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="val-text">{{COMPONENT_1}}</td>
+          <td class="val-blue">{{TECH_1}}</td>
+          <td class="val-muted">{{SPEC_1}}</td>
+          <td class="val-green">{{PERF_1}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{COMPONENT_2}}</td>
+          <td class="val-blue">{{TECH_2}}</td>
+          <td class="val-muted">{{SPEC_2}}</td>
+          <td class="val-green">{{PERF_2}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{COMPONENT_3}}</td>
+          <td class="val-blue">{{TECH_3}}</td>
+          <td class="val-muted">{{SPEC_3}}</td>
+          <td class="val-green">{{PERF_3}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{COMPONENT_4}}</td>
+          <td class="val-blue">{{TECH_4}}</td>
+          <td class="val-muted">{{SPEC_4}}</td>
+          <td class="val-green">{{PERF_4}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{COMPONENT_5}}</td>
+          <td class="val-blue">{{TECH_5}}</td>
+          <td class="val-muted">{{SPEC_5}}</td>
+          <td class="val-green">{{PERF_5}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BULLET PANELS -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ BENEFITS &amp; USE CASES</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">KEY BENEFITS &amp; USE CASES</div>
+  <div class="panel-row">
+    <div class="bullet-panel">
+      <div class="bp-header">Key Benefits</div>
+      <ul>
+        <li><strong>{{BENEFIT_1}}</strong> <span>— {{BENEFIT_1_DESC}}</span></li>
+        <li><strong>{{BENEFIT_2}}</strong> <span>— {{BENEFIT_2_DESC}}</span></li>
+        <li><strong>{{BENEFIT_3}}</strong> <span>— {{BENEFIT_3_DESC}}</span></li>
+        <li><strong>{{BENEFIT_4}}</strong> <span>— {{BENEFIT_4_DESC}}</span></li>
+        <li><strong>{{BENEFIT_5}}</strong> <span>— {{BENEFIT_5_DESC}}</span></li>
+      </ul>
+    </div>
+    <div class="bullet-panel sec">
+      <div class="bp-header">Primary Use Cases</div>
+      <ul>
+        <li><strong>{{USECASE_1}}</strong> <span>— {{USECASE_1_DESC}}</span></li>
+        <li><strong>{{USECASE_2}}</strong> <span>— {{USECASE_2_DESC}}</span></li>
+        <li><strong>{{USECASE_3}}</strong> <span>— {{USECASE_3_DESC}}</span></li>
+        <li><strong>{{USECASE_4}}</strong> <span>— {{USECASE_4_DESC}}</span></li>
+        <li><strong>{{USECASE_5}}</strong> <span>— {{USECASE_5_DESC}}</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CALLOUT STRIP -->
+  <div class="callout-strip">
+    <div class="callout-box">
+      <div class="cb-lbl">Speed</div>
+      <div class="cb-val">{{SPEED_STAT}}</div>
+      <div class="cb-desc">{{SPEED_CONTEXT}}</div>
+    </div>
+    <div class="callout-box sec">
+      <div class="cb-lbl">Cost Efficiency</div>
+      <div class="cb-val">{{COST_STAT}}</div>
+      <div class="cb-desc">{{COST_CONTEXT}}</div>
+    </div>
+    <div class="callout-box acc">
+      <div class="cb-lbl">Reliability</div>
+      <div class="cb-val">{{RELIABILITY_STAT}}</div>
+      <div class="cb-desc">{{RELIABILITY_CONTEXT}}</div>
     </div>
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
-    <div class="footer-note">{{DISCLAIMER}} · {{URL}}</div>
-    <div class="footer-cta">{{CTA_TEXT}} →</div>
+    <div class="footer-left">
+      <div class="footer-logo">{{TICKER_1}}</div>
+      <div>
+        <div class="footer-name">{{PROJECT_NAME}}</div>
+        <div class="footer-tag">{{TAGLINE}}</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="f-badge">{{CATEGORY}}</div>
+      <div class="footer-date">{{WEBSITE}}</div>
+    </div>
   </div>
 
 </body>

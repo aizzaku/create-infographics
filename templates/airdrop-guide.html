@@ -1,327 +1,765 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{PROJECT_NAME}} — Airdrop Guide</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{PROJECT_NAME}} — Airdrop Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #080808;
+    --bg-card:      #0F0F0F;
+    --bg-section:   #111111;
+    --primary:      #E79A00;
+    --primary-rgb:  231,154,0;
+    --secondary:    #61B8FF;
+    --secondary-rgb:97,184,255;
+    --text:         #FFFFFF;
+    --muted:        #888888;
+    --border:       rgba(231,154,0,0.22);
+    --border-faint: rgba(255,255,255,0.06);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    width: 1080px;
+      margin: 0 auto;
+  }
 
-    :root {
-      --bg:          #07090C;
-      --surface:     #0F1218;
-      --border:      #1E2430;
-      --amber:       #E99A00;
-      --amber-hi:    #F0B63A;
-      --amber-dim:   #9A6800;
-      --text:        #F2F2F0;
-      --muted:       #8A8A8A;
-      --grey-bar:    #C8C8C8;
-      --grey-mid:    #7A7A7A;
-      --grey-dark:   #3A3A3A;
+  /* ── HERO ── */
+  .hero {
+    display: grid; grid-template-columns: 1fr 320px;
+    gap: 32px; padding: 40px 48px 36px;
+    background: linear-gradient(135deg, rgba(231,154,0,0.06) 0%, transparent 60%);
+    border-bottom: 2px solid var(--primary);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -60px; right: 150px;
+    width: 280px; height: 280px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(231,154,0,0.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px;
+    border-radius: 3px; background: rgba(231,154,0,0.10);
+    border: 1px solid rgba(231,154,0,0.30);
+    font-size: 9px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--primary); margin-bottom: 14px;
+  }
+  .hero-eyebrow span { width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 76px; letter-spacing: 2px; line-height: 0.90;
+    color: var(--text); margin-bottom: 18px;
+  }
+  .hero-title em { color: var(--primary); font-style: normal; }
+  .hero-meta {
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
+  }
+  .hero-meta span { color: var(--primary); margin: 0 4px; }
+  .hero-bullets {
+    list-style: none; display: flex; flex-direction: column; gap: 6px;
+  }
+  .hero-bullets li {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 11.5px; font-weight: 500; color: var(--muted); line-height: 1.4;
+  }
+  .hero-bullets li::before {
+    content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0;
+  }
 
-      --font-display:'Teko', sans-serif;
-      --font-body:   'Montserrat', sans-serif;
-    }
+  .hero-card {
+    background: var(--bg-card);
+    border: 1.5px solid rgba(var(--primary-rgb),0.25);
+    padding: 20px 18px;
+    align-self: start;
+  }
+  .hero-card-lbl {
+    font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--muted);
+    padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .hero-kpi-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2px; margin-bottom: 14px;
+  }
+  .hero-kpi {
+    background: rgba(255,255,255,0.03); padding: 10px 11px;
+    border: 1px solid var(--border-faint);
+  }
+  .hero-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; letter-spacing: 1px; color: var(--primary); line-height: 1;
+  }
+  .hero-kpi-val.sec { color: var(--secondary); }
+  .hero-kpi-lbl {
+    font-size: 9px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--muted); margin-top: 3px;
+  }
+  .hero-note {
+    font-size: 10px; font-weight: 500; color: var(--muted); line-height: 1.5;
+    padding-top: 10px; border-top: 1px solid var(--border);
+  }
 
-    body {
-      background: var(--bg);
-      font-family: var(--font-body);
-      color: var(--text);
-      width: 1100px;
-      min-height: 618px;
-      padding: 52px 64px;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
+  /* ── STAT STRIP ── */
+  .stat-strip {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 2px;
+    padding: 20px 48px 28px;
+  }
+  .stat-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border); padding: 12px 14px;
+    position: relative;
+  }
+  .stat-box::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: var(--primary);
+  }
+  .stat-box.sec::before { background: var(--secondary); }
+  .stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px;
+  }
+  .stat-lbl {
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .stat-sub { font-size: 9px; color: var(--muted); margin-top: 2px; }
 
-    /* ── Headline ── */
-    .headline {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .headline-category {
-      font-family: var(--font-body);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 4px;
-    }
-    .headline h1 {
-      font-family: var(--font-display);
-      font-size: 88px;
-      font-weight: 700;
-      line-height: 0.88;
-      text-transform: uppercase;
-      letter-spacing: 0.01em;
-      color: var(--amber);
-    }
-    .headline h1 span.pct {
-      color: var(--text);
-    }
+  /* ── SECTION LABEL ── */
+  .section-label {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 9px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--muted);
+    padding: 0 48px 12px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    /* ── Body: rules + vesting side-by-side ── */
-    .body-zone {
-      display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 48px;
-      align-items: start;
-      flex: 1;
-    }
+  /* ── ARROW CONNECTOR ── */
+  .arrow-connector {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 48px 20px; color: var(--muted);
+  }
+  .arrow-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(var(--primary-rgb),0.4), transparent);
+  }
+  .arrow-icon {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--primary); padding: 4px 12px; border-radius: 3px;
+    background: rgba(var(--primary-rgb),0.08); border: 1px solid rgba(var(--primary-rgb),0.22);
+  }
 
-    /* Rules list */
-    .rules {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      padding-top: 4px;
-    }
-    .rule-item {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-    }
-    .rule-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--amber);
-      margin-top: 7px;
-      flex-shrink: 0;
-    }
-    .rule-text {
-      font-size: 15px;
-      font-weight: 500;
-      line-height: 1.55;
-      color: var(--text);
-    }
-    .rule-text strong {
-      color: var(--amber);
-      font-weight: 700;
-    }
-    .rule-text .highlight-2 { color: #61B8FF; }
-    .rule-text .highlight-3 { color: #E29B6C; }
+  /* ── BULLET PANELS ── */
+  .panel-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    padding: 0 48px 28px;
+  }
+  .bullet-panel {
+    background: var(--bg-card);
+    border: 1.5px solid rgba(var(--primary-rgb),0.18);
+    padding: 16px 18px;
+  }
+  .bullet-panel.sec { border-color: rgba(var(--secondary-rgb),0.18); }
+  .bp-header {
+    font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--primary);
+    padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
+  }
+  .bullet-panel.sec .bp-header { color: var(--secondary); }
+  .bullet-panel ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .bullet-panel li {
+    display: flex; align-items: flex-start; gap: 7px;
+    font-size: 11.5px; font-weight: 500; color: var(--text); line-height: 1.4;
+  }
+  .bullet-panel li::before {
+    content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0;
+  }
+  .bullet-panel.sec li::before { color: var(--secondary); }
+  .bullet-panel li span { color: var(--muted); }
 
-    /* Right: vesting widget */
-    .vesting-widget {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+  /* ── DENSE TABLE ── */
+  .table-wrap {
+    margin: 0 48px 28px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .dense-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 12px;
+  }
+  .dense-table thead tr {
+    background: rgba(var(--primary-rgb),0.07);
+    border-bottom: 1px solid rgba(var(--primary-rgb),0.22);
+  }
+  .dense-table thead th {
+    padding: 9px 12px; text-align: left;
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--primary);
+  }
+  .dense-table tbody tr { border-bottom: 1px solid var(--border-faint); }
+  .dense-table tbody tr:last-child { border-bottom: none; }
+  .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .dense-table td {
+    padding: 7px 12px; vertical-align: middle; font-weight: 500;
+  }
+  .tier-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 3px;
+    font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .tier-gold   { background: rgba(231,154,0,0.18);  color: var(--primary);   border: 1px solid rgba(231,154,0,0.40); }
+  .tier-silver { background: rgba(97,184,255,0.15);  color: var(--secondary); border: 1px solid rgba(97,184,255,0.35); }
+  .tier-bronze { background: rgba(255,255,255,0.07); color: #AAAAAA;          border: 1px solid rgba(255,255,255,0.18); }
+  .tier-comm   { background: rgba(255,255,255,0.04); color: var(--muted);     border: 1px solid var(--border); }
+  .val-amber { color: var(--primary);   font-weight: 700; }
+  .val-blue  { color: var(--secondary); font-weight: 600; }
+  .val-muted { color: var(--muted);     font-weight: 500; }
+  .val-text  { color: var(--text);      font-weight: 500; }
 
-    .vesting-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .pct-badge {
-      background: var(--amber);
-      color: #000;
-      font-family: var(--font-display);
-      font-size: 32px;
-      font-weight: 700;
-      padding: 4px 14px 2px;
-      line-height: 1;
-      text-transform: uppercase;
-      border-radius: 4px;
-    }
-    .vesting-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      line-height: 1.4;
-    }
+  /* ── POINTS TABLE ── */
+  .points-table-wrap {
+    margin: 0 48px 28px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .points-table {
+    width: 100%; border-collapse: collapse; font-size: 12px;
+  }
+  .points-table thead tr {
+    background: rgba(97,184,255,0.07);
+    border-bottom: 1px solid rgba(97,184,255,0.22);
+  }
+  .points-table thead th {
+    padding: 9px 12px; text-align: left;
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--secondary);
+  }
+  .points-table tbody tr { border-bottom: 1px solid var(--border-faint); }
+  .points-table tbody tr:last-child { border-bottom: none; }
+  .points-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .points-table td { padding: 7px 12px; vertical-align: middle; font-weight: 500; }
 
-    /* Timeline bar */
-    .vesting-bar-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .vesting-bar {
-      display: flex;
-      gap: 3px;
-      height: 36px;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .bar-seg {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.7);
-      flex-shrink: 0;
-    }
-    .bar-seg.tge  { background: var(--amber); width: 60px; }
-    .bar-seg.lock { background: var(--grey-dark); width: 80px; color: var(--muted); }
-    .bar-seg.v1   { background: var(--grey-mid); flex: 1; }
-    .bar-seg.v2   { background: #B0B0B0; flex: 1; }
-    .bar-seg.v3   { background: var(--grey-bar); flex: 1; }
-    .bar-seg.full { background: var(--amber); flex: 1; color: #000; }
+  /* ── STEP PROCESS ── */
+  .step-row {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 2px;
+    padding: 0 48px 28px;
+  }
+  .step {
+    background: var(--bg-card);
+    border: 1px solid var(--border); padding: 18px 16px;
+    position: relative;
+  }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px; line-height: 1;
+    color: rgba(231,154,0,0.15); margin-bottom: 8px;
+  }
+  .step-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--text); margin-bottom: 6px;
+  }
+  .step-desc { font-size: 10.5px; font-weight: 500; color: var(--muted); line-height: 1.5; }
+  .step-tag {
+    display: inline-block; margin-top: 10px;
+    padding: 2px 8px; border-radius: 3px;
+    font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    background: rgba(231,154,0,0.10); border: 1px solid rgba(231,154,0,0.25); color: var(--primary);
+  }
+  .step-arrow {
+    position: absolute; top: 50%; right: -10px;
+    transform: translateY(-50%);
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--bg); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; color: var(--primary); z-index: 1;
+  }
+  .step:last-child .step-arrow { display: none; }
 
-    /* unlock ramp overlay */
-    .bar-seg.ramp {
-      flex: 3;
-      background: linear-gradient(to right, var(--grey-dark), var(--amber-dim));
-      position: relative;
-      clip-path: polygon(0 100%, 0 100%, 100% 0%, 100% 100%);
-    }
+  /* ── VESTING SECTION ── */
+  .vest-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    padding: 0 48px 28px;
+  }
+  .vest-card {
+    background: var(--bg-card);
+    border: 1.5px solid rgba(var(--primary-rgb),0.18);
+    padding: 18px 18px;
+  }
+  .vest-title {
+    font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
+  }
+  .vesting-bar {
+    display: flex; height: 32px; gap: 2px; margin-bottom: 8px;
+  }
+  .vseg {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .vseg-tge   { background: var(--primary); color: #000; width: 14%; }
+  .vseg-cliff { background: #1A2030; color: var(--muted); width: 16%;
+    border: 1px solid #2A3040; }
+  .vseg-vest  { background: linear-gradient(to right, #1A4B7A, #3B88CC); color: var(--text); flex: 1; }
+  .vseg-full  { background: var(--secondary); color: #000; width: 12%; }
+  .vesting-axis {
+    display: flex; justify-content: space-between;
+    font-size: 9px; font-weight: 600; color: var(--muted); letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .vesting-legend {
+    display: flex; gap: 14px; flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 10px; font-weight: 600; color: var(--muted);
+  }
+  .legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
 
-    .vesting-axis {
-      display: flex;
-      justify-content: space-between;
-      font-size: 10px;
-      color: var(--muted);
-      font-weight: 500;
-      letter-spacing: 0.05em;
-    }
+  /* ── CALLOUT BOXES ── */
+  .callout-col { display: flex; flex-direction: column; gap: 10px; }
+  .callout-box {
+    padding: 14px 16px; border-left: 3px solid var(--primary);
+    background: rgba(var(--primary-rgb),0.05);
+    border: 1px solid rgba(var(--primary-rgb),0.18);
+    border-left: 3px solid var(--primary);
+  }
+  .callout-box.sec {
+    background: rgba(var(--secondary-rgb),0.05);
+    border-color: rgba(var(--secondary-rgb),0.18);
+    border-left-color: var(--secondary);
+  }
+  .cb-lbl {
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--primary); margin-bottom: 6px;
+  }
+  .callout-box.sec .cb-lbl { color: var(--secondary); }
+  .cb-body {
+    font-size: 11.5px; font-weight: 500; color: var(--text); line-height: 1.5;
+  }
+  .cb-body strong { font-weight: 700; color: var(--primary); }
+  .callout-box.sec .cb-body strong { color: var(--secondary); }
 
-    .vesting-note {
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .vesting-note strong { color: var(--amber); }
-
-    /* ── Bottom callout ── */
-    .bottom-callout {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-      border-top: 1px solid var(--border);
-      padding-top: 20px;
-    }
-    .callout-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .callout-amount {
-      font-family: var(--font-display);
-      font-size: 52px;
-      font-weight: 700;
-      line-height: 1;
-      color: var(--amber);
-      letter-spacing: 0.01em;
-    }
-    .callout-ticker {
-      font-family: var(--font-display);
-      font-size: 30px;
-      font-weight: 500;
-      color: var(--text);
-      letter-spacing: 0.04em;
-    }
-    .callout-meta {
-      margin-left: auto;
-      font-size: 12px;
-      color: var(--muted);
-      text-align: right;
-      line-height: 1.5;
-    }
-  </style>
+  /* ── FOOTER ── */
+  .footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    border-top: 1px solid var(--border);
+    background: rgba(var(--primary-rgb),0.02);
+  }
+  .footer-left { display: flex; align-items: center; gap: 12px; }
+  .footer-logo {
+    width: 30px; height: 30px; border-radius: 5px;
+    background: var(--primary);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 14px; color: #000;
+  }
+  .footer-name { font-size: 12px; font-weight: 700; color: var(--text); letter-spacing: 1px; }
+  .footer-tag  { font-size: 9px; color: var(--muted); font-weight: 500; }
+  .footer-right { display: flex; align-items: center; gap: 14px; }
+  .f-badge {
+    padding: 3px 10px; border-radius: 3px; border: 1px solid var(--border);
+    font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .footer-date { font-size: 10px; color: var(--muted); }
+</style>
 </head>
 <body>
 
-  <!-- ── HEADLINE ───────────────────────────────────────── -->
-  <div class="headline">
-    <div class="headline-category">{{PROJECT_NAME}} · Token Distribution</div>
-    <h1>COMMUNITY AIRDROP <span class="pct">(25%)</span></h1>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span></span>AIRDROP GUIDE</div>
+      <div class="hero-title"><em>{{AIRDROP_TOTAL}}</em> TOKEN<br>AIRDROP</div>
+      <div class="hero-meta">
+        Snapshot: <span>{{SNAPSHOT_DATE}}</span>
+        · TGE: <span>{{TGE_DATE}}</span>
+        · Claim: <span>{{CLAIM_WINDOW}} days</span>
+      </div>
+      <ul class="hero-bullets">
+        <li>{{ALLOC_PCT}}% of total supply — {{TOTAL_ALLOC}} tokens distributed across eligible wallets</li>
+        <li>Tiered allocation: Gold / Silver / Bronze / Community based on activity score</li>
+        <li>{{TGE_PCT}}% unlocked at TGE — remainder vests linearly over {{VEST_MONTHS}} months</li>
+        <li>Snapshot block #{{SNAPSHOT_BLOCK}} · All qualified interactions counted retroactively</li>
+      </ul>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-lbl">Key Numbers</div>
+      <div class="hero-kpi-grid">
+        <div class="hero-kpi">
+          <div class="hero-kpi-val">{{TOTAL_ALLOC}}</div>
+          <div class="hero-kpi-lbl">Total Tokens</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val sec">{{ELIGIBLE_WALLETS}}</div>
+          <div class="hero-kpi-lbl">Eligible Wallets</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val">{{TGE_PCT}}%</div>
+          <div class="hero-kpi-lbl">TGE Unlock</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val sec">{{VEST_MONTHS}}M</div>
+          <div class="hero-kpi-lbl">Vest Period</div>
+        </div>
+      </div>
+      <div class="hero-note">
+        Claim window closes {{CLAIM_DEADLINE}}. Unclaimed tokens return to treasury.
+      </div>
+    </div>
   </div>
 
-  <!-- ── BODY ──────────────────────────────────────────── -->
-  <div class="body-zone">
+  <!-- STAT STRIP -->
+  <div class="stat-strip">
+    <div class="stat-box">
+      <div class="stat-val">{{ALLOC_PCT}}%</div>
+      <div class="stat-lbl">Supply Allocated</div>
+      <div class="stat-sub">Of total token supply</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val">{{TGE_PCT}}%</div>
+      <div class="stat-lbl">TGE Unlock</div>
+      <div class="stat-sub">Instant at launch</div>
+    </div>
+    <div class="stat-box sec">
+      <div class="stat-val">{{VEST_MONTHS}}M</div>
+      <div class="stat-lbl">Vesting Period</div>
+      <div class="stat-sub">Linear monthly</div>
+    </div>
+    <div class="stat-box sec">
+      <div class="stat-val">{{ELIGIBLE_WALLETS}}</div>
+      <div class="stat-lbl">Eligible Wallets</div>
+      <div class="stat-sub">As of snapshot</div>
+    </div>
+  </div>
 
-    <!-- Allocation rules -->
-    <div class="rules">
-      <div class="rule-item">
-        <div class="rule-dot"></div>
-        <div class="rule-text">
-          <strong>25% of total supply</strong> reserved for community airdrop — rewarding early supporters
-          and ecosystem participants across all qualifying wallets
-        </div>
+  <!-- ELIGIBILITY REQUIREMENTS -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ ELIGIBILITY RULES</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">WHAT QUALIFIES / WHAT DISQUALIFIES</div>
+  <div class="panel-row">
+    <div class="bullet-panel">
+      <div class="bp-header">Qualifying Activities</div>
+      <ul>
+        <li><strong>Protocol Usage</strong> <span>— any transaction on mainnet before snapshot block</span></li>
+        <li><strong>Liquidity Provision</strong> <span>— LP positions held for 7+ days in qualifying pools</span></li>
+        <li><strong>Governance Voting</strong> <span>— participated in ≥1 on-chain governance vote</span></li>
+        <li><strong>OG Holder</strong> <span>— held {{TICKER}} or NFT before {{EARLY_CUTOFF}}</span></li>
+        <li><strong>Beta Participation</strong> <span>— used testnet or closed beta program</span></li>
+        <li><strong>Referral Activity</strong> <span>— referred ≥3 active wallets to the platform</span></li>
+      </ul>
+    </div>
+    <div class="bullet-panel sec">
+      <div class="bp-header">Disqualifying Criteria</div>
+      <ul>
+        <li><strong>Sybil Wallets</strong> <span>— cluster analysis of linked addresses will remove farms</span></li>
+        <li><strong>CEX Addresses</strong> <span>— exchange hot/cold wallets are excluded from distribution</span></li>
+        <li><strong>No Genuine Activity</strong> <span>— wallets with zero qualifying on-chain interaction</span></li>
+        <li><strong>Sanctioned Jurisdictions</strong> <span>— OFAC-screened wallets auto-excluded</span></li>
+        <li><strong>Team / Investor Wallets</strong> <span>— addresses in team or VC allocations are excluded</span></li>
+        <li><strong>Post-Snapshot Transfers</strong> <span>— moving assets after block #{{SNAPSHOT_BLOCK}} has no effect</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- POINTS TABLE -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ POINTS SCORING</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">ACTIVITY POINTS BREAKDOWN</div>
+  <div class="points-table-wrap">
+    <table class="points-table">
+      <thead>
+        <tr>
+          <th>Activity</th>
+          <th>Category</th>
+          <th>Points / Action</th>
+          <th>Max Points</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="val-text">Protocol transaction (any)</td>
+          <td><span class="tier-badge tier-gold">USAGE</span></td>
+          <td class="val-amber">10 pts</td>
+          <td class="val-amber">500 pts</td>
+          <td class="val-muted">Per unique tx, capped at 50 txs</td>
+        </tr>
+        <tr>
+          <td class="val-text">LP position held 7+ days</td>
+          <td><span class="tier-badge tier-gold">LIQUIDITY</span></td>
+          <td class="val-amber">50 pts</td>
+          <td class="val-amber">1000 pts</td>
+          <td class="val-muted">Per qualifying 7-day window</td>
+        </tr>
+        <tr>
+          <td class="val-text">Volume milestone</td>
+          <td><span class="tier-badge tier-gold">VOLUME</span></td>
+          <td class="val-amber">25–200 pts</td>
+          <td class="val-amber">800 pts</td>
+          <td class="val-muted">Tiered: $1k / $10k / $100k / $1M</td>
+        </tr>
+        <tr>
+          <td class="val-text">Governance vote</td>
+          <td><span class="tier-badge tier-silver">GOVERNANCE</span></td>
+          <td class="val-blue">100 pts</td>
+          <td class="val-blue">500 pts</td>
+          <td class="val-muted">Per voted proposal, capped at 5</td>
+        </tr>
+        <tr>
+          <td class="val-text">Referral (active wallet)</td>
+          <td><span class="tier-badge tier-silver">SOCIAL</span></td>
+          <td class="val-blue">75 pts</td>
+          <td class="val-blue">750 pts</td>
+          <td class="val-muted">Referred wallet must have ≥5 txs</td>
+        </tr>
+        <tr>
+          <td class="val-text">OG / Beta participant</td>
+          <td><span class="tier-badge tier-silver">LOYALTY</span></td>
+          <td class="val-blue">500 pts</td>
+          <td class="val-blue">500 pts</td>
+          <td class="val-muted">One-time bonus, verified on-chain</td>
+        </tr>
+        <tr>
+          <td class="val-text">NFT / Token holder</td>
+          <td><span class="tier-badge tier-bronze">HOLDER</span></td>
+          <td class="val-muted">200 pts</td>
+          <td class="val-muted">200 pts</td>
+          <td class="val-muted">Held before {{EARLY_CUTOFF}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TIER TABLE -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ TIER BREAKDOWN</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">ELIGIBILITY &amp; TIER ALLOCATION</div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Point Threshold</th>
+          <th>Allocation</th>
+          <th>TGE Unlock</th>
+          <th>Vesting</th>
+          <th>Est. Wallets</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tier-badge tier-gold">GOLD</span></td>
+          <td class="val-amber">≥ {{GOLD_THRESHOLD}} pts</td>
+          <td class="val-amber">{{GOLD_ALLOC}} {{TICKER}}</td>
+          <td class="val-amber">{{GOLD_TGE}}%</td>
+          <td class="val-blue">{{VEST_MONTHS}}M linear</td>
+          <td class="val-muted">{{GOLD_WALLETS}}</td>
+        </tr>
+        <tr>
+          <td><span class="tier-badge tier-silver">SILVER</span></td>
+          <td class="val-amber">≥ {{SILVER_THRESHOLD}} pts</td>
+          <td class="val-amber">{{SILVER_ALLOC}} {{TICKER}}</td>
+          <td class="val-amber">{{SILVER_TGE}}%</td>
+          <td class="val-blue">{{VEST_MONTHS}}M linear</td>
+          <td class="val-muted">{{SILVER_WALLETS}}</td>
+        </tr>
+        <tr>
+          <td><span class="tier-badge tier-bronze">BRONZE</span></td>
+          <td class="val-muted">≥ {{BRONZE_THRESHOLD}} pts</td>
+          <td class="val-amber">{{BRONZE_ALLOC}} {{TICKER}}</td>
+          <td class="val-amber">{{BRONZE_TGE}}%</td>
+          <td class="val-blue">{{VEST_MONTHS}}M linear</td>
+          <td class="val-muted">{{BRONZE_WALLETS}}</td>
+        </tr>
+        <tr>
+          <td><span class="tier-badge tier-comm">COMMUNITY</span></td>
+          <td class="val-muted">Any activity</td>
+          <td class="val-amber">{{COMM_ALLOC}} {{TICKER}}</td>
+          <td class="val-amber">{{COMM_TGE}}%</td>
+          <td class="val-blue">{{COMM_VEST}}</td>
+          <td class="val-muted">{{COMM_WALLETS}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CLAIM STEPS -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ HOW TO CLAIM</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">CLAIM PROCESS</div>
+  <div class="step-row">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Connect Wallet</div>
+      <div class="step-desc">Visit {{CLAIM_URL}} and connect the eligible wallet used before snapshot</div>
+      <div class="step-tag">{{CLAIM_DATE}}</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">Check Eligibility</div>
+      <div class="step-desc">System verifies snapshot balance, tier assignment, and sybil check</div>
+      <div class="step-tag">Instant</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Claim Tokens</div>
+      <div class="step-desc">Approve on-chain transaction — TGE portion transferred immediately to wallet</div>
+      <div class="step-tag">Gas required</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">Stake &amp; Earn</div>
+      <div class="step-desc">Stake claimed tokens for boosted yield while remainder vests monthly</div>
+      <div class="step-tag">Optional</div>
+      <div class="step-arrow">›</div>
+    </div>
+  </div>
+
+  <!-- VESTING TABLE -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ VESTING SCHEDULE</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">TIER-BY-TIER UNLOCK SCHEDULE</div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>TGE Unlock</th>
+          <th>Cliff</th>
+          <th>Linear Vest</th>
+          <th>Month 6</th>
+          <th>Month 12</th>
+          <th>Full Unlock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tier-badge tier-gold">GOLD</span></td>
+          <td class="val-amber">{{GOLD_TGE}}%</td>
+          <td class="val-muted">1 month</td>
+          <td class="val-blue">{{VEST_MONTHS}}M linear</td>
+          <td class="val-amber">~40%</td>
+          <td class="val-amber">~70%</td>
+          <td class="val-amber">Month {{VEST_MONTHS}}</td>
+        </tr>
+        <tr>
+          <td><span class="tier-badge tier-silver">SILVER</span></td>
+          <td class="val-amber">{{SILVER_TGE}}%</td>
+          <td class="val-muted">2 months</td>
+          <td class="val-blue">{{VEST_MONTHS}}M linear</td>
+          <td class="val-amber">~35%</td>
+          <td class="val-amber">~65%</td>
+          <td class="val-amber">Month {{VEST_MONTHS}}</td>
+        </tr>
+        <tr>
+          <td><span class="tier-badge tier-bronze">BRONZE</span></td>
+          <td class="val-amber">{{BRONZE_TGE}}%</td>
+          <td class="val-muted">None</td>
+          <td class="val-blue">{{VEST_MONTHS}}M linear</td>
+          <td class="val-amber">~50%</td>
+          <td class="val-amber">~75%</td>
+          <td class="val-amber">Month {{VEST_MONTHS}}</td>
+        </tr>
+        <tr>
+          <td><span class="tier-badge tier-comm">COMMUNITY</span></td>
+          <td class="val-amber">{{COMM_TGE}}%</td>
+          <td class="val-muted">None</td>
+          <td class="val-muted">{{COMM_VEST}}</td>
+          <td class="val-muted">~60%</td>
+          <td class="val-amber">100%</td>
+          <td class="val-muted">Month 6</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-label">VISUAL UNLOCK TIMELINE</div>
+  <div class="vest-grid">
+    <div class="vest-card">
+      <div class="vest-title">Vesting Timeline</div>
+      <div class="vesting-bar">
+        <div class="vseg vseg-tge">TGE</div>
+        <div class="vseg vseg-cliff">CLIFF</div>
+        <div class="vseg vseg-vest">LINEAR VEST →</div>
+        <div class="vseg vseg-full">100%</div>
       </div>
-      <div class="rule-item">
-        <div class="rule-dot"></div>
-        <div class="rule-text">
-          Holders of <span class="highlight-2">{{COLLECTION_A}}</span> and
-          <span class="highlight-3">{{COLLECTION_B}}</span> NFTs are eligible for
-          <strong>enhanced allocations</strong> based on rarity tier
-        </div>
+      <div class="vesting-axis">
+        <span>TGE</span>
+        <span>M{{CLIFF_END}}</span>
+        <span>M{{MID_VEST}}</span>
+        <span>M{{VEST_MONTHS}}</span>
       </div>
-      <div class="rule-item">
-        <div class="rule-dot"></div>
-        <div class="rule-text">
-          <strong>10% unlocked at TGE</strong> — remaining 90% released linearly over
-          <strong>18 months</strong> with no cliff period
-        </div>
-      </div>
-      <div class="rule-item">
-        <div class="rule-dot"></div>
-        <div class="rule-text">
-          Snapshot taken at block <strong>#{{SNAPSHOT_BLOCK}}</strong> —
-          wallets must hold minimum qualifying balance at snapshot time
-        </div>
-      </div>
-      <div class="rule-item">
-        <div class="rule-dot"></div>
-        <div class="rule-text">
-          Claimable via official portal — KYC required for allocations above
-          <strong>{{KYC_THRESHOLD}} {{TICKER}}</strong>
-        </div>
+      <div class="vesting-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--primary)"></div>TGE ({{TGE_PCT}}%)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#1A2030;border:1px solid #2A3040"></div>Cliff</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--secondary)"></div>Linear Vest</div>
       </div>
     </div>
 
-    <!-- Vesting widget -->
-    <div class="vesting-widget">
-      <div class="vesting-header">
-        <div class="pct-badge">10%</div>
-        <div class="vesting-label">Unlocked<br/>at TGE</div>
+    <div class="callout-col">
+      <div class="callout-box">
+        <div class="cb-lbl">Snapshot Rule</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:4px;">
+          <li style="display:flex;align-items:flex-start;gap:6px;font-size:11px;font-weight:500;color:rgba(255,255,255,0.78);"><span style="color:var(--primary);flex-shrink:0;font-size:9px;margin-top:2px;">▸</span>Snapshot at block <strong style="color:var(--primary);">#{{SNAPSHOT_BLOCK}}</strong></li>
+          <li style="display:flex;align-items:flex-start;gap:6px;font-size:11px;font-weight:500;color:rgba(255,255,255,0.78);"><span style="color:var(--primary);flex-shrink:0;font-size:9px;margin-top:2px;">▸</span>Minimum qualifying balance required</li>
+          <li style="display:flex;align-items:flex-start;gap:6px;font-size:11px;font-weight:500;color:rgba(255,255,255,0.78);"><span style="color:var(--primary);flex-shrink:0;font-size:9px;margin-top:2px;">▸</span>Transfers post-snapshot: no effect on tier</li>
+        </ul>
       </div>
-      <div class="vesting-bar-wrap">
-        <div class="vesting-bar">
-          <div class="bar-seg tge">TGE<br/>10%</div>
-          <div class="bar-seg ramp"></div>
-          <div class="bar-seg full">100%</div>
-        </div>
-        <div class="vesting-axis">
-          <span>TGE</span>
-          <span>M3</span>
-          <span>M6</span>
-          <span>M12</span>
-          <span>M18</span>
-        </div>
-      </div>
-      <div class="vesting-note">
-        <strong>Linear vesting</strong> — tokens unlock daily after TGE.<br/>
-        No sudden unlocks. No cliff.
+      <div class="callout-box sec">
+        <div class="cb-lbl">Locked Allocation</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:4px;">
+          <li style="display:flex;align-items:flex-start;gap:6px;font-size:11px;font-weight:500;color:rgba(255,255,255,0.78);"><span style="color:var(--secondary);flex-shrink:0;font-size:9px;margin-top:2px;">▸</span><strong style="color:var(--secondary);">{{LOCKED_PCT}}%</strong> unlocks monthly post-TGE</li>
+          <li style="display:flex;align-items:flex-start;gap:6px;font-size:11px;font-weight:500;color:rgba(255,255,255,0.78);"><span style="color:var(--secondary);flex-shrink:0;font-size:9px;margin-top:2px;">▸</span>Non-transferable during cliff period</li>
+          <li style="display:flex;align-items:flex-start;gap:6px;font-size:11px;font-weight:500;color:rgba(255,255,255,0.78);"><span style="color:var(--secondary);flex-shrink:0;font-size:9px;margin-top:2px;">▸</span>Automatic vesting — no monthly re-claim needed</li>
+        </ul>
       </div>
     </div>
-
   </div>
 
-  <!-- ── BOTTOM CALLOUT ─────────────────────────────────── -->
-  <div class="bottom-callout">
-    <div class="callout-label">Total<br/>Airdrop</div>
-    <div class="callout-amount">{{AIRDROP_AMOUNT}}</div>
-    <div class="callout-ticker">{{TICKER}}</div>
-    <div class="callout-meta">
-      out of <strong>{{TOTAL_SUPPLY}}</strong> total supply<br/>
-      TGE: <strong>{{TGE_DATE}}</strong>
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <div class="footer-logo">{{TICKER_1}}</div>
+      <div>
+        <div class="footer-name">{{PROJECT_NAME}}</div>
+        <div class="footer-tag">{{TAGLINE}}</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="f-badge">{{CHAIN}}</div>
+      <div class="footer-date">{{WEBSITE}}</div>
     </div>
   </div>
 

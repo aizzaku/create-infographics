@@ -187,6 +187,68 @@ Badges create urgency and context. Rules:
 
 ---
 
+## Body Copy Rules — Bullets Over Paragraphs
+
+### Rule: Bullet points, not paragraphs
+Body text inside any card, panel, or callout box must be bullet points — never prose paragraphs. The only paragraph allowed in an entire infographic is 1–2 sentences in the hero intro.
+
+```
+✅ Inside a card:
+• Earns 8% APY on staked tokens
+• 30-day lock period after deposit
+• Compounding every 24 hours
+
+❌ Inside a card:
+"Users who stake their tokens will earn an 8% annual percentage yield
+on their deposited assets, with a 30-day lock period that applies
+after each deposit, and rewards that compound every 24 hours."
+```
+
+### Rule: One fact per line
+Never wrap explanations into multi-sentence bullet points. Each bullet = one fact, one condition, one number.
+
+```
+✅ One fact per bullet:
+• Min stake: 500 $TKN
+• Lock period: 30 days
+• APY: 8% (compounding daily)
+
+❌ Multi-sentence bullet:
+• Users must stake at least 500 $TKN tokens and maintain the lock
+  for 30 days to earn the 8% APY, which compounds every day.
+```
+
+### Rule: Sentence fragments, not full sentences
+Use the shortest phrase that conveys the fact. Drop articles ("the", "a"), drop "users can", drop "this allows":
+
+```
+✅ Fragment style:
+• Daily rate based on Temperature factor
+• 3 egg types: Common, Rare, Legendary
+• Snapshot: March 31, 2026
+
+❌ Full sentence style:
+• The daily rate is calculated based on the Temperature nurturing factor.
+• There are 3 types of eggs available: Common, Rare, and Legendary.
+• The snapshot will take place on March 31, 2026.
+```
+
+### Rule: Inline token coloring — always color `$TOKEN` names
+Token names mentioned inline in any body text must be wrapped in an accent `<span>`. This is a core signature of the designer's style.
+
+```html
+✅ Colored token reference:
+<li>Hold <span class="highlight">500 $TKN</span> before snapshot</li>
+<li>Earn <span class="highlight">$ARENA</span> + <span class="highlight">$ENERGY</span> daily</li>
+
+❌ Uncolored token reference:
+<li>Hold 500 $TKN before snapshot</li>
+```
+
+Limit: max 2 highlights per bullet. Token names always get colored — limit other highlights to key numbers only.
+
+---
+
 ## Common Mistakes to Avoid
 
 | ❌ Don't | ✅ Do Instead |
@@ -197,3 +259,6 @@ Badges create urgency and context. Rules:
 | Mixed case section labels: "Token Allocation" | **TOKEN ALLOCATION** |
 | Abbreviation without context: "TVL: $2.4M" | **$2.4M TVL** (number first) |
 | Generic tag: "Feature" | **NEW** or **LIVE** |
+| Paragraph inside a card | Bullet list, one fact per line |
+| "The daily rate is based on the Temperature factor" | "Daily rate based on Temperature factor" |
+| Uncolored `$TOKEN` in body text | `<span class="highlight">$TOKEN</span>` |

@@ -1,92 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Event Schedule — Launch / Conference</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
-  <style>
-    :root {
-      --bg: #0D0D0D;
-      --surface: #121212;
-      --border: #222;
-      --primary: #FF4D00; /* Vibrant Orange */
-      --text: #ffffff;
-      --muted: #777;
-      --fd: 'Syne', sans-serif;
-      --fb: 'Plus Jakarta Sans', sans-serif;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: var(--fb); width: 1100px; padding: 80px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE}}</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0E17;
+    --bg2: #111520;
+    --bg3: #161B28;
+    --primary: #FF6B6B;
+    --primary-rgb: 255,107,107;
+    --secondary: #FFD166;
+    --secondary-rgb: 255,209,102;
+    --accent: #4ECBFF;
+    --accent-rgb: 78,203,255;
+    --text: #E8EAF0;
+    --text-muted: #8890A8;
+    --border: rgba(255,255,255,0.08);
+    --border-faint: rgba(255,255,255,0.04);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1080px;
+      margin: 0 auto; background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 13px; line-height: 1.5; }
 
-    h1 { font-family: var(--fd); font-size: 80px; text-transform: uppercase; line-height: 0.9; margin-bottom: 40px; }
-    h1 span { color: var(--primary); }
+  .header {
+    padding: 36px 48px 28px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    background: linear-gradient(135deg, rgba(var(--primary-rgb),0.06) 0%, transparent 55%);
+  }
+  .header-tag { display: inline-flex; align-items: center; background: rgba(var(--primary-rgb),0.1); border: 1px solid rgba(var(--primary-rgb),0.25); color: var(--primary); font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; margin-bottom: 12px; }
+  .header-title { font-family: 'Bebas Neue', sans-serif; font-size: 56px; line-height: 0.92; color: #fff; letter-spacing: 1px; margin-bottom: 10px; }
+  .header-title span { color: var(--primary); }
+  .header-sub { font-size: 12px; color: var(--text-muted); font-weight: 500; max-width: 500px; }
+  .header-right { display: flex; flex-direction: column; gap: 6px; justify-content: center; }
+  .hkpi { background: var(--bg3); border: 1px solid var(--border); padding: 10px 16px; text-align: right; min-width: 120px; }
+  .hkpi-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--primary); line-height: 1; }
+  .hkpi-lbl { font-size: 8.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
 
-    .schedule { display: flex; flex-direction: column; gap: 8px; }
-    .session {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 32px 40px;
-      display: grid;
-      grid-template-columns: 180px 1fr 140px;
-      align-items: center;
-      gap: 32px;
-    }
-    .time { font-family: var(--fd); font-size: 20px; color: var(--primary); }
-    .info h3 { font-family: var(--fd); font-size: 24px; margin-bottom: 4px; text-transform: uppercase; }
-    .info p { color: var(--muted); font-size: 14px; font-weight: 500; }
-    .speaker { text-align: right; font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--muted); }
+  .section-label { display: flex; align-items: center; gap: 14px; padding: 0 48px 12px; }
+  .section-label-text { font-size: 8.5px; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--primary); white-space: nowrap; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    .highlight { border-color: var(--primary); }
+  .stat-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; padding: 0 48px 28px; }
+  .stat-box { background: var(--bg3); border: 1px solid var(--border); padding: 14px 16px; position: relative; }
+  .stat-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--primary); }
+  .stat-box.s2::before { background: var(--secondary); }
+  .stat-box.s3::before { background: var(--accent); }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: #fff; line-height: 1; }
+  .stat-label { font-size: 8.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
 
-    .bottom-bar { margin-top: 64px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid var(--text); padding-top: 24px; }
-    .location { font-family: var(--fd); font-size: 18px; text-transform: uppercase; }
-    .cta { background: var(--text); color: var(--bg); padding: 8px 24px; font-family: var(--fd); font-weight: 800; font-size: 14px; text-transform: uppercase; }
-  </style>
+  /* Day columns */
+  .day-grid { padding: 0 48px 28px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .day-col { background: var(--bg3); border: 1px solid var(--border); overflow: hidden; }
+  .day-header {
+    padding: 10px 14px;
+    background: rgba(var(--primary-rgb),0.08);
+    border-bottom: 1px solid rgba(var(--primary-rgb),0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .day-name { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
+  .day-date { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: rgba(255,255,255,0.6); }
+  .day-events { display: flex; flex-direction: column; gap: 0; }
+  .event-slot { padding: 9px 14px; border-bottom: 1px solid var(--border-faint); display: grid; grid-template-columns: 52px 1fr; gap: 10px; align-items: flex-start; }
+  .event-slot:last-child { border-bottom: none; }
+  .event-time { font-size: 9px; font-weight: 700; letter-spacing: 0.5px; color: var(--text-muted); padding-top: 2px; }
+  .event-info {}
+  .event-name { font-size: 11px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+  .event-loc { font-size: 9.5px; color: var(--text-muted); font-weight: 500; }
+  .event-tag {
+    display: inline-block;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: 2px;
+    margin-top: 3px;
+  }
+  .et-main { background: rgba(var(--primary-rgb),0.12); color: var(--primary); border: 1px solid rgba(var(--primary-rgb),0.25); }
+  .et-side { background: rgba(var(--secondary-rgb),0.12); color: var(--secondary); border: 1px solid rgba(var(--secondary-rgb),0.25); }
+  .et-break { background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border); }
+  .et-keynote { background: rgba(var(--accent-rgb),0.12); color: var(--accent); border: 1px solid rgba(var(--accent-rgb),0.25); }
+
+  .arrow-connector { display: flex; align-items: center; gap: 10px; padding: 10px 48px 20px; }
+  .arrow-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(var(--primary-rgb),0.4), transparent); }
+  .arrow-icon { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(var(--primary-rgb),0.6); padding: 4px 12px; border-radius: 3px; background: rgba(var(--primary-rgb),0.08); border: 1px solid rgba(var(--primary-rgb),0.22); }
+
+  /* Full schedule table */
+  .table-wrap { padding: 0 48px 28px; }
+  .dense-table { width: 100%; border-collapse: collapse; font-size: 12px; border: 1px solid var(--border); }
+  .dense-table thead tr { background: rgba(var(--primary-rgb),0.07); }
+  .dense-table thead th { padding: 8px 12px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); text-align: left; border-bottom: 1px solid rgba(var(--primary-rgb),0.2); }
+  .dense-table td { padding: 7px 12px; vertical-align: middle; font-weight: 500; border-bottom: 1px solid var(--border-faint); }
+  .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .dense-table tbody tr:last-child td { border-bottom: none; }
+  .td-name { font-weight: 700; color: #fff; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 2px; font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .badge-key { background: rgba(var(--primary-rgb),0.12); color: var(--primary); border: 1px solid rgba(var(--primary-rgb),0.25); }
+  .badge-side { background: rgba(var(--secondary-rgb),0.12); color: var(--secondary); border: 1px solid rgba(var(--secondary-rgb),0.25); }
+  .badge-net { background: rgba(var(--accent-rgb),0.12); color: var(--accent); border: 1px solid rgba(var(--accent-rgb),0.25); }
+  .badge-ws { background: rgba(255,255,255,0.06); color: var(--text-muted); border: 1px solid var(--border); }
+
+  /* Speaker grid */
+  .speaker-grid { padding: 0 48px 28px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .speaker-card { background: var(--bg3); border: 1px solid var(--border); padding: 14px 16px; }
+  .sp-name { font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+  .sp-role { font-size: 10px; font-weight: 500; color: var(--primary); margin-bottom: 4px; }
+  .sp-org { font-size: 10px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
+  .sp-topic { font-size: 10.5px; font-weight: 500; color: var(--text); line-height: 1.35; padding-top: 8px; border-top: 1px solid var(--border); }
+
+  .two-col { padding: 0 48px 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .bullet-panel { background: var(--bg3); border: 1px solid var(--border); padding: 16px 18px; }
+  .bp-title { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .bullet-panel ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .bullet-panel li { display: flex; align-items: flex-start; gap: 7px; font-size: 11.5px; font-weight: 500; line-height: 1.4; }
+  .bullet-panel li::before { content: '▸'; color: var(--primary); font-size: 9px; flex-shrink: 0; margin-top: 2px; }
+  .bullet-panel.alt .bp-title { color: var(--secondary); }
+  .bullet-panel.alt li::before { color: var(--secondary); }
+
+  .callout-strip { padding: 0 48px 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .cb { background: rgba(var(--primary-rgb),0.06); border: 1px solid rgba(var(--primary-rgb),0.18); padding: 14px 16px; border-radius: 2px; }
+  .cb.alt { background: rgba(var(--secondary-rgb),0.06); border-color: rgba(var(--secondary-rgb),0.18); }
+  .cb-lbl { font-size: 8.5px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 5px; }
+  .cb.alt .cb-lbl { color: var(--secondary); }
+  .cb-txt { font-size: 11.5px; font-weight: 500; line-height: 1.45; }
+
+  .footer { padding: 16px 48px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); background: var(--bg2); }
+  .footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 2px; color: var(--primary); }
+  .footer-note { font-size: 9.5px; color: var(--text-muted); font-weight: 500; }
+  .footer-date { font-size: 9.5px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; }
+</style>
 </head>
 <body>
 
-  <h1>EVENT <span>AGENDA</span></h1>
+<div class="header">
+  <div>
+    <div class="header-tag">{{CATEGORY}} · EVENT SCHEDULE</div>
+    <div class="header-title"><span>{{EVENT_NAME}}</span><br>{{SUBTITLE_LINE}}</div>
+    <div class="header-sub">{{DESCRIPTION}}</div>
+  </div>
+  <div class="header-right">
+    <div class="hkpi"><div class="hkpi-val">{{KPI1_VAL}}</div><div class="hkpi-lbl">{{KPI1_LABEL}}</div></div>
+    <div class="hkpi"><div class="hkpi-val" style="color:var(--secondary);">{{KPI2_VAL}}</div><div class="hkpi-lbl">{{KPI2_LABEL}}</div></div>
+    <div class="hkpi"><div class="hkpi-val" style="color:var(--accent);">{{KPI3_VAL}}</div><div class="hkpi-lbl">{{KPI3_LABEL}}</div></div>
+  </div>
+</div>
 
-  <div class="schedule">
-    <div class="session">
-      <div class="time">09:00 AM</div>
-      <div class="info">
-        <h3>Opening Keynote</h3>
-        <p>The future of decentralized design and agentic workflows.</p>
-      </div>
-      <div class="speaker">Sarah J. Miller</div>
+<div style="padding:28px 48px 8px;">
+  <div class="section-label"><span class="section-label-text">Event Stats</span></div>
+</div>
+<div class="stat-strip">
+  <div class="stat-box"><div class="stat-val">{{STAT1_VAL}}</div><div class="stat-label">{{STAT1_LABEL}}</div></div>
+  <div class="stat-box s2"><div class="stat-val">{{STAT2_VAL}}</div><div class="stat-label">{{STAT2_LABEL}}</div></div>
+  <div class="stat-box s3"><div class="stat-val">{{STAT3_VAL}}</div><div class="stat-label">{{STAT3_LABEL}}</div></div>
+  <div class="stat-box"><div class="stat-val">{{STAT4_VAL}}</div><div class="stat-label">{{STAT4_LABEL}}</div></div>
+  <div class="stat-box s2"><div class="stat-val">{{STAT5_VAL}}</div><div class="stat-label">{{STAT5_LABEL}}</div></div>
+</div>
+
+<div style="padding:0 48px 8px;">
+  <div class="section-label"><span class="section-label-text">Daily Schedule</span></div>
+</div>
+<div class="day-grid">
+  <div class="day-col">
+    <div class="day-header">
+      <div class="day-name">{{DAY1_NAME}}</div>
+      <div class="day-date">{{DAY1_DATE}}</div>
     </div>
-    <div class="session highlight">
-      <div class="time">11:30 AM</div>
-      <div class="info">
-        <h3>Workshop: AI Logic</h3>
-        <p>Deep dive into configuring custom skills for autonomous agents.</p>
+    <div class="day-events">
+      <div class="event-slot">
+        <div class="event-time">{{D1E1_TIME}}</div>
+        <div class="event-info"><div class="event-name">{{D1E1_NAME}}</div><div class="event-loc">{{D1E1_LOC}}</div><span class="event-tag et-keynote">Keynote</span></div>
       </div>
-      <div class="speaker">Marcus Chen</div>
-    </div>
-    <div class="session">
-      <div class="time">02:00 PM</div>
-      <div class="info">
-        <h3>Breakout Sessions</h3>
-        <p>Multiple tracks including security hardening and UI patterns.</p>
+      <div class="event-slot">
+        <div class="event-time">{{D1E2_TIME}}</div>
+        <div class="event-info"><div class="event-name">{{D1E2_NAME}}</div><div class="event-loc">{{D1E2_LOC}}</div><span class="event-tag et-main">Main Stage</span></div>
       </div>
-      <div class="speaker">Track Leads</div>
-    </div>
-    <div class="session">
-      <div class="time">05:00 PM</div>
-      <div class="info">
-        <h3>Closing Ceremony</h3>
-        <p>Awards, networking drinks, and final project reveals.</p>
+      <div class="event-slot">
+        <div class="event-time">{{D1E3_TIME}}</div>
+        <div class="event-info"><div class="event-name">{{D1E3_NAME}}</div><div class="event-loc">{{D1E3_LOC}}</div><span class="event-tag et-break">Break</span></div>
       </div>
-      <div class="speaker">Executive Team</div>
+      <div class="event-slot">
+        <div class="event-time">{{D1E4_TIME}}</div>
+        <div class="event-info"><div class="event-name">{{D1E4_NAME}}</div><div class="event-loc">{{D1E4_LOC}}</div><span class="event-tag et-side">Workshop</span></div>
+      </div>
+      <div class="event-slot">
+        <div class="event-time">{{D1E5_TIME}}</div>
+        <div class="event-info"><div class="event-name">{{D1E5_NAME}}</div><div class="event-loc">{{D1E5_LOC}}</div><span class="event-tag et-main">Panel</span></div>
+      </div>
     </div>
   </div>
-
-  <div class="bottom-bar">
-    <div class="location">PIER 27, SAN FRANCISCO / OCT 12</div>
-    <div class="cta">Register Now</div>
+  <div class="day-col">
+    <div class="day-header">
+      <div class="day-name">{{DAY2_NAME}}</div>
+      <div class="day-date">{{DAY2_DATE}}</div>
+    </div>
+    <div class="day-events">
+      <div class="event-slot">
+        <div class="event-time">{{D2E1_TIME}}</div>
+        <div class="event-info"><div class="event-name">{{D2E1_NAME}}</div><div class="event-loc">{{D2E1_LOC}}</div><span class="event-tag et-main">Main Stage</span></div>
+      </div>
+      <div class="event-slot">
+        <div class="event-time">{{D2E2_TIME}}</div>
+        <div class="event-info"><div class="event-name">{{D2E2_NAME}}</div><div class="event-loc">{{D2E2_LOC}}</div><span class="event-tag et-side">Workshop</span></div>
+      </div>
+      <div class="event-slot">
+        <div class="event-time">{{D2E3_TIME}}</div>
+        <div class="event-info"><div class="event-name">{{D2E3_NAME}}</div><div class="event-loc">{{D2E3_LOC}}</div><span class="event-tag et-keynote">Fireside</span></div>
+      </div>
+      <div class="event-slot">
+        <div class="event-time">{{D2E4_TIME}}</div>
+        <div class="event-info"><div class="event-name">{{D2E4_NAME}}</div><div class="event-loc">{{D2E4_LOC}}</div><span class="event-tag et-break">Break</span></div>
+      </div>
+      <div class="event-slot">
+        <div class="event-time">{{D2E5_TIME}}</div>
+        <div class="event-info"><div class="event-name">{{D2E5_NAME}}</div><div class="event-loc">{{D2E5_LOC}}</div><span class="event-tag et-main">Closing</span></div>
+      </div>
+    </div>
   </div>
+  <div class="day-col">
+    <div class="day-header">
+      <div class="day-name">{{DAY3_NAME}}</div>
+      <div class="day-date">{{DAY3_DATE}}</div>
+    </div>
+    <div class="day-events">
+      <div class="event-slot">
+        <div class="event-time">{{D3E1_TIME}}</div>
+        <div class="event-info"><div class="event-name">{{D3E1_NAME}}</div><div class="event-loc">{{D3E1_LOC}}</div><span class="event-tag et-side">Workshop</span></div>
+      </div>
+      <div class="event-slot">
+        <div class="event-time">{{D3E2_TIME}}</div>
+        <div class="event-info"><div class="event-name">{{D3E2_NAME}}</div><div class="event-loc">{{D3E2_LOC}}</div><span class="event-tag et-keynote">Keynote</span></div>
+      </div>
+      <div class="event-slot">
+        <div class="event-time">{{D3E3_TIME}}</div>
+        <div class="event-info"><div class="event-name">{{D3E3_NAME}}</div><div class="event-loc">{{D3E3_LOC}}</div><span class="event-tag et-main">Demo</span></div>
+      </div>
+      <div class="event-slot">
+        <div class="event-time">{{D3E4_TIME}}</div>
+        <div class="event-info"><div class="event-name">{{D3E4_NAME}}</div><div class="event-loc">{{D3E4_LOC}}</div><span class="event-tag et-break">Networking</span></div>
+      </div>
+      <div class="event-slot">
+        <div class="event-time">{{D3E5_TIME}}</div>
+        <div class="event-info"><div class="event-name">{{D3E5_NAME}}</div><div class="event-loc">{{D3E5_LOC}}</div><span class="event-tag et-main">Awards</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="arrow-connector">
+  <div class="arrow-line"></div>
+  <div class="arrow-icon">FULL AGENDA</div>
+  <div class="arrow-line"></div>
+</div>
+
+<div style="padding:0 48px 8px;">
+  <div class="section-label"><span class="section-label-text">Session Overview</span></div>
+</div>
+<div class="table-wrap">
+  <table class="dense-table">
+    <thead>
+      <tr>
+        <th>Session</th>
+        <th>Day / Time</th>
+        <th>Speaker</th>
+        <th>Track</th>
+        <th>Capacity</th>
+        <th>Type</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="td-name">{{S1_NAME}}</td><td style="color:var(--text-muted);">{{S1_WHEN}}</td><td>{{S1_SPEAKER}}</td><td>{{S1_TRACK}}</td><td>{{S1_CAP}}</td><td><span class="badge badge-key">Keynote</span></td><td style="color:var(--text-muted);">{{S1_LOC}}</td></tr>
+      <tr><td class="td-name">{{S2_NAME}}</td><td style="color:var(--text-muted);">{{S2_WHEN}}</td><td>{{S2_SPEAKER}}</td><td>{{S2_TRACK}}</td><td>{{S2_CAP}}</td><td><span class="badge badge-side">Workshop</span></td><td style="color:var(--text-muted);">{{S2_LOC}}</td></tr>
+      <tr><td class="td-name">{{S3_NAME}}</td><td style="color:var(--text-muted);">{{S3_WHEN}}</td><td>{{S3_SPEAKER}}</td><td>{{S3_TRACK}}</td><td>{{S3_CAP}}</td><td><span class="badge badge-net">Fireside</span></td><td style="color:var(--text-muted);">{{S3_LOC}}</td></tr>
+      <tr><td class="td-name">{{S4_NAME}}</td><td style="color:var(--text-muted);">{{S4_WHEN}}</td><td>{{S4_SPEAKER}}</td><td>{{S4_TRACK}}</td><td>{{S4_CAP}}</td><td><span class="badge badge-key">Panel</span></td><td style="color:var(--text-muted);">{{S4_LOC}}</td></tr>
+      <tr><td class="td-name">{{S5_NAME}}</td><td style="color:var(--text-muted);">{{S5_WHEN}}</td><td>{{S5_SPEAKER}}</td><td>{{S5_TRACK}}</td><td>{{S5_CAP}}</td><td><span class="badge badge-ws">Demo</span></td><td style="color:var(--text-muted);">{{S5_LOC}}</td></tr>
+      <tr><td class="td-name">{{S6_NAME}}</td><td style="color:var(--text-muted);">{{S6_WHEN}}</td><td>{{S6_SPEAKER}}</td><td>{{S6_TRACK}}</td><td>{{S6_CAP}}</td><td><span class="badge badge-net">Networking</span></td><td style="color:var(--text-muted);">{{S6_LOC}}</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="padding:0 48px 8px;">
+  <div class="section-label"><span class="section-label-text">Featured Speakers</span></div>
+</div>
+<div class="speaker-grid">
+  <div class="speaker-card">
+    <div class="sp-name">{{SP1_NAME}}</div>
+    <div class="sp-role">{{SP1_ROLE}}</div>
+    <div class="sp-org">{{SP1_ORG}}</div>
+    <div class="sp-topic">{{SP1_TOPIC}}</div>
+  </div>
+  <div class="speaker-card">
+    <div class="sp-name">{{SP2_NAME}}</div>
+    <div class="sp-role">{{SP2_ROLE}}</div>
+    <div class="sp-org">{{SP2_ORG}}</div>
+    <div class="sp-topic">{{SP2_TOPIC}}</div>
+  </div>
+  <div class="speaker-card">
+    <div class="sp-name">{{SP3_NAME}}</div>
+    <div class="sp-role">{{SP3_ROLE}}</div>
+    <div class="sp-org">{{SP3_ORG}}</div>
+    <div class="sp-topic">{{SP3_TOPIC}}</div>
+  </div>
+  <div class="speaker-card">
+    <div class="sp-name">{{SP4_NAME}}</div>
+    <div class="sp-role">{{SP4_ROLE}}</div>
+    <div class="sp-org">{{SP4_ORG}}</div>
+    <div class="sp-topic">{{SP4_TOPIC}}</div>
+  </div>
+</div>
+
+<div style="padding:0 48px 8px;">
+  <div class="section-label"><span class="section-label-text">Attendee Info</span></div>
+</div>
+<div class="two-col">
+  <div class="bullet-panel">
+    <div class="bp-title">What to Expect</div>
+    <ul>
+      <li>{{EXP1}}</li>
+      <li>{{EXP2}}</li>
+      <li>{{EXP3}}</li>
+      <li>{{EXP4}}</li>
+      <li>{{EXP5}}</li>
+    </ul>
+  </div>
+  <div class="bullet-panel alt">
+    <div class="bp-title">Need to Know</div>
+    <ul>
+      <li>{{NTK1}}</li>
+      <li>{{NTK2}}</li>
+      <li>{{NTK3}}</li>
+      <li>{{NTK4}}</li>
+      <li>{{NTK5}}</li>
+    </ul>
+  </div>
+</div>
+
+<div style="padding:0 48px 8px;">
+  <div class="section-label"><span class="section-label-text">Highlights</span></div>
+</div>
+<div class="callout-strip">
+  <div class="cb"><div class="cb-lbl">Don't Miss</div><div class="cb-txt">{{CALLOUT1}}</div></div>
+  <div class="cb alt"><div class="cb-lbl">Exclusive</div><div class="cb-txt">{{CALLOUT2}}</div></div>
+  <div class="cb"><div class="cb-lbl">After-Party</div><div class="cb-txt">{{CALLOUT3}}</div></div>
+</div>
+
+<div class="footer">
+  <div class="footer-brand">{{BRAND}}</div>
+  <div class="footer-note">{{FOOTER_NOTE}}</div>
+  <div class="footer-date">{{DATE}}</div>
+</div>
 
 </body>
 </html>

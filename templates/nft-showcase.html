@@ -1,132 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>{{COLLECTION_NAME}} — NFT Showcase</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Press+Start+2P&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --bg:#050A14;--surface:#08101E;--border:#0E1A2E;
-      --cyan:#1AA8B8;--cyan-hi:#42F3EE;--gold:#F6B629;
-      --purple:#C44BFF;--green:#32D06E;
-      --text:#F4F3E9;--muted:#788A9A;
-      --fd:'Orbitron',monospace;--fp:'Press Start 2P',monospace;
-      --fb:'Montserrat',sans-serif;
-    }
-    body{background:var(--bg);font-family:var(--fb);color:var(--text);width:1100px;padding:12px}
-    .frame{border:2px solid var(--cyan);box-shadow:0 0 40px rgba(26,168,184,.12);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{COLLECTION_NAME}} — NFT Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #05080F;
+    --bg-card:      #080D18;
+    --bg-section:   #0C1220;
+    --primary:      #1AA8B8;
+    --primary-rgb:  26,168,184;
+    --secondary:    #C44BFF;
+    --secondary-rgb:196,75,255;
+    --accent:       #F6B629;
+    --accent-rgb:   246,182,41;
+    --text:         #F4F3E9;
+    --muted:        #788A9A;
+    --border:       rgba(255,255,255,0.07);
+    --border-faint: rgba(255,255,255,0.03);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; width: 1080px;
+      margin: 0 auto; }
 
-    /* header */
-    .hdr{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;background:linear-gradient(to right,rgba(26,168,184,.15),transparent);border-bottom:1px solid var(--cyan)}
-    .hdr-name{font-family:var(--fp);font-size:13px;color:var(--cyan-hi);letter-spacing:.05em}
-    .chain-badge{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--text);background:rgba(255,255,255,.06);border:1px solid var(--border);padding:4px 12px;border-radius:20px}
-    .logo-slot{width:60px;height:24px;background:var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--muted)}
-    .hdr-right{display:flex;align-items:center;gap:16px}
+  .hero { display: grid; grid-template-columns: 1fr 310px; gap: 32px; padding: 40px 48px 36px; background: linear-gradient(135deg, rgba(26,168,184,0.08) 0%, transparent 60%); border-bottom: 2px solid var(--primary); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -60px; right: 180px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(26,168,184,0.10) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 3px; background: rgba(26,168,184,0.12); border: 1px solid rgba(26,168,184,0.30); font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--primary); margin-bottom: 14px; }
+  .hero-eyebrow span { width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: 68px; letter-spacing: 2px; line-height: 0.92; color: var(--text); margin-bottom: 18px; }
+  .hero-title em { color: var(--primary); font-style: normal; }
+  .hero-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .hero-bullets li { display: flex; align-items: flex-start; gap: 8px; font-size: 11.5px; font-weight: 500; color: var(--muted); line-height: 1.4; }
+  .hero-bullets li::before { content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0; }
+  .hero-card { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.25); padding: 20px 18px; align-self: start; }
+  .hero-card-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+  .hero-kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 14px; }
+  .hero-kpi { background: rgba(255,255,255,0.03); padding: 10px 11px; border: 1px solid var(--border-faint); }
+  .hero-kpi-val { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 1px; color: var(--primary); line-height: 1; }
+  .hero-kpi-val.sec { color: var(--secondary); }
+  .hero-kpi-val.acc { color: var(--accent); }
+  .hero-kpi-lbl { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+  .hero-note { font-size: 10px; font-weight: 500; color: var(--muted); line-height: 1.5; padding-top: 10px; border-top: 1px solid var(--border); }
 
-    /* hero grid */
-    .hero{display:grid;grid-template-columns:280px 1fr 1fr;border-bottom:1px solid var(--border);min-height:220px}
-    .art{background:linear-gradient(135deg,#0A1428,#0E1E38);border-right:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;color:var(--cyan);opacity:.5}
-    .art i{font-size:48px}
-    .info{padding:22px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
-    .tag-badge{display:inline-flex;align-items:center;background:rgba(66,243,238,.1);border:1px solid var(--cyan-hi);padding:4px 10px;border-radius:4px;font-family:var(--fp);font-size:7px;color:var(--cyan-hi);letter-spacing:.06em;margin-bottom:4px}
-    .nft-title{font-family:var(--fd);font-size:26px;font-weight:800;line-height:1.1;text-transform:uppercase}
-    .nft-desc{font-size:11.5px;color:var(--muted);line-height:1.6;font-weight:500;flex:1}
-    .mint-row{display:flex;align-items:baseline;gap:8px;margin-top:auto}
-    .mint-lbl{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-    .mint-val{font-family:var(--fd);font-size:18px;font-weight:700;color:var(--gold)}
-    .stats-col{padding:22px;display:flex;flex-direction:column;gap:12px}
-    .srow{display:flex;align-items:baseline;gap:8px}
-    .slbl{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);width:64px;flex-shrink:0}
-    .sval{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--cyan-hi)}
-    .sval.gold{color:var(--gold)}.sval.green{color:var(--green)}
+  .stat-strip { display: grid; grid-template-columns: repeat(5,1fr); gap: 2px; padding: 20px 48px 28px; }
+  .stat-box { background: var(--bg-card); border: 1px solid var(--border); padding: 12px 14px; position: relative; }
+  .stat-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--primary); }
+  .stat-box.sec::before { background: var(--secondary); }
+  .stat-box.acc::before { background: var(--accent); }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .stat-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .stat-sub { font-size: 9px; color: var(--muted); margin-top: 2px; }
 
-    /* supply bar */
-    .sbar{display:flex;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-    .scell{flex:1;padding:12px 22px;border-right:1px solid var(--border);display:flex;align-items:center;gap:10px}
-    .scell:last-child{border-right:none}
-    .scell i{font-size:18px;color:var(--cyan)}
-    .smeta{display:flex;flex-direction:column;gap:1px}
-    .sval2{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--text)}
-    .skey{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .section-label { display: flex; align-items: center; gap: 14px; font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); padding: 0 48px 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .arrow-connector { display: flex; align-items: center; gap: 10px; padding: 10px 48px 20px; }
+  .arrow-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(var(--primary-rgb),0.4), transparent); }
+  .arrow-icon { display: flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); padding: 4px 12px; border-radius: 3px; background: rgba(var(--primary-rgb),0.08); border: 1px solid rgba(var(--primary-rgb),0.22); }
 
-    /* table */
-    .table-sec{padding:20px 28px}
-    .table-title{font-family:var(--fp);font-size:8px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
-    .rtable{width:100%;border-collapse:separate;border-spacing:0}
-    .rtable th{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:8px 14px;text-align:left;border-bottom:1px solid var(--border)}
-    .th-c{color:#9A9A9A}.th-u{color:#4AC7FF}.th-r{color:var(--purple)}.th-l{color:var(--gold)}
-    .rtable td{font-size:12px;font-weight:500;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.03)}
-    .rtable tr:last-child td{border-bottom:none}
-    .rlbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-    .vc{color:#9A9A9A}.vu{color:#4AC7FF}.vr{color:var(--purple)}.vl{color:var(--gold);font-weight:700}
+  .table-wrap { margin: 0 48px 28px; border: 1px solid var(--border); overflow: hidden; }
+  .dense-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .dense-table thead tr { background: rgba(var(--primary-rgb),0.07); border-bottom: 1px solid rgba(var(--primary-rgb),0.22); }
+  .dense-table thead th { padding: 9px 12px; text-align: left; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
+  .dense-table.sec-h thead tr { background: rgba(var(--secondary-rgb),0.07); border-bottom-color: rgba(var(--secondary-rgb),0.22); }
+  .dense-table.sec-h thead th { color: var(--secondary); }
+  .dense-table.acc-h thead tr { background: rgba(var(--accent-rgb),0.07); border-bottom-color: rgba(var(--accent-rgb),0.22); }
+  .dense-table.acc-h thead th { color: var(--accent); }
+  .dense-table tbody tr { border-bottom: 1px solid var(--border-faint); }
+  .dense-table tbody tr:last-child { border-bottom: none; }
+  .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .dense-table td { padding: 7px 12px; vertical-align: middle; font-weight: 500; }
+  .val-teal   { color: var(--primary);   font-weight: 700; }
+  .val-purple { color: var(--secondary); font-weight: 700; }
+  .val-gold   { color: var(--accent);    font-weight: 700; }
+  .val-muted  { color: var(--muted);     font-weight: 500; }
+  .val-text   { color: var(--text);      font-weight: 500; }
+  .p-tag { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+  .p-legendary { background: rgba(196,75,255,0.12); color: var(--secondary); border: 1px solid rgba(196,75,255,0.30); }
+  .p-epic      { background: rgba(26,168,184,0.10);  color: var(--primary);   border: 1px solid rgba(26,168,184,0.28); }
+  .p-rare      { background: rgba(246,182,41,0.10);  color: var(--accent);    border: 1px solid rgba(246,182,41,0.28); }
+  .p-common    { background: rgba(255,255,255,0.05); color: var(--muted);     border: 1px solid var(--border); }
 
-    /* footer */
-    .ftr{padding:12px 28px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(26,168,184,.04)}
-    .ftr-note{font-size:10px;color:var(--muted)}
-    .ftr-brand{font-family:var(--fp);font-size:8px;color:var(--cyan);letter-spacing:.1em}
-  </style>
+  .panel-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 48px 28px; }
+  .bullet-panel { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.18); padding: 16px 18px; }
+  .bullet-panel.sec { border-color: rgba(var(--secondary-rgb),0.18); }
+  .bp-header { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--primary); padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+  .bullet-panel.sec .bp-header { color: var(--secondary); }
+  .bullet-panel ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .bullet-panel li { display: flex; align-items: flex-start; gap: 7px; font-size: 11.5px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .bullet-panel li::before { content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0; }
+  .bullet-panel.sec li::before { color: var(--secondary); }
+  .bullet-panel li span { color: var(--muted); }
+
+  .callout-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; padding: 0 48px 32px; }
+  .callout-box { padding: 14px 16px; border: 1px solid var(--border); border-left: 3px solid var(--primary); background: var(--bg-section); }
+  .callout-box.sec { border-left-color: var(--secondary); }
+  .callout-box.acc { border-left-color: var(--accent); }
+  .cb-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 6px; }
+  .callout-box.sec .cb-lbl { color: var(--secondary); }
+  .callout-box.acc .cb-lbl { color: var(--accent); }
+  .cb-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .cb-desc { font-size: 11px; font-weight: 500; color: var(--muted); line-height: 1.45; }
+
+  .footer { display: flex; align-items: center; justify-content: space-between; padding: 18px 48px; border-top: 1px solid var(--border); background: rgba(var(--primary-rgb),0.03); }
+  .footer-left { display: flex; align-items: center; gap: 12px; }
+  .footer-logo { width: 30px; height: 30px; border-radius: 5px; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 13px; color: #000; }
+  .footer-name { font-size: 12px; font-weight: 700; color: var(--text); letter-spacing: 1px; }
+  .footer-tag  { font-size: 9px; color: var(--muted); font-weight: 500; }
+  .footer-right { display: flex; align-items: center; gap: 14px; }
+  .f-badge { padding: 3px 10px; border-radius: 3px; border: 1px solid var(--border); font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .footer-date { font-size: 10px; color: var(--muted); }
+</style>
 </head>
 <body>
-<div class="frame">
-  <div class="hdr">
-    <div class="hdr-name">{{COLLECTION_NAME}}</div>
-    <div class="hdr-right">
-      <div class="chain-badge">{{BLOCKCHAIN}}</div>
-      <div class="logo-slot">LOGO</div>
-    </div>
-  </div>
 
   <div class="hero">
-    <div class="art"><i class="ph ph-image-square"></i></div>
-    <div class="info">
-      <div class="tag-badge">{{COLLECTION_TAG}}</div>
-      <div class="nft-title">{{COLLECTION_FULL_NAME}}</div>
-      <div class="nft-desc">{{COLLECTION_DESCRIPTION}}</div>
-      <div class="mint-row"><div class="mint-lbl">Mint Price</div><div class="mint-val">{{MINT_PRICE}}</div></div>
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span></span>NFT COLLECTION</div>
+      <div class="hero-title"><em>{{COLLECTION_NAME}}</em></div>
+      <ul class="hero-bullets">
+        <li>{{COLLECTION_DESC}} — {{ITEM_COUNT}} unique items on {{BLOCKCHAIN}}</li>
+        <li>Floor price: {{FLOOR_PRICE}} · 24h volume: {{DAILY_VOLUME}} · Market cap: {{MARKET_CAP}}</li>
+        <li>{{HOLDER_COUNT}} unique holders · {{LISTED_PCT}}% currently listed</li>
+        <li>Royalties: {{ROYALTY_PCT}}% · Creator: {{CREATOR}} · Launched {{LAUNCH_DATE}}</li>
+      </ul>
     </div>
-    <div class="stats-col">
-      <div class="srow"><div class="slbl">Supply</div><div class="sval">{{TOTAL_SUPPLY}}</div></div>
-      <div class="srow"><div class="slbl">Chain</div><div class="sval">{{BLOCKCHAIN}}</div></div>
-      <div class="srow"><div class="slbl">Factions</div><div class="sval green">{{FACTION_COUNT}}</div></div>
-      <div class="srow"><div class="slbl">Traits</div><div class="sval">{{TRAIT_COUNT}}+</div></div>
-      <div class="srow"><div class="slbl">Royalty</div><div class="sval">{{ROYALTY_PCT}}</div></div>
+    <div class="hero-card">
+      <div class="hero-card-lbl">Collection Stats</div>
+      <div class="hero-kpi-grid">
+        <div class="hero-kpi"><div class="hero-kpi-val">{{FLOOR_PRICE}}</div><div class="hero-kpi-lbl">Floor</div></div>
+        <div class="hero-kpi"><div class="hero-kpi-val sec">{{TOTAL_VOLUME}}</div><div class="hero-kpi-lbl">Total Vol</div></div>
+        <div class="hero-kpi"><div class="hero-kpi-val acc">{{ITEM_COUNT}}</div><div class="hero-kpi-lbl">Items</div></div>
+        <div class="hero-kpi"><div class="hero-kpi-val">{{HOLDER_COUNT}}</div><div class="hero-kpi-lbl">Holders</div></div>
+      </div>
+      <div class="hero-note">{{BLOCKCHAIN}} · {{STANDARD}} · Royalty: {{ROYALTY_PCT}}%</div>
     </div>
   </div>
 
-  <div class="sbar">
-    <div class="scell"><i class="ph ph-database"></i><div class="smeta"><div class="sval2">{{TOTAL_SUPPLY}}</div><div class="skey">Total Supply</div></div></div>
-    <div class="scell"><i class="ph ph-link"></i><div class="smeta"><div class="sval2">{{BLOCKCHAIN}}</div><div class="skey">Chain</div></div></div>
-    <div class="scell"><i class="ph ph-hourglass"></i><div class="smeta"><div class="sval2">{{MINT_DATE}}</div><div class="skey">Launch Date</div></div></div>
-    <div class="scell"><i class="ph ph-storefront"></i><div class="smeta"><div class="sval2">{{MARKETPLACE}}</div><div class="skey">Marketplace</div></div></div>
+  <div class="stat-strip">
+    <div class="stat-box"><div class="stat-val">{{FLOOR_PRICE}}</div><div class="stat-lbl">Floor Price</div><div class="stat-sub">{{FLOOR_CHANGE}}% 24h</div></div>
+    <div class="stat-box sec"><div class="stat-val">{{TOTAL_VOLUME}}</div><div class="stat-lbl">Total Volume</div><div class="stat-sub">All-time</div></div>
+    <div class="stat-box acc"><div class="stat-val">{{MARKET_CAP}}</div><div class="stat-lbl">Market Cap</div><div class="stat-sub">Floor × supply</div></div>
+    <div class="stat-box"><div class="stat-val">{{HOLDER_COUNT}}</div><div class="stat-lbl">Holders</div><div class="stat-sub">Unique wallets</div></div>
+    <div class="stat-box sec"><div class="stat-val">{{LISTED_PCT}}%</div><div class="stat-lbl">Listed</div><div class="stat-sub">Of total supply</div></div>
   </div>
 
-  <div class="table-sec">
-    <div class="table-title">// RARITY & UTILITY BREAKDOWN</div>
-    <table class="rtable">
+  <div class="section-label">RARITY TIER BREAKDOWN</div>
+  <div class="table-wrap">
+    <table class="dense-table">
       <thead>
-        <tr>
-          <th></th>
-          <th class="th-c">COMMON</th>
-          <th class="th-u">UNCOMMON</th>
-          <th class="th-r">RARE</th>
-          <th class="th-l">LEGENDARY</th>
-        </tr>
+        <tr><th>Rarity Tier</th><th>Count</th><th>% of Supply</th><th>Floor Price</th><th>Avg Sale Price</th><th>Typical Traits</th></tr>
       </thead>
       <tbody>
-        <tr><td class="rlbl">SUPPLY</td><td class="vc">{{COMMON_SUPPLY}}</td><td class="vu">{{UNCOMMON_SUPPLY}}</td><td class="vr">{{RARE_SUPPLY}}</td><td class="vl">{{LEGENDARY_SUPPLY}}</td></tr>
-        <tr><td class="rlbl">{{UTILITY_1}}</td><td class="vc">{{U1_COMMON}}</td><td class="vu">{{U1_UNCOMMON}}</td><td class="vr">{{U1_RARE}}</td><td class="vl">{{U1_LEGENDARY}}</td></tr>
-        <tr><td class="rlbl">{{UTILITY_2}}</td><td class="vc">{{U2_COMMON}}</td><td class="vu">{{U2_UNCOMMON}}</td><td class="vr">{{U2_RARE}}</td><td class="vl">{{U2_LEGENDARY}}</td></tr>
-        <tr><td class="rlbl">{{UTILITY_3}}</td><td class="vc">{{U3_COMMON}}</td><td class="vu">{{U3_UNCOMMON}}</td><td class="vr">{{U3_RARE}}</td><td class="vl">{{U3_LEGENDARY}}</td></tr>
+        <tr>
+          <td><span class="p-tag p-legendary">LEGENDARY</span></td>
+          <td class="val-purple">{{LEGENDARY_COUNT}}</td>
+          <td class="val-muted">{{LEGENDARY_PCT}}%</td>
+          <td class="val-gold">{{LEGENDARY_FLOOR}}</td>
+          <td class="val-muted">{{LEGENDARY_AVG}}</td>
+          <td class="val-muted">{{LEGENDARY_TRAITS}}</td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-epic">EPIC</span></td>
+          <td class="val-teal">{{EPIC_COUNT}}</td>
+          <td class="val-muted">{{EPIC_PCT}}%</td>
+          <td class="val-teal">{{EPIC_FLOOR}}</td>
+          <td class="val-muted">{{EPIC_AVG}}</td>
+          <td class="val-muted">{{EPIC_TRAITS}}</td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-rare">RARE</span></td>
+          <td class="val-gold">{{RARE_COUNT}}</td>
+          <td class="val-muted">{{RARE_PCT}}%</td>
+          <td class="val-gold">{{RARE_FLOOR}}</td>
+          <td class="val-muted">{{RARE_AVG}}</td>
+          <td class="val-muted">{{RARE_TRAITS}}</td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-common">UNCOMMON</span></td>
+          <td class="val-muted">{{UNCOMMON_COUNT}}</td>
+          <td class="val-muted">{{UNCOMMON_PCT}}%</td>
+          <td class="val-muted">{{UNCOMMON_FLOOR}}</td>
+          <td class="val-muted">{{UNCOMMON_AVG}}</td>
+          <td class="val-muted">{{UNCOMMON_TRAITS}}</td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-common">COMMON</span></td>
+          <td class="val-muted">{{COMMON_COUNT}}</td>
+          <td class="val-muted">{{COMMON_PCT}}%</td>
+          <td class="val-muted">{{COMMON_FLOOR}}</td>
+          <td class="val-muted">{{COMMON_AVG}}</td>
+          <td class="val-muted">{{COMMON_TRAITS}}</td>
+        </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="ftr">
-    <div class="ftr-note">{{DISCLAIMER}} · Not financial advice.</div>
-    <div class="ftr-brand">{{PROJECT_NAME}}</div>
+  <div class="arrow-connector"><div class="arrow-line"></div><div class="arrow-icon">▼ TRAIT DISTRIBUTION</div><div class="arrow-line"></div></div>
+
+  <div class="section-label">TOP TRAITS BY RARITY</div>
+  <div class="table-wrap">
+    <table class="dense-table sec-h">
+      <thead>
+        <tr><th>Trait Category</th><th>Trait Value</th><th>Count</th><th>Rarity</th><th>Floor Premium</th><th>Avg Sale</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="val-text">{{TRAIT_CAT_1}}</td><td class="val-purple">{{TRAIT_1}}</td><td class="val-muted">{{TRAIT_1_COUNT}}</td><td class="val-gold">{{TRAIT_1_RARITY}}%</td><td class="val-teal">+{{TRAIT_1_PREMIUM}}%</td><td class="val-muted">{{TRAIT_1_FLOOR}}</td></tr>
+        <tr><td class="val-text">{{TRAIT_CAT_2}}</td><td class="val-purple">{{TRAIT_2}}</td><td class="val-muted">{{TRAIT_2_COUNT}}</td><td class="val-gold">{{TRAIT_2_RARITY}}%</td><td class="val-teal">+{{TRAIT_2_PREMIUM}}%</td><td class="val-muted">{{TRAIT_2_FLOOR}}</td></tr>
+        <tr><td class="val-text">{{TRAIT_CAT_3}}</td><td class="val-teal">{{TRAIT_3}}</td><td class="val-muted">{{TRAIT_3_COUNT}}</td><td class="val-gold">{{TRAIT_3_RARITY}}%</td><td class="val-teal">+{{TRAIT_3_PREMIUM}}%</td><td class="val-muted">{{TRAIT_3_FLOOR}}</td></tr>
+        <tr><td class="val-text">{{TRAIT_CAT_4}}</td><td class="val-teal">{{TRAIT_4}}</td><td class="val-muted">{{TRAIT_4_COUNT}}</td><td class="val-muted">{{TRAIT_4_RARITY}}%</td><td class="val-teal">+{{TRAIT_4_PREMIUM}}%</td><td class="val-muted">{{TRAIT_4_FLOOR}}</td></tr>
+        <tr><td class="val-text">{{TRAIT_CAT_5}}</td><td class="val-muted">{{TRAIT_5}}</td><td class="val-muted">{{TRAIT_5_COUNT}}</td><td class="val-muted">{{TRAIT_5_RARITY}}%</td><td class="val-muted">{{TRAIT_5_PREMIUM}}%</td><td class="val-muted">{{TRAIT_5_FLOOR}}</td></tr>
+        <tr><td class="val-text">{{TRAIT_CAT_6}}</td><td class="val-muted">{{TRAIT_6}}</td><td class="val-muted">{{TRAIT_6_COUNT}}</td><td class="val-muted">{{TRAIT_6_RARITY}}%</td><td class="val-muted">{{TRAIT_6_PREMIUM}}%</td><td class="val-muted">{{TRAIT_6_FLOOR}}</td></tr>
+      </tbody>
+    </table>
   </div>
-</div>
+
+  <div class="arrow-connector"><div class="arrow-line"></div><div class="arrow-icon">▼ COLLECTION DETAILS</div><div class="arrow-line"></div></div>
+
+  <div class="section-label">UTILITY &amp; ROADMAP</div>
+  <div class="panel-row">
+    <div class="bullet-panel">
+      <div class="bp-header">Holder Utilities</div>
+      <ul>
+        <li><strong>{{UTILITY_1}}</strong> <span>— {{UTILITY_1_DESC}}</span></li>
+        <li><strong>{{UTILITY_2}}</strong> <span>— {{UTILITY_2_DESC}}</span></li>
+        <li><strong>{{UTILITY_3}}</strong> <span>— {{UTILITY_3_DESC}}</span></li>
+        <li><strong>{{UTILITY_4}}</strong> <span>— {{UTILITY_4_DESC}}</span></li>
+        <li><strong>{{UTILITY_5}}</strong> <span>— {{UTILITY_5_DESC}}</span></li>
+      </ul>
+    </div>
+    <div class="bullet-panel sec">
+      <div class="bp-header">Roadmap Highlights</div>
+      <ul>
+        <li><strong>{{ROAD_1}}</strong> <span>— {{ROAD_1_DESC}}</span></li>
+        <li><strong>{{ROAD_2}}</strong> <span>— {{ROAD_2_DESC}}</span></li>
+        <li><strong>{{ROAD_3}}</strong> <span>— {{ROAD_3_DESC}}</span></li>
+        <li><strong>{{ROAD_4}}</strong> <span>— {{ROAD_4_DESC}}</span></li>
+        <li><strong>{{ROAD_5}}</strong> <span>— {{ROAD_5_DESC}}</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout-strip">
+    <div class="callout-box"><div class="cb-lbl">Floor Price</div><div class="cb-val">{{FLOOR_PRICE}}</div><div class="cb-desc">{{FLOOR_CHANGE}}% change in last 24h. ATH floor: {{ATH_FLOOR}}.</div></div>
+    <div class="callout-box sec"><div class="cb-lbl">Total Volume</div><div class="cb-val">{{TOTAL_VOLUME}}</div><div class="cb-desc">Since launch. {{DAILY_VOLUME}} traded in last 24 hours.</div></div>
+    <div class="callout-box acc"><div class="cb-lbl">Unique Holders</div><div class="cb-val">{{HOLDER_COUNT}}</div><div class="cb-desc">{{HOLDER_PCT}}% of supply held by top 100 wallets.</div></div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">
+      <div class="footer-logo">N</div>
+      <div><div class="footer-name">{{COLLECTION_NAME}}</div><div class="footer-tag">{{COLLECTION_TAGLINE}}</div></div>
+    </div>
+    <div class="footer-right">
+      <div class="f-badge">{{BLOCKCHAIN}}</div>
+      <div class="footer-date">{{MARKETPLACE_URL}}</div>
+    </div>
+  </div>
+
 </body>
 </html>

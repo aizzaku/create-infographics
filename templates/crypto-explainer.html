@@ -1,392 +1,539 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{PROJECT_NAME}} — {{MECHANISM_NAME}}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crypto Explainer — Reference Template</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg:        #060608;
-      --surface:   #0E0F14;
-      --border:    #1C1E26;
-      --amber:     #E99A00;
-      --amber-hi:  #F0B63A;
-      --node-a:    #4DA0F8;   /* input node */
-      --node-b:    #E99A00;   /* central node — amber */
-      --node-c:    #37E59F;   /* output node */
-      --text:      #F4F2EE;
-      --muted:     #8A8A9A;
-      --glow-a:    rgba(77,160,248,0.25);
-      --glow-b:    rgba(233,154,0,0.30);
-      --glow-c:    rgba(55,229,159,0.25);
-
-      --font-display:'Bebas Neue', sans-serif;
-      --font-body:   'Montserrat', sans-serif;
+      --bg:          #080808;
+      --bg-card:     #101010;
+      --primary:     #A764F6;
+      --primary-2:   #C490FF;
+      --primary-rgb: 167,100,246;
+      --secondary:   #F4BC2F;
+      --secondary-rgb: 244,188,47;
+      --text:        #FFFFFF;
+      --muted:       #8B8B8B;
+      --border:      rgba(167,100,246,0.22);
+      --border-faint:rgba(255,255,255,0.08);
+      --glow:        rgba(167,100,246,0.28);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Montserrat', sans-serif;
     }
 
     body {
       background: var(--bg);
       font-family: var(--font-body);
       color: var(--text);
-      width: 1100px;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
+      width: 1080px;
+      margin: 0 auto;
+      min-height: 1440px;
+      overflow: hidden;
+      position: relative;
     }
 
-    /* ── Header strip ── */
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 48px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(255,255,255,0.02);
+    .bg-geo { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .bg-geo::before {
+      content: ''; position: absolute; top: -140px; right: -140px;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(167,100,246,0.09) 0%, transparent 65%);
     }
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .brand-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--amber);
-      box-shadow: 0 0 8px var(--amber);
-    }
-    .header-brand {
-      font-family: var(--font-display);
-      font-size: 22px;
-      letter-spacing: 0.1em;
-      color: var(--text);
-    }
-    .header-tag {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 3px 10px;
-      border-radius: 20px;
-    }
-    .logo-slot {
-      width: 80px; height: 28px;
-      background: var(--border);
-      border-radius: 4px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 9px; color: var(--muted); letter-spacing: 0.1em;
+    .bg-geo::after {
+      content: ''; position: absolute; bottom: 60px; left: -80px;
+      width: 360px; height: 360px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(244,188,47,0.06) 0%, transparent 65%);
     }
 
-    /* ── Hero: title + subtitle ── */
+    .canvas { position: relative; z-index: 1; padding: 0 0 36px; }
+
+    /* ─── HERO ─── */
     .hero {
-      padding: 36px 48px 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      background: linear-gradient(160deg, #110820 0%, #0b0814 50%, #080808 100%);
+      border-bottom: 2px solid var(--border);
+      padding: 32px 48px 28px;
+      position: relative; overflow: hidden;
     }
-    .hero h1 {
-      font-family: var(--font-display);
-      font-size: 60px;
-      line-height: 0.92;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      color: var(--text);
+    .hero::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
     }
-    .hero h1 em {
-      color: var(--amber);
-      font-style: normal;
+    .hero-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .logo-lockup { display: flex; align-items: center; gap: 12px; }
+    .logo-box {
+      width: 44px; height: 44px; border-radius: 8px;
+      background: rgba(167,100,246,0.12); border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; color: var(--primary); box-shadow: 0 0 14px var(--glow);
     }
-    .hero-sub {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--muted);
-      letter-spacing: 0.02em;
-      max-width: 560px;
-    }
-
-    /* ── Flow diagram ── */
-    .flow {
-      padding: 8px 48px 32px;
-      display: flex;
-      align-items: center;
-      gap: 0;
+    .logo-name { font-family: var(--font-display); font-size: 26px; letter-spacing: 1px; }
+    .logo-name span { color: var(--primary); }
+    .chain-badge {
+      background: rgba(244,188,47,0.10); border: 1px solid rgba(244,188,47,0.3);
+      border-radius: 20px; padding: 5px 14px;
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--secondary); text-transform: uppercase;
     }
 
+    /* Hero: title left, concept card right */
+    .hero-body { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+    .hero-left {}
+    .hero-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; color: var(--primary); text-transform: uppercase; margin-bottom: 10px; }
+    .hero-title { font-family: var(--font-display); font-size: 64px; line-height: 0.92; color: var(--text); margin-bottom: 14px; }
+    .hero-title span { color: var(--primary); }
+    .hero-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .hero-bullets li { font-size: 12px; color: rgba(255,255,255,0.65); display: flex; gap: 7px; align-items: flex-start; font-weight: 500; }
+    .hero-bullets li::before { content: '▸'; color: var(--primary); flex-shrink: 0; font-size: 10px; margin-top: 1px; }
+
+    /* Hero concept callout card */
+    .hero-callout {
+      background: rgba(167,100,246,0.07); border: 1.5px solid rgba(167,100,246,0.32);
+      border-radius: 10px; padding: 18px 20px; position: relative;
+      box-shadow: 0 0 24px rgba(167,100,246,0.14);
+    }
+    .hero-callout::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+    .callout-icon {
+      width: 38px; height: 38px; border-radius: 8px;
+      background: rgba(167,100,246,0.14); border: 1px solid rgba(167,100,246,0.38);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: var(--primary); margin-bottom: 12px;
+      box-shadow: 0 0 10px rgba(167,100,246,0.22);
+    }
+    .callout-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; color: var(--primary); text-transform: uppercase; margin-bottom: 5px; }
+    .callout-heading { font-family: var(--font-display); font-size: 22px; letter-spacing: 0.5px; color: var(--text); margin-bottom: 10px; }
+    .callout-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+    .callout-stat { background: rgba(244,188,47,0.06); border: 1px solid rgba(244,188,47,0.2); border-radius: 6px; padding: 8px 10px; }
+    .callout-stat-label { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; margin-bottom: 3px; }
+    .callout-stat-value { font-family: var(--font-display); font-size: 20px; color: var(--secondary); }
+
+    /* ─── Section chrome ─── */
+    .section { padding: 24px 48px 0; }
+    .section-label {
+      font-family: var(--font-display); font-size: 11px; letter-spacing: 3px;
+      color: var(--primary); text-transform: uppercase; margin-bottom: 4px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .section-title { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.5px; color: var(--text); margin-bottom: 14px; }
+
+    /* ─── Stat strip ─── */
+    .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+    .stat-box {
+      background: rgba(167,100,246,0.06); border: 1px solid var(--border);
+      padding: 12px 14px; position: relative; overflow: hidden;
+    }
+    .stat-box:first-child { border-radius: 8px 0 0 8px; }
+    .stat-box:last-child { border-radius: 0 8px 8px 0; }
+    .stat-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--primary); opacity: 0.65; }
+    .stat-label { font-size: 9px; font-weight: 700; letter-spacing: 1.6px; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+    .stat-value { font-family: var(--font-display); font-size: 28px; line-height: 1; color: var(--primary); }
+    .stat-note { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+    /* ─── Flow diagram with arrows ─── */
+    .flow-row { display: flex; align-items: stretch; gap: 0; }
     .flow-node {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      text-align: center;
-    }
-    .node-box {
-      border-radius: 10px;
-      border: 1.5px solid;
-      padding: 14px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      min-width: 140px;
+      flex: 1; background: rgba(167,100,246,0.06);
+      border: 1.5px solid rgba(167,100,246,0.22);
+      border-radius: 8px; padding: 14px 14px 12px;
       position: relative;
     }
-    .node-box.input {
-      border-color: var(--node-a);
-      background: rgba(77,160,248,0.06);
-      box-shadow: 0 0 20px var(--glow-a);
+    .flow-node.gold { background: rgba(244,188,47,0.06); border-color: rgba(244,188,47,0.24); }
+    .flow-step-num {
+      font-family: var(--font-display); font-size: 36px; line-height: 1;
+      color: rgba(167,100,246,0.18); position: absolute; top: 10px; right: 12px;
     }
-    .node-box.central {
-      border-color: var(--node-b);
-      background: rgba(233,154,0,0.08);
-      box-shadow: 0 0 28px var(--glow-b);
-      min-width: 180px;
-      padding: 18px 24px;
+    .flow-node.gold .flow-step-num { color: rgba(244,188,47,0.18); }
+    .flow-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: rgba(167,100,246,0.12); border: 1px solid rgba(167,100,246,0.28);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: var(--primary); margin-bottom: 10px;
     }
-    .node-box.output {
-      border-color: var(--node-c);
-      background: rgba(55,229,159,0.06);
-      box-shadow: 0 0 20px var(--glow-c);
-    }
+    .flow-node.gold .flow-icon { background: rgba(244,188,47,0.10); border-color: rgba(244,188,47,0.28); color: var(--secondary); }
+    .flow-title { font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+    .flow-bullets { list-style: none; display: flex; flex-direction: column; gap: 3px; }
+    .flow-bullets li { font-size: 10.5px; color: rgba(255,255,255,0.55); display: flex; gap: 5px; }
+    .flow-bullets li::before { content: '·'; color: var(--primary); flex-shrink: 0; }
+    .flow-arrow { width: 28px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 16px; opacity: 0.6; }
+    .flow-arrow.gold { color: var(--secondary); }
 
-    .node-icon {
-      font-size: 22px;
-    }
-    .node-icon.a { color: var(--node-a); }
-    .node-icon.b { color: var(--node-b); }
-    .node-icon.c { color: var(--node-c); }
+    /* ─── Dense table ─── */
+    .table-wrap { border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .dense-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .dense-table thead tr { background: rgba(167,100,246,0.08); border-bottom: 1px solid rgba(167,100,246,0.2); }
+    .dense-table th { font-size: 9px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--muted); padding: 8px 10px; text-align: left; }
+    .dense-table th.accent { color: var(--primary); }
+    .dense-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+    .dense-table tbody tr:last-child td { border-bottom: none; }
+    .dense-table td { padding: 7px 10px; color: rgba(255,255,255,0.82); vertical-align: middle; font-weight: 500; }
+    .dense-table td.bold { font-weight: 700; color: var(--text); }
+    .dense-table td.purple { color: var(--primary); font-weight: 700; }
+    .dense-table td.gold   { color: var(--secondary); font-weight: 700; }
+    .dense-table td.muted  { color: var(--muted); }
 
-    .node-title {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-    .node-title.a { color: var(--node-a); }
-    .node-title.b { color: var(--node-b); }
-    .node-title.c { color: var(--node-c); }
+    .badge-yes { display: inline-flex; align-items: center; gap: 4px; background: rgba(167,100,246,0.12); border: 1px solid rgba(167,100,246,0.28); border-radius: 20px; padding: 2px 9px; font-size: 10px; font-weight: 700; color: var(--primary); }
+    .badge-no  { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 2px 9px; font-size: 10px; font-weight: 600; color: var(--muted); }
+    .badge-gold { display: inline-flex; align-items: center; gap: 4px; background: rgba(244,188,47,0.10); border: 1px solid rgba(244,188,47,0.28); border-radius: 20px; padding: 2px 9px; font-size: 10px; font-weight: 700; color: var(--secondary); }
 
-    .node-value {
-      font-family: var(--font-display);
-      font-size: 22px;
-      letter-spacing: 0.04em;
-      color: var(--text);
+    /* ─── Bullet panels ─── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .bullet-panel {
+      background: rgba(255,255,255,0.02); border: 1.5px solid rgba(var(--primary-rgb),0.2);
+      border-radius: 8px; padding: 14px 16px;
     }
-    .node-sub {
-      font-size: 10px;
-      color: var(--muted);
-      font-weight: 500;
-    }
+    .bullet-panel.gold { border-color: rgba(var(--secondary-rgb),0.22); }
+    .bullet-panel-title { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--primary); margin-bottom: 10px; }
+    .bullet-panel.gold .bullet-panel-title { color: var(--secondary); }
+    .bullet-panel ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .bullet-panel li { font-size: 11.5px; color: rgba(255,255,255,0.78); line-height: 1.45; display: flex; align-items: flex-start; gap: 7px; font-weight: 500; }
+    .bullet-panel li::before { content: '▸'; color: var(--primary); flex-shrink: 0; font-size: 9px; margin-top: 2px; }
+    .bullet-panel.gold li::before { color: var(--secondary); }
 
-    /* Arrow */
-    .flow-arrow {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: 0 8px;
-    }
-    .arrow-line {
-      width: 100%;
-      height: 1.5px;
-      background: linear-gradient(to right, var(--border), var(--amber-hi), var(--border));
-      position: relative;
-    }
-    .arrow-line::after {
-      content: '';
-      position: absolute;
-      right: -1px; top: -4px;
-      width: 0; height: 0;
-      border-left: 8px solid var(--amber-hi);
-      border-top: 5px solid transparent;
-      border-bottom: 5px solid transparent;
-    }
-    .arrow-label {
-      position: absolute;
-      top: -18px;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      white-space: nowrap;
-    }
+    /* ─── Arrow connector ─── */
+    .arrow-connector { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 48px 0; }
+    .arrow-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(167,100,246,0.35), transparent); }
+    .arrow-icon { color: var(--primary); font-size: 20px; flex-shrink: 0; }
+    .arrow-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
 
-    /* ── Bottom: info panels ── */
-    .info-row {
-      padding: 0 48px 44px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
+    /* ─── Economy flow (fee loop) ─── */
+    .economy-flow {
+      display: flex; align-items: center; gap: 0;
+      background: var(--bg-card); border: 1.5px solid var(--border);
+      border-radius: 10px; padding: 16px 20px; overflow: hidden;
     }
+    .econ-node {
+      flex: 1; text-align: center; padding: 10px 8px;
+    }
+    .econ-icon { font-size: 22px; color: var(--primary); margin-bottom: 6px; }
+    .econ-label { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; color: var(--text); margin-bottom: 3px; }
+    .econ-sub { font-size: 9.5px; color: var(--muted); font-weight: 500; }
+    .econ-arrow { flex-shrink: 0; width: 32px; text-align: center; color: var(--primary); font-size: 18px; opacity: 0.7; }
+    .econ-arrow.gold { color: var(--secondary); }
 
-    .info-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 20px 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .panel-heading {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--amber);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .panel-heading i { font-size: 14px; }
+    /* ─── Callout boxes ─── */
+    .callouts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .callout-box { border-left: 2px solid var(--primary); background: rgba(167,100,246,0.05); border-radius: 0 8px 8px 0; padding: 12px 14px; }
+    .callout-box.gold { border-left-color: var(--secondary); background: rgba(244,188,47,0.04); }
+    .callout-term { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; color: var(--primary); text-transform: uppercase; margin-bottom: 4px; }
+    .callout-box.gold .callout-term { color: var(--secondary); }
+    .callout-text { font-size: 11.5px; color: rgba(255,255,255,0.74); line-height: 1.45; font-weight: 500; }
+    .callout-text strong { color: var(--text); }
 
-    .bullet-list {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-    .bullet-item {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      font-size: 12.5px;
-      color: var(--text);
-      line-height: 1.5;
-      font-weight: 500;
-    }
-    .bullet-item::before {
-      content: '›';
-      color: var(--amber);
-      font-size: 16px;
-      line-height: 1.2;
-      flex-shrink: 0;
-    }
-
-    /* ── Footer ── */
-    .footer {
-      padding: 14px 48px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .footer-note {
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-    }
-    .footer-logo {
-      font-family: var(--font-display);
-      font-size: 16px;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-    }
+    /* ─── Footer ─── */
+    .footer { margin-top: 28px; border-top: 1px solid rgba(255,255,255,0.06); padding: 16px 48px; display: flex; align-items: center; justify-content: space-between; }
+    .footer-left { display: flex; align-items: center; gap: 10px; }
+    .footer-logo-box { width: 26px; height: 26px; border-radius: 5px; background: rgba(167,100,246,0.12); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--primary); }
+    .footer-project-name { font-size: 11px; font-weight: 700; color: var(--text); }
+    .footer-tagline { font-size: 10px; color: var(--muted); }
+    .footer-right { font-size: 10px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
   </style>
 </head>
 <body>
+  <div class="bg-geo"></div>
+  <div class="canvas">
 
-  <!-- ── HEADER ─────────────────────────────────────────── -->
-  <div class="header">
-    <div class="header-left">
-      <div class="brand-dot"></div>
-      <div class="header-brand">{{PROJECT_NAME}}</div>
-      <div class="header-tag">{{MECHANISM_TAG}}</div>
-    </div>
-    <div class="logo-slot">LOGO</div>
-  </div>
-
-  <!-- ── HERO ───────────────────────────────────────────── -->
-  <div class="hero">
-    <h1>HOW <em>{{MECHANISM_NAME}}</em><br/>WORKS</h1>
-    <div class="hero-sub">{{ONE_LINE_DESCRIPTION}}</div>
-  </div>
-
-  <!-- ── FLOW DIAGRAM ───────────────────────────────────── -->
-  <div class="flow">
-
-    <div class="flow-node">
-      <div class="node-box input">
-        <i class="ph ph-coins node-icon a"></i>
-        <div class="node-title a">{{INPUT_LABEL}}</div>
-        <div class="node-value">{{INPUT_VALUE}}</div>
-        <div class="node-sub">{{INPUT_SUB}}</div>
+    <!-- ─── HERO ─── -->
+    <div class="hero">
+      <div class="hero-top">
+        <div class="logo-lockup">
+          <div class="logo-box"><i class="ph-bold ph-infinity"></i></div>
+          <div class="logo-name">PROJECT <span>PROTOCOL</span></div>
+        </div>
+        <div class="chain-badge">Layer 2 · Solana</div>
+      </div>
+      <div class="hero-body">
+        <div class="hero-left">
+          <div class="hero-eyebrow">Protocol Explainer</div>
+          <div class="hero-title">HOW IT<br><span>WORKS</span></div>
+          <ul class="hero-bullets">
+            <li>Decentralized liquidity routing across 50+ sources</li>
+            <li>Sub-400ms settlement — same-block execution</li>
+            <li>MEV-protected via intent-based architecture</li>
+            <li>Non-custodial — funds never leave your wallet</li>
+            <li>Deployed on 12 EVM-compatible networks</li>
+          </ul>
+        </div>
+        <div class="hero-callout">
+          <div class="callout-icon"><i class="ph-bold ph-lightning"></i></div>
+          <div class="callout-label">Core Concept</div>
+          <div class="callout-heading">AUTOMATED LIQUIDITY</div>
+          <div class="callout-stats">
+            <div class="callout-stat">
+              <div class="callout-stat-label">Liquidity Sources</div>
+              <div class="callout-stat-value">50+</div>
+            </div>
+            <div class="callout-stat">
+              <div class="callout-stat-label">Settlement Time</div>
+              <div class="callout-stat-value">~400ms</div>
+            </div>
+            <div class="callout-stat">
+              <div class="callout-stat-label">Networks</div>
+              <div class="callout-stat-value">12</div>
+            </div>
+            <div class="callout-stat">
+              <div class="callout-stat-label">MEV Protection</div>
+              <div class="callout-stat-value">Full</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="flow-arrow">
+    <!-- ─── KPI STAT STRIP ─── -->
+    <div class="section" style="margin-top:20px;">
+      <div class="stat-strip">
+        <div class="stat-box">
+          <div class="stat-label">Daily Volume</div>
+          <div class="stat-value">$4.2B</div>
+          <div class="stat-note">30-day avg</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Total Trades</div>
+          <div class="stat-value">142M</div>
+          <div class="stat-note">All time</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Unique Users</div>
+          <div class="stat-value">2.8M</div>
+          <div class="stat-note">Active wallets</div>
+        </div>
+        <div class="stat-box" style="border-radius:0 8px 8px 0;">
+          <div class="stat-label">Fee Savings</div>
+          <div class="stat-value">$89M</div>
+          <div class="stat-note">vs benchmark</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── HOW IT WORKS FLOW ─── -->
+    <div class="section" style="margin-top:24px;">
+      <div class="section-label">Protocol Flow</div>
+      <div class="section-title">HOW IT WORKS — STEP BY STEP</div>
+      <div class="flow-row">
+        <div class="flow-node">
+          <div class="flow-step-num">01</div>
+          <div class="flow-icon"><i class="ph-bold ph-wallet"></i></div>
+          <div class="flow-title">Connect Wallet</div>
+          <ul class="flow-bullets">
+            <li>Self-custodial — no KYC</li>
+            <li>12+ wallet types supported</li>
+            <li>Permissionless access</li>
+          </ul>
+        </div>
+        <div class="flow-arrow"><i class="ph-bold ph-arrow-right"></i></div>
+        <div class="flow-node">
+          <div class="flow-step-num">02</div>
+          <div class="flow-icon"><i class="ph-bold ph-funnel"></i></div>
+          <div class="flow-title">Submit Intent</div>
+          <ul class="flow-bullets">
+            <li>Token in / token out</li>
+            <li>Set slippage tolerance</li>
+            <li>Optional deadline</li>
+          </ul>
+        </div>
+        <div class="flow-arrow"><i class="ph-bold ph-arrow-right"></i></div>
+        <div class="flow-node gold">
+          <div class="flow-step-num">03</div>
+          <div class="flow-icon"><i class="ph-bold ph-robot"></i></div>
+          <div class="flow-title">Solver Auction</div>
+          <ul class="flow-bullets" style="--primary:var(--secondary);">
+            <li>50+ sources scanned</li>
+            <li>Split routing applied</li>
+            <li>Best price wins</li>
+          </ul>
+        </div>
+        <div class="flow-arrow gold"><i class="ph-bold ph-arrow-right"></i></div>
+        <div class="flow-node gold">
+          <div class="flow-step-num">04</div>
+          <div class="flow-icon"><i class="ph-bold ph-check-circle"></i></div>
+          <div class="flow-title">Settlement</div>
+          <ul class="flow-bullets" style="--primary:var(--secondary);">
+            <li>On-chain execution</li>
+            <li>~400ms delivery</li>
+            <li>Tokens in wallet</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── FEATURES BULLET PANELS ─── -->
+    <div class="section" style="margin-top:24px;">
+      <div class="section-label">Core Properties</div>
+      <div class="section-title">PROTOCOL FEATURES</div>
+      <div class="two-col">
+        <div class="bullet-panel">
+          <div class="bullet-panel-title">Security &amp; Trust</div>
+          <ul>
+            <li>Non-custodial — funds never held by protocol</li>
+            <li>Atomic swaps — succeeds fully or reverts</li>
+            <li>MEV protection via off-chain intent submission</li>
+            <li>No front-running — order book separation</li>
+            <li>Audited by Trail of Bits + Certik (2024)</li>
+            <li>Open source — fully verifiable smart contracts</li>
+          </ul>
+        </div>
+        <div class="bullet-panel gold">
+          <div class="bullet-panel-title">Performance</div>
+          <ul>
+            <li>Sub-400ms settlement on Solana &amp; L2s</li>
+            <li>50+ liquidity sources routed in real-time</li>
+            <li>Price impact reduced by up to 60% via split routing</li>
+            <li>Cross-chain swaps in single transaction</li>
+            <li>Gas optimized batch settlement for solvers</li>
+            <li>99.97% uptime — distributed solver network</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── ECONOMY FLOW: FEE LOOP ─── -->
+    <div class="arrow-connector">
       <div class="arrow-line"></div>
-      <div class="arrow-label">stake</div>
-    </div>
-
-    <div class="flow-node">
-      <div class="node-box central">
-        <i class="ph-fill ph-vault node-icon b"></i>
-        <div class="node-title b">{{PLATFORM_NAME}}</div>
-        <div class="node-value">{{PLATFORM_STAT}}</div>
-        <div class="node-sub">{{PLATFORM_SUB}}</div>
-      </div>
-    </div>
-
-    <div class="flow-arrow">
+      <i class="ph-bold ph-arrows-clockwise arrow-icon"></i>
+      <span class="arrow-label">Fee Flow Loop</span>
       <div class="arrow-line"></div>
-      <div class="arrow-label">earn</div>
     </div>
 
-    <div class="flow-node">
-      <div class="node-box output">
-        <i class="ph ph-trophy node-icon c"></i>
-        <div class="node-title c">{{OUTPUT_LABEL}}</div>
-        <div class="node-value">{{OUTPUT_VALUE}}</div>
-        <div class="node-sub">{{OUTPUT_SUB}}</div>
+    <div class="section" style="margin-top:12px;">
+      <div class="section-label">Value Flow</div>
+      <div class="section-title">FEE &amp; INCENTIVE ECONOMY</div>
+      <div class="economy-flow">
+        <div class="econ-node">
+          <div class="econ-icon"><i class="ph-bold ph-swap"></i></div>
+          <div class="econ-label">User Trade</div>
+          <div class="econ-sub">0.05% protocol fee</div>
+        </div>
+        <div class="econ-arrow"><i class="ph-bold ph-arrow-right"></i></div>
+        <div class="econ-node">
+          <div class="econ-icon" style="color:var(--secondary);"><i class="ph-bold ph-vault"></i></div>
+          <div class="econ-label">Fee Treasury</div>
+          <div class="econ-sub">40% → token buyback</div>
+        </div>
+        <div class="econ-arrow gold"><i class="ph-bold ph-arrow-right"></i></div>
+        <div class="econ-node">
+          <div class="econ-icon"><i class="ph-bold ph-fire"></i></div>
+          <div class="econ-label">Buyback + Burn</div>
+          <div class="econ-sub">Quarterly burn event</div>
+        </div>
+        <div class="econ-arrow"><i class="ph-bold ph-arrow-right"></i></div>
+        <div class="econ-node">
+          <div class="econ-icon" style="color:var(--secondary);"><i class="ph-bold ph-coins"></i></div>
+          <div class="econ-label">Staker Rewards</div>
+          <div class="econ-sub">60% → stakers APY</div>
+        </div>
+        <div class="econ-arrow gold"><i class="ph-bold ph-arrows-clockwise"></i></div>
+        <div class="econ-node">
+          <div class="econ-icon"><i class="ph-bold ph-currency-circle-dollar"></i></div>
+          <div class="econ-label">Price Support</div>
+          <div class="econ-sub">Supply ↓ · Demand ↑</div>
+        </div>
       </div>
+    </div>
+
+    <!-- ─── COMPARISON TABLE ─── -->
+    <div class="section" style="margin-top:24px;">
+      <div class="section-label">Comparison</div>
+      <div class="section-title">VS THE ALTERNATIVES</div>
+      <div class="table-wrap">
+        <table class="dense-table">
+          <thead>
+            <tr>
+              <th class="accent">Feature</th>
+              <th class="accent">This Protocol</th>
+              <th>Standard AMM</th>
+              <th>Order Book DEX</th>
+              <th>CEX</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="bold">MEV Protection</td>
+              <td><span class="badge-yes"><i class="ph-bold ph-check"></i> Full</span></td>
+              <td><span class="badge-no">None</span></td>
+              <td><span class="badge-no">Partial</span></td>
+              <td><span class="badge-gold">Internal</span></td>
+            </tr>
+            <tr>
+              <td class="bold">Non-Custodial</td>
+              <td><span class="badge-yes">Yes</span></td>
+              <td><span class="badge-yes">Yes</span></td>
+              <td><span class="badge-yes">Yes</span></td>
+              <td><span class="badge-no">No</span></td>
+            </tr>
+            <tr>
+              <td class="bold">Cross-Chain</td>
+              <td><span class="badge-yes">12 Chains</span></td>
+              <td><span class="badge-no">Bridge needed</span></td>
+              <td><span class="badge-no">None</span></td>
+              <td><span class="badge-gold">Centralized</span></td>
+            </tr>
+            <tr>
+              <td class="bold">Price Optimization</td>
+              <td><span class="badge-yes">50+ sources</span></td>
+              <td><span class="badge-no">1 pool</span></td>
+              <td><span class="badge-gold">Order book</span></td>
+              <td><span class="badge-gold">Internal MM</span></td>
+            </tr>
+            <tr>
+              <td class="bold">Settlement Speed</td>
+              <td class="purple">~400ms</td>
+              <td class="muted">Block time (12s)</td>
+              <td class="muted">Block time</td>
+              <td class="gold">&lt;1ms (internal)</td>
+            </tr>
+            <tr>
+              <td class="bold">KYC Required</td>
+              <td><span class="badge-yes">No</span></td>
+              <td><span class="badge-yes">No</span></td>
+              <td><span class="badge-yes">No</span></td>
+              <td><span class="badge-no">Yes</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ─── KEY TERMS ─── -->
+    <div class="section" style="margin-top:24px;">
+      <div class="callouts-grid">
+        <div class="callout-box">
+          <div class="callout-term">Intent-Based Architecture</div>
+          <div class="callout-text">Users sign a <strong>declaration of intent</strong> (what they want) rather than an on-chain transaction. Off-chain solvers compete to fulfill it at the best price — separating expression from execution.</div>
+        </div>
+        <div class="callout-box gold">
+          <div class="callout-term">Solver Network</div>
+          <div class="callout-text">Competing <strong>professional market makers</strong> analyze 50+ liquidity sources in real time. The solver who delivers best execution wins the order — self-reinforcing quality guarantee.</div>
+        </div>
+        <div class="callout-box gold">
+          <div class="callout-term">Split Routing</div>
+          <div class="callout-text">Large orders are automatically <strong>split across multiple pools</strong> to minimize price impact. A $1M USDC→ETH swap may execute across 8 pools simultaneously.</div>
+        </div>
+        <div class="callout-box">
+          <div class="callout-term">Batch Settlement</div>
+          <div class="callout-text">Multiple user trades are <strong>batched into a single on-chain transaction</strong>. This reduces gas costs by up to 70% and enables the ~400ms settlement time.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── FOOTER ─── -->
+    <div class="footer">
+      <div class="footer-left">
+        <div class="footer-logo-box"><i class="ph-bold ph-infinity"></i></div>
+        <div>
+          <div class="footer-project-name">PROJECT PROTOCOL</div>
+          <div class="footer-tagline">Permissionless · Non-Custodial · Cross-Chain</div>
+        </div>
+      </div>
+      <div class="footer-right"><i class="ph ph-globe"></i> projectprotocol.xyz · @ProjectProtocol</div>
     </div>
 
   </div>
-
-  <!-- ── INFO PANELS ────────────────────────────────────── -->
-  <div class="info-row">
-
-    <div class="info-panel">
-      <div class="panel-heading">
-        <i class="ph ph-list-checks"></i>
-        REQUIREMENTS
-      </div>
-      <div class="bullet-list">
-        <div class="bullet-item">{{REQUIREMENT_1}}</div>
-        <div class="bullet-item">{{REQUIREMENT_2}}</div>
-        <div class="bullet-item">{{REQUIREMENT_3}}</div>
-        <div class="bullet-item">{{REQUIREMENT_4}}</div>
-      </div>
-    </div>
-
-    <div class="info-panel">
-      <div class="panel-heading">
-        <i class="ph ph-star"></i>
-        REWARDS & BENEFITS
-      </div>
-      <div class="bullet-list">
-        <div class="bullet-item">{{BENEFIT_1}}</div>
-        <div class="bullet-item">{{BENEFIT_2}}</div>
-        <div class="bullet-item">{{BENEFIT_3}}</div>
-        <div class="bullet-item">{{BENEFIT_4}}</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ── FOOTER ─────────────────────────────────────────── -->
-  <div class="footer">
-    <div class="footer-note">{{DISCLAIMER_NOTE}}</div>
-    <div class="footer-logo">{{PROJECT_NAME}}</div>
-  </div>
-
 </body>
 </html>

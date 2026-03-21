@@ -1,488 +1,729 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{BRAND_A}} × {{BRAND_B}} Ecosystem</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
-  <style>
-    /* ══════════════════════════════════════════
-       THEME: Ecosystem / Partnership — Cyber Teal
-       ══════════════════════════════════════════ */
-    :root {
-      --bg:          #0D0D0F;
-      --bg-secondary:#11111A;
-      --surface:     #16161F;
-      --primary:     #00E5CC;
-      --primary-rgb: 0,229,204;
-      --secondary:   #00D4FF;
-      --accent:      #00FF85;
-      --text:        #FFFFFF;
-      --muted:       #7A7A9A;
-      --border:      rgba(0,229,204,0.12);
-      --border-card: rgba(255,255,255,0.06);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecosystem Overview — Reference Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #080808;
+    --bg-card:     #0F0F0F;
+    --bg-section:  #111111;
+    --primary:     #00E88A;
+    --primary-rgb: 0,232,138;
+    --secondary:   #B98AFF;
+    --secondary-rgb:185,138,255;
+    --accent:      #2ED5D7;
+    --accent-rgb:  46,213,215;
+    --text:        #FFFFFF;
+    --muted:       #888888;
+    --border:      rgba(0,232,138,0.22);
+    --border-faint:rgba(255,255,255,0.06);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    width: 1080px;
+      margin: 0 auto;
+  }
 
-      --font-display: 'Space Grotesk', sans-serif;
-      --font-body:    'Inter', sans-serif;
-      --font-mono:    'JetBrains Mono', monospace;
+  /* ── HERO ── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 32px;
+    padding: 40px 48px 36px;
+    border-bottom: 2px solid var(--border);
+    background: linear-gradient(135deg, rgba(0,232,138,0.05) 0%, transparent 60%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -60px; right: 200px;
+    width: 280px; height: 280px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,232,138,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-left {}
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px;
+    border-radius: 3px; background: rgba(0,232,138,0.10);
+    border: 1px solid rgba(0,232,138,0.28);
+    font-size: 9px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--primary); margin-bottom: 14px;
+  }
+  .hero-eyebrow span { width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px; letter-spacing: 2px; line-height: 0.92;
+    color: var(--text); margin-bottom: 20px;
+  }
+  .hero-title em { color: var(--primary); font-style: normal; }
+  .hero-bullets {
+    list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 0;
+  }
+  .hero-bullets li {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 12px; font-weight: 500; color: var(--muted); line-height: 1.4;
+  }
+  .hero-bullets li::before {
+    content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0;
+  }
 
-      --text-hero:    clamp(32px, 4.5vw, 56px);
-      --text-h1:      clamp(20px, 2.5vw, 30px);
-      --text-h2:      clamp(15px, 1.8vw, 20px);
-      --text-body:    clamp(13px, 1.4vw, 15px);
-      --text-caption: clamp(10px, 1vw,  12px);
-      --text-stat:    clamp(24px, 3vw,  40px);
+  .hero-card {
+    background: var(--bg-card);
+    border: 1.5px solid rgba(var(--primary-rgb),0.22);
+    border-radius: 6px;
+    padding: 22px 20px;
+    display: flex; flex-direction: column; gap: 0;
+    align-self: start;
+  }
+  .hero-card-label {
+    font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--border);
+  }
+  .hero-kpi-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2px; margin-bottom: 14px;
+  }
+  .hero-kpi {
+    background: rgba(255,255,255,0.03);
+    padding: 10px 12px;
+    border: 1px solid var(--border-faint);
+  }
+  .hero-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; letter-spacing: 1px; color: var(--primary); line-height: 1;
+  }
+  .hero-kpi-val.sec { color: var(--secondary); }
+  .hero-kpi-val.acc { color: var(--accent); }
+  .hero-kpi-lbl {
+    font-size: 9px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--muted); margin-top: 3px;
+  }
+  .hero-chain-row {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .chain-pill {
+    padding: 3px 10px; border-radius: 3px;
+    font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    background: rgba(0,232,138,0.08); border: 1px solid rgba(0,232,138,0.25); color: var(--primary);
+  }
+  .chain-pill.sec { background: rgba(185,138,255,0.08); border-color: rgba(185,138,255,0.25); color: var(--secondary); }
+  .chain-pill.acc { background: rgba(46,213,215,0.08); border-color: rgba(46,213,215,0.25); color: var(--accent); }
 
-      --radius-card:  10px;
-      --radius-sm:    4px;
-      --radius-badge: 20px;
-    }
+  /* ── STAT STRIP ── */
+  .stat-strip {
+    display: grid; grid-template-columns: repeat(5,1fr); gap: 2px;
+    padding: 0 48px 32px;
+  }
+  .stat-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 12px 14px;
+    position: relative;
+  }
+  .stat-box::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: var(--primary);
+  }
+  .stat-box.sec::before { background: var(--secondary); }
+  .stat-box.acc::before { background: var(--accent); }
+  .stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px;
+  }
+  .stat-lbl {
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .stat-sub { font-size: 9px; color: var(--muted); margin-top: 2px; font-weight: 500; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* ── SECTION LABEL ── */
+  .section-label {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 9px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--muted);
+    padding: 0 48px 12px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
 
-    body {
-      background: #080808;
-      display: flex;
-      justify-content: center;
-      padding: 40px 20px;
-      font-family: var(--font-body);
-    }
+  /* ── ARROW CONNECTOR ── */
+  .arrow-connector {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 48px; color: var(--muted);
+  }
+  .arrow-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(var(--primary-rgb),0.4), transparent);
+  }
+  .arrow-icon {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--primary);
+    padding: 4px 12px; border-radius: 3px;
+    background: rgba(var(--primary-rgb),0.08); border: 1px solid rgba(var(--primary-rgb),0.22);
+  }
 
-    .infographic {
-      background: var(--bg);
-      color: var(--text);
-      max-width: 1100px;
-      width: 100%;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 0 80px rgba(0,229,204,0.04);
-    }
+  /* ── ARCHITECTURE FLOW ── */
+  .arch-flow {
+    display: flex; align-items: center; gap: 0;
+    padding: 0 48px 28px;
+  }
+  .arch-node {
+    background: var(--bg-card);
+    border: 1.5px solid rgba(var(--primary-rgb),0.20);
+    padding: 14px 16px; flex: 1;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .arch-node.sec { border-color: rgba(var(--secondary-rgb),0.22); }
+  .arch-node.acc { border-color: rgba(var(--accent-rgb),0.22); }
+  .arch-node-tag {
+    font-size: 8px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--primary); margin-bottom: 2px;
+  }
+  .arch-node.sec .arch-node-tag { color: var(--secondary); }
+  .arch-node.acc .arch-node-tag { color: var(--accent); }
+  .arch-node-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px; letter-spacing: 1px; color: var(--text); line-height: 1;
+  }
+  .arch-node-desc {
+    font-size: 9.5px; font-weight: 500; color: var(--muted); line-height: 1.4;
+  }
+  .arch-arrow {
+    color: var(--primary); font-size: 16px; padding: 0 4px; flex-shrink: 0; opacity: 0.6;
+  }
 
-    /* ── DUAL LOGO HEADER ────────────────────── */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 22px 36px;
-      border-bottom: 1px solid var(--border-card);
-    }
-    .logo-lockup {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .logo-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .logo-brand img { height: 32px; width: auto; }
-    .logo-brand-name {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
-    .logo-sep {
-      font-size: 22px;
-      color: var(--muted);
-      font-weight: 300;
-      padding: 0 4px;
-    }
-    .header-date {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
+  /* ── PARTNER TABLE ── */
+  .table-wrap {
+    margin: 0 48px 28px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .dense-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 12px; font-family: 'Montserrat', sans-serif;
+  }
+  .dense-table thead tr {
+    background: rgba(var(--primary-rgb),0.07);
+    border-bottom: 1px solid rgba(var(--primary-rgb),0.22);
+  }
+  .dense-table thead th {
+    padding: 9px 12px; text-align: left;
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--primary);
+  }
+  .dense-table tbody tr {
+    border-bottom: 1px solid var(--border-faint);
+  }
+  .dense-table tbody tr:last-child { border-bottom: none; }
+  .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .dense-table td {
+    padding: 7px 12px; vertical-align: middle;
+    color: var(--text); font-weight: 500;
+  }
+  .td-name { font-weight: 700; font-size: 12px; }
+  .td-chain { font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 1px; }
+  .p-tag {
+    display: inline-block; padding: 2px 7px; border-radius: 3px;
+    font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .p-green  { background: rgba(0,232,138,0.10);   color: var(--primary);   border: 1px solid rgba(0,232,138,0.25); }
+  .p-purple { background: rgba(185,138,255,0.10);  color: var(--secondary); border: 1px solid rgba(185,138,255,0.25); }
+  .p-teal   { background: rgba(46,213,215,0.10);   color: var(--accent);    border: 1px solid rgba(46,213,215,0.25); }
+  .p-amber  { background: rgba(246,169,26,0.10);   color: #F6A91A;          border: 1px solid rgba(246,169,26,0.25); }
+  .p-red    { background: rgba(217,74,75,0.10);    color: #D94A4B;          border: 1px solid rgba(217,74,75,0.25); }
+  .val-green  { color: var(--primary);   font-weight: 700; }
+  .val-purple { color: var(--secondary); font-weight: 600; }
+  .val-muted  { color: var(--muted);     font-weight: 500; }
 
-    /* ── HERO: Title + Description ───────────── */
-    .hero {
-      padding: 40px 40px 32px;
-      border-bottom: 1px solid var(--border-card);
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -60px; right: -60px;
-      width: 300px; height: 300px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,229,204,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--primary);
-      background: rgba(0,229,204,0.08);
-      border: 1px solid rgba(0,229,204,0.2);
-      padding: 4px 14px;
-      border-radius: var(--radius-badge);
-      margin-bottom: 20px;
-    }
-    .hero h1 {
-      font-family: var(--font-display);
-      font-size: var(--text-hero);
-      font-weight: 700;
-      line-height: 1.1;
-      text-transform: uppercase;
-      letter-spacing: -0.01em;
-      max-width: 700px;
-      margin-bottom: 14px;
-    }
-    .hero h1 span { color: var(--primary); }
-    .hero-desc {
-      font-size: var(--text-body);
-      color: var(--muted);
-      max-width: 680px;
-      line-height: 1.6;
-    }
+  /* ── BULLET PANELS ── */
+  .panel-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    padding: 0 48px 28px;
+  }
+  .bullet-panel {
+    background: var(--bg-card);
+    border: 1.5px solid rgba(var(--primary-rgb),0.18);
+    padding: 16px 18px;
+  }
+  .bullet-panel.sec { border-color: rgba(var(--secondary-rgb),0.18); }
+  .bullet-panel.acc { border-color: rgba(var(--accent-rgb),0.18); }
+  .bp-header {
+    font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--primary);
+    padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
+  }
+  .bullet-panel.sec .bp-header { color: var(--secondary); }
+  .bullet-panel.acc .bp-header { color: var(--accent); }
+  .bullet-panel ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .bullet-panel li {
+    display: flex; align-items: flex-start; gap: 7px;
+    font-size: 11.5px; font-weight: 500; color: var(--text); line-height: 1.45;
+  }
+  .bullet-panel li::before {
+    content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0;
+  }
+  .bullet-panel.sec li::before { color: var(--secondary); }
+  .bullet-panel.acc li::before { color: var(--accent); }
+  .bullet-panel li span { color: var(--muted); }
 
-    /* ── FLOW DIAGRAM ────────────────────────── */
-    .flow-section {
-      padding: 32px 40px;
-      border-bottom: 1px solid var(--border-card);
-    }
-    .section-heading {
-      font-family: var(--font-display);
-      font-size: 13px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      margin-bottom: 24px;
-    }
-    .flow {
-      display: flex;
-      align-items: center;
-      gap: 0;
-    }
-    .flow-node {
-      flex: 1;
-      background: var(--surface);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-card);
-      padding: 20px;
-      text-align: center;
-      position: relative;
-    }
-    .flow-node.highlighted {
-      border-color: var(--border);
-      background: rgba(0,229,204,0.04);
-      box-shadow: 0 0 20px rgba(0,229,204,0.08);
-    }
-    .flow-node-icon {
-      font-size: 28px;
-      color: var(--primary);
-      margin-bottom: 10px;
-      display: block;
-    }
-    .flow-node-title {
-      font-family: var(--font-display);
-      font-size: 14px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 6px;
-    }
-    .flow-node-desc {
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-    .flow-arrow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 48px;
-      flex-shrink: 0;
-      color: var(--primary);
-      font-size: 20px;
-    }
-    .flow-arrow-label {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
-    .arrow-benefit {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-    }
+  /* ── CATEGORY TABLE ── */
+  .cat-table-wrap {
+    margin: 0 48px 28px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .cat-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 12px;
+  }
+  .cat-table thead tr {
+    background: rgba(var(--secondary-rgb),0.07);
+    border-bottom: 1px solid rgba(var(--secondary-rgb),0.22);
+  }
+  .cat-table thead th {
+    padding: 9px 12px; text-align: left;
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--secondary);
+  }
+  .cat-table tbody tr { border-bottom: 1px solid var(--border-faint); }
+  .cat-table tbody tr:last-child { border-bottom: none; }
+  .cat-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .cat-table td { padding: 7px 12px; font-weight: 500; }
 
-    /* ── 2-COL PARTNER DETAILS ───────────────── */
-    .details-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      border-bottom: 1px solid var(--border-card);
-    }
-    .detail-col {
-      padding: 28px 36px;
-    }
-    .detail-col:first-child {
-      border-right: 1px solid var(--border-card);
-    }
-    .detail-col-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border-card);
-    }
-    .detail-col-title {
-      font-family: var(--font-display);
-      font-size: var(--text-h2);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-    .detail-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .detail-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: var(--text-body);
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .detail-item i {
-      color: var(--primary);
-      font-size: 14px;
-      margin-top: 2px;
-      flex-shrink: 0;
-    }
+  /* ── CALLOUT STRIP ── */
+  .callout-strip {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 10px;
+    padding: 0 48px 32px;
+  }
+  .callout-box {
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--primary);
+    background: var(--bg-section);
+  }
+  .callout-box.sec { border-left-color: var(--secondary); }
+  .callout-box.acc { border-left-color: var(--accent); }
+  .cb-lbl {
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--primary); margin-bottom: 6px;
+  }
+  .callout-box.sec .cb-lbl { color: var(--secondary); }
+  .callout-box.acc .cb-lbl { color: var(--accent); }
+  .cb-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 5px;
+  }
+  .cb-desc { font-size: 11px; font-weight: 500; color: var(--muted); line-height: 1.45; }
 
-    /* ── TIER BADGES ─────────────────────────── */
-    .tiers-section {
-      padding: 24px 36px;
-      border-bottom: 1px solid var(--border-card);
-    }
-    .tiers {
-      display: flex;
-      gap: 12px;
-    }
-    .tier-badge {
-      flex: 1;
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-card);
-      padding: 16px 20px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .tier-badge.featured {
-      border-color: var(--border);
-      background: rgba(0,229,204,0.04);
-    }
-    .tier-label {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-    .tier-name {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 8px;
-    }
-    .tier-perks {
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    /* ── CTA FOOTER BAR ──────────────────────── */
-    .cta-bar {
-      padding: 18px 36px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border-card);
-      background: rgba(0,229,204,0.03);
-    }
-    .cta-text {
-      font-size: var(--text-body);
-      color: var(--muted);
-    }
-    .cta-url {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--primary);
-      letter-spacing: 0.02em;
-    }
-
-    /* ── FOOTER ─────────────────────────────── */
-    .footer {
-      padding: 12px 32px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 10px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      opacity: 0.5;
-    }
-
-    /* ── ANIMATIONS ─────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .header  { animation: fadeUp 0.4s ease 0.0s both; }
-    .hero    { animation: fadeUp 0.4s ease 0.1s both; }
-    .flow-section   { animation: fadeUp 0.4s ease 0.2s both; }
-    .details-section { animation: fadeUp 0.4s ease 0.3s both; }
-    .tiers-section  { animation: fadeUp 0.4s ease 0.4s both; }
-  </style>
+  /* ── FOOTER ── */
+  .footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    border-top: 1px solid var(--border);
+    background: rgba(var(--primary-rgb),0.02);
+  }
+  .footer-left { display: flex; align-items: center; gap: 12px; }
+  .footer-logo {
+    width: 30px; height: 30px; border-radius: 5px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 13px; color: #000;
+  }
+  .footer-name { font-size: 12px; font-weight: 700; color: var(--text); letter-spacing: 1px; }
+  .footer-tag  { font-size: 9px; color: var(--muted); font-weight: 500; }
+  .footer-right { display: flex; align-items: center; gap: 14px; }
+  .f-badge {
+    padding: 3px 10px; border-radius: 3px;
+    border: 1px solid var(--border);
+    font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .footer-date { font-size: 10px; color: var(--muted); }
+</style>
 </head>
 <body>
-<div class="infographic">
-
-  <!-- DUAL LOGO HEADER -->
-  <header class="header">
-    <div class="logo-lockup">
-      <div class="logo-brand">
-        <!-- <img src="{{LOGO_A_PATH}}" alt="{{BRAND_A}}"> -->
-        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;">{{BRAND_A}}</div>
-      </div>
-      <span class="logo-sep">×</span>
-      <div class="logo-brand">
-        <!-- <img src="{{LOGO_B_PATH}}" alt="{{BRAND_B}}"> -->
-        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;">{{BRAND_B}}</div>
-      </div>
-    </div>
-    <div class="header-date">{{DATE}}</div>
-  </header>
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-badge">
-      <i class="ph ph-link"></i>
-      {{INTEGRATION_TYPE}}
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span></span>2024 ECOSYSTEM REPORT</div>
+      <div class="hero-title">THE <em>GROWING</em><br>ECOSYSTEM</div>
+      <ul class="hero-bullets">
+        <li>120+ protocols, tools, and dApps building on or integrating with the platform</li>
+        <li>Spanning DeFi, infrastructure, gaming, and cross-chain deployments</li>
+        <li>Ecosystem TVL exceeds $4.2B across 8 supported chains</li>
+        <li>Category pills indicate primary integration category and live status</li>
+      </ul>
     </div>
-    <h1>{{HEADLINE}}<br><span>{{HEADLINE_LINE2}}</span></h1>
-    <p class="hero-desc">{{DESCRIPTION}}</p>
-  </div>
-
-  <!-- FLOW DIAGRAM -->
-  <div class="flow-section">
-    <div class="section-heading">How the Integration Works</div>
-    <div class="flow">
-      <div class="flow-node highlighted">
-        <i class="ph-duotone ph-cube flow-node-icon"></i>
-        <div class="flow-node-title">{{BRAND_A}}</div>
-        <div class="flow-node-desc">{{BRAND_A_ROLE}}</div>
-      </div>
-      <div class="flow-arrow">
-        <div class="flow-arrow-label">
-          <span class="arrow-benefit">{{BENEFIT_1}}</span>
-          <i class="ph ph-arrow-right" style="font-size:18px;color:var(--primary);"></i>
-          <span class="arrow-benefit">{{BENEFIT_2}}</span>
+    <div class="hero-card">
+      <div class="hero-card-label">Ecosystem Snapshot</div>
+      <div class="hero-kpi-grid">
+        <div class="hero-kpi">
+          <div class="hero-kpi-val">120+</div>
+          <div class="hero-kpi-lbl">Total Partners</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val sec">14</div>
+          <div class="hero-kpi-lbl">Categories</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val acc">$4.2B</div>
+          <div class="hero-kpi-lbl">Ecosystem TVL</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val">8</div>
+          <div class="hero-kpi-lbl">Chains</div>
         </div>
       </div>
-      <div class="flow-node">
-        <i class="ph-duotone ph-shield-check flow-node-icon"></i>
-        <div class="flow-node-title">Integration</div>
-        <div class="flow-node-desc">{{MIDDLE_NODE_DESC}}</div>
-      </div>
-      <div class="flow-arrow">
-        <div class="flow-arrow-label">
-          <span class="arrow-benefit">{{BENEFIT_3}}</span>
-          <i class="ph ph-arrow-right" style="font-size:18px;color:var(--primary);"></i>
-          <span class="arrow-benefit">{{BENEFIT_4}}</span>
-        </div>
-      </div>
-      <div class="flow-node highlighted">
-        <i class="ph-duotone ph-globe flow-node-icon"></i>
-        <div class="flow-node-title">{{BRAND_B}}</div>
-        <div class="flow-node-desc">{{BRAND_B_ROLE}}</div>
+      <div class="hero-chain-row">
+        <div class="chain-pill">Ethereum</div>
+        <div class="chain-pill sec">Arbitrum</div>
+        <div class="chain-pill acc">Base</div>
+        <div class="chain-pill">Polygon</div>
       </div>
     </div>
   </div>
 
-  <!-- 2-COL PARTNER DETAILS -->
-  <div class="details-section">
-    <div class="detail-col">
-      <div class="detail-col-header">
-        <i class="ph ph-buildings" style="font-size:20px;color:var(--primary);"></i>
-        <div class="detail-col-title">{{BRAND_A}}</div>
-      </div>
-      <div class="detail-list">
-        <div class="detail-item"><i class="ph-fill ph-check-circle"></i> {{BRAND_A_POINT_1}}</div>
-        <div class="detail-item"><i class="ph-fill ph-check-circle"></i> {{BRAND_A_POINT_2}}</div>
-        <div class="detail-item"><i class="ph-fill ph-check-circle"></i> {{BRAND_A_POINT_3}}</div>
-      </div>
+  <!-- STAT STRIP -->
+  <div style="padding: 20px 48px 0;"><!-- spacer --></div>
+  <div class="stat-strip">
+    <div class="stat-box">
+      <div class="stat-val">+47</div>
+      <div class="stat-lbl">New Q1 Partners</div>
+      <div class="stat-sub">Since Jan 2024</div>
     </div>
-    <div class="detail-col">
-      <div class="detail-col-header">
-        <i class="ph ph-buildings" style="font-size:20px;color:var(--secondary);"></i>
-        <div class="detail-col-title" style="color:var(--secondary);">{{BRAND_B}}</div>
-      </div>
-      <div class="detail-list">
-        <div class="detail-item"><i class="ph-fill ph-check-circle" style="color:var(--secondary);"></i> {{BRAND_B_POINT_1}}</div>
-        <div class="detail-item"><i class="ph-fill ph-check-circle" style="color:var(--secondary);"></i> {{BRAND_B_POINT_2}}</div>
-        <div class="detail-item"><i class="ph-fill ph-check-circle" style="color:var(--secondary);"></i> {{BRAND_B_POINT_3}}</div>
-      </div>
+    <div class="stat-box sec">
+      <div class="stat-val">$8.5M</div>
+      <div class="stat-lbl">Grants Deployed</div>
+      <div class="stat-sub">Foundation fund</div>
     </div>
-  </div>
-
-  <!-- TIER SYSTEM (optional — remove section if not needed) -->
-  <div class="tiers-section">
-    <div class="section-heading">Access Tiers</div>
-    <div class="tiers">
-      <div class="tier-badge">
-        <div class="tier-label">Tier I</div>
-        <div class="tier-name" style="color:var(--muted);">{{TIER_1_NAME}}</div>
-        <div class="tier-perks">{{TIER_1_PERKS}}</div>
-      </div>
-      <div class="tier-badge featured">
-        <div class="tier-label">Tier II</div>
-        <div class="tier-name" style="color:var(--primary);">{{TIER_2_NAME}}</div>
-        <div class="tier-perks">{{TIER_2_PERKS}}</div>
-      </div>
-      <div class="tier-badge">
-        <div class="tier-label">Tier III</div>
-        <div class="tier-name" style="color:var(--accent);">{{TIER_3_NAME}}</div>
-        <div class="tier-perks">{{TIER_3_PERKS}}</div>
-      </div>
+    <div class="stat-box acc">
+      <div class="stat-val">38</div>
+      <div class="stat-lbl">DeFi Integrations</div>
+      <div class="stat-sub">Live protocols</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val">24</div>
+      <div class="stat-lbl">Deployments</div>
+      <div class="stat-sub">Active projects</div>
+    </div>
+    <div class="stat-box sec">
+      <div class="stat-val">17</div>
+      <div class="stat-lbl">Infrastructure</div>
+      <div class="stat-sub">Providers</div>
     </div>
   </div>
 
-  <!-- CTA BAR -->
-  <div class="cta-bar">
-    <span class="cta-text">Learn more about the integration</span>
-    <span class="cta-url">{{CTA_URL}}</span>
+  <!-- ARCHITECTURE FLOW -->
+  <div class="section-label">ECOSYSTEM ARCHITECTURE</div>
+  <div class="arch-flow">
+    <div class="arch-node">
+      <div class="arch-node-tag">LAYER 1</div>
+      <div class="arch-node-title">Base Chain</div>
+      <div class="arch-node-desc">Settlement layer · consensus · security guarantees</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-node sec">
+      <div class="arch-node-tag">PROTOCOL</div>
+      <div class="arch-node-title">Core Protocol</div>
+      <div class="arch-node-desc">Smart contracts · liquidity layer · token logic</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-node acc">
+      <div class="arch-node-tag">MIDDLEWARE</div>
+      <div class="arch-node-title">Oracles & Indexers</div>
+      <div class="arch-node-desc">Price feeds · on-chain data · subgraph queries</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-node">
+      <div class="arch-node-tag">APP LAYER</div>
+      <div class="arch-node-title">dApps & Vaults</div>
+      <div class="arch-node-desc">Yield optimizers · trading UIs · portfolio tools</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-node sec">
+      <div class="arch-node-tag">DISTRIBUTION</div>
+      <div class="arch-node-title">Users & Wallets</div>
+      <div class="arch-node-desc">End users · CEX listings · fiat on-ramps</div>
+    </div>
+  </div>
+
+  <!-- ARROW CONNECTOR -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ FEATURED PARTNERS</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <!-- PARTNER TABLE -->
+  <div class="section-label">INTEGRATION DIRECTORY</div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th>Protocol</th>
+          <th>Category</th>
+          <th>Network</th>
+          <th>TVL / Volume</th>
+          <th>Integration</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="td-name">Aave v3</div><div class="td-chain">Ethereum · Arbitrum</div></td>
+          <td><span class="p-tag p-green">LENDING</span></td>
+          <td class="val-muted">Multi-chain</td>
+          <td class="val-green">$12.4B TVL</td>
+          <td class="val-muted">Collateral</td>
+          <td><span class="p-tag p-green">LIVE</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-name">Uniswap v4</div><div class="td-chain">Ethereum · Base</div></td>
+          <td><span class="p-tag p-purple">DEX</span></td>
+          <td class="val-muted">Multi-chain</td>
+          <td class="val-green">$2.1B 24h Vol</td>
+          <td class="val-muted">AMM routing</td>
+          <td><span class="p-tag p-green">LIVE</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-name">Chainlink</div><div class="td-chain">Cross-chain</div></td>
+          <td><span class="p-tag p-amber">ORACLE</span></td>
+          <td class="val-muted">All networks</td>
+          <td class="val-muted">–</td>
+          <td class="val-muted">Price feeds</td>
+          <td><span class="p-tag p-green">LIVE</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-name">GMX</div><div class="td-chain">Arbitrum · Avalanche</div></td>
+          <td><span class="p-tag p-amber">PERPS</span></td>
+          <td class="val-muted">Arbitrum</td>
+          <td class="val-green">$700M OI</td>
+          <td class="val-muted">Liquidity share</td>
+          <td><span class="p-tag p-green">LIVE</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-name">Stargate</div><div class="td-chain">Multi-chain</div></td>
+          <td><span class="p-tag p-teal">BRIDGE</span></td>
+          <td class="val-muted">12 chains</td>
+          <td class="val-green">$440M TVL</td>
+          <td class="val-muted">Cross-chain LP</td>
+          <td><span class="p-tag p-amber">BETA</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-name">Pendle Finance</div><div class="td-chain">Ethereum · Arbitrum</div></td>
+          <td><span class="p-tag p-purple">YIELD</span></td>
+          <td class="val-muted">Ethereum</td>
+          <td class="val-green">$2.8B TVL</td>
+          <td class="val-muted">Yield markets</td>
+          <td><span class="p-tag p-green">LIVE</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-name">The Graph</div><div class="td-chain">Ethereum · Polygon</div></td>
+          <td><span class="p-tag p-purple">INDEXING</span></td>
+          <td class="val-muted">Multi-chain</td>
+          <td class="val-muted">–</td>
+          <td class="val-muted">Data indexing</td>
+          <td><span class="p-tag p-green">LIVE</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-name">Lido</div><div class="td-chain">Ethereum</div></td>
+          <td><span class="p-tag p-red">STAKING</span></td>
+          <td class="val-muted">Ethereum</td>
+          <td class="val-green">$28B TVL</td>
+          <td class="val-muted">stETH collateral</td>
+          <td><span class="p-tag p-green">LIVE</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-name">Curve Finance</div><div class="td-chain">Ethereum · Polygon</div></td>
+          <td><span class="p-tag p-teal">DEX</span></td>
+          <td class="val-muted">Multi-chain</td>
+          <td class="val-green">$1.9B TVL</td>
+          <td class="val-muted">Stable swap</td>
+          <td><span class="p-tag p-green">LIVE</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-name">LayerZero</div><div class="td-chain">Cross-chain</div></td>
+          <td><span class="p-tag p-amber">MESSAGING</span></td>
+          <td class="val-muted">30+ chains</td>
+          <td class="val-muted">–</td>
+          <td class="val-muted">OFT standard</td>
+          <td><span class="p-tag p-amber">BETA</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ARROW CONNECTOR -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ CATEGORY BREAKDOWN</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <!-- BULLET PANELS -->
+  <div class="section-label">INTEGRATION CATEGORIES</div>
+  <div class="panel-row">
+    <div class="bullet-panel">
+      <div class="bp-header">DeFi Protocols</div>
+      <ul>
+        <li><strong>Lending / Borrowing</strong> <span>— Aave, Compound, Radiant (8 protocols)</span></li>
+        <li><strong>DEX / AMM</strong> <span>— Uniswap, Curve, Balancer, Camelot (11 protocols)</span></li>
+        <li><strong>Perpetuals</strong> <span>— GMX, dYdX, Gains Network (5 protocols)</span></li>
+        <li><strong>Yield Optimization</strong> <span>— Pendle, Yearn, Beefy (6 protocols)</span></li>
+        <li><strong>Stablecoins</strong> <span>— MakerDAO, crvUSD, FRAX (4 protocols)</span></li>
+        <li><strong>Liquid Staking</strong> <span>— Lido, Rocket Pool, Frax ETH (4 protocols)</span></li>
+      </ul>
+    </div>
+    <div class="bullet-panel sec">
+      <div class="bp-header">Infrastructure & Tooling</div>
+      <ul>
+        <li><strong>Oracle Networks</strong> <span>— Chainlink, Pyth, API3 (3 providers)</span></li>
+        <li><strong>Bridge Protocols</strong> <span>— Stargate, Across, Hop (5 bridges)</span></li>
+        <li><strong>Node / RPC</strong> <span>— Alchemy, Infura, QuickNode (5 providers)</span></li>
+        <li><strong>Data Indexing</strong> <span>— The Graph, Goldsky, Subsquid (3 indexers)</span></li>
+        <li><strong>Cross-chain Messaging</strong> <span>— LayerZero, Axelar, Wormhole (3 protocols)</span></li>
+        <li><strong>Security / Audits</strong> <span>— Certik, OpenZeppelin, Iosiro (3 firms)</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CATEGORY MATRIX TABLE -->
+  <div class="section-label">CATEGORY MATRIX</div>
+  <div class="cat-table-wrap">
+    <table class="cat-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Partner Count</th>
+          <th>Combined TVL</th>
+          <th>Integration Depth</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="p-tag p-green">LENDING</span></td>
+          <td>8 protocols</td>
+          <td class="val-green">$18.2B</td>
+          <td>Collateral + Borrow</td>
+          <td><span class="p-tag p-green">LIVE</span></td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-purple">DEX / AMM</span></td>
+          <td>11 protocols</td>
+          <td class="val-green">$6.4B</td>
+          <td>Routing + Liquidity</td>
+          <td><span class="p-tag p-green">LIVE</span></td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-red">STAKING</span></td>
+          <td>4 protocols</td>
+          <td class="val-green">$34.1B</td>
+          <td>LST collateral</td>
+          <td><span class="p-tag p-green">LIVE</span></td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-teal">BRIDGE</span></td>
+          <td>5 protocols</td>
+          <td class="val-green">$1.1B</td>
+          <td>Cross-chain LP</td>
+          <td><span class="p-tag p-amber">PARTIAL</span></td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-amber">ORACLE</span></td>
+          <td>3 providers</td>
+          <td class="val-muted">N/A</td>
+          <td>Price + VRF feeds</td>
+          <td><span class="p-tag p-green">LIVE</span></td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-purple">YIELD</span></td>
+          <td>6 protocols</td>
+          <td class="val-green">$4.7B</td>
+          <td>Vault strategies</td>
+          <td><span class="p-tag p-green">LIVE</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CALLOUT STRIP -->
+  <div class="callout-strip">
+    <div class="callout-box">
+      <div class="cb-lbl">Q1 Growth</div>
+      <div class="cb-val">+47 NEW PARTNERS</div>
+      <div class="cb-desc">▸ DeFi: +18 &nbsp;▸ Infra: +15 &nbsp;▸ Gaming: +14</div>
+    </div>
+    <div class="callout-box sec">
+      <div class="cb-lbl">Grant Fund</div>
+      <div class="cb-val">$8.5M DEPLOYED</div>
+      <div class="cb-desc">▸ 23 teams funded &nbsp;▸ Infra focus &nbsp;▸ Q2 round open</div>
+    </div>
+    <div class="callout-box acc">
+      <div class="cb-lbl">Chain Coverage</div>
+      <div class="cb-val">8 NETWORKS</div>
+      <div class="cb-desc">ETH · Arbitrum · Base · Polygon · Optimism · zkSync · Avax · BNB</div>
+    </div>
+  </div>
+
+  <!-- GOVERNANCE & UTILITY -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ GOVERNANCE &amp; UTILITY</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">TOKEN UTILITY &amp; GOVERNANCE</div>
+  <div class="panel-row">
+    <div class="bullet-panel">
+      <div class="bp-header">Governance Rights</div>
+      <ul>
+        <li><strong>Protocol Upgrades</strong> <span>— token holders vote on all smart contract changes</span></li>
+        <li><strong>Grant Allocation</strong> <span>— community votes on foundation grant recipients</span></li>
+        <li><strong>Parameter Control</strong> <span>— fees, limits, and thresholds set by governance</span></li>
+        <li><strong>Emergency Actions</strong> <span>— multisig council with 72-hour timelock</span></li>
+        <li><strong>Chain Expansion</strong> <span>— new network deployments require governance vote</span></li>
+        <li><strong>Quorum Threshold</strong> <span>— 4% of supply required for valid vote</span></li>
+      </ul>
+    </div>
+    <div class="bullet-panel acc">
+      <div class="bp-header">Ecosystem Incentives</div>
+      <ul>
+        <li><strong>Builder Grants</strong> <span>— $8.5M deployed; next round opens Q2 2024</span></li>
+        <li><strong>Liquidity Mining</strong> <span>— LP providers earn emissions for 36 months</span></li>
+        <li><strong>Partner Incentives</strong> <span>— integrating protocols receive co-marketing + grants</span></li>
+        <li><strong>Hackathon Fund</strong> <span>— $500K reserved for quarterly developer events</span></li>
+        <li><strong>Security Bounties</strong> <span>— up to $250K per critical vulnerability reported</span></li>
+        <li><strong>Retroactive Rewards</strong> <span>— early adopters eligible for retroactive airdrop</span></li>
+      </ul>
+    </div>
   </div>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <span>{{FOOTER_SOURCE}} • {{DATE}}</span>
-    <span>Not financial advice. DYOR.</span>
-  </footer>
+  <div class="footer">
+    <div class="footer-left">
+      <div class="footer-logo">E</div>
+      <div>
+        <div class="footer-name">PROJECT NAME</div>
+        <div class="footer-tag">Building the open financial system</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="f-badge">Ethereum</div>
+      <div class="f-badge">Arbitrum</div>
+      <div class="footer-date">March 2024</div>
+    </div>
+  </div>
 
-</div>
 </body>
 </html>

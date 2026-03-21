@@ -1,129 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Data Story — KPI Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
-  <style>
-    :root {
-      --bg: #0A0F1A;
-      --surface: #101622;
-      --border: rgba(255,255,255,0.08);
-      --primary: #00E5C7;
-      --secondary: #9B5DE5;
-      --text: #ffffff;
-      --muted: #8AA0C4;
-      --fd: 'DM Sans', sans-serif;
-      --fb: 'DM Sans', sans-serif;
-      --fmono: 'JetBrains Mono', monospace;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: var(--fb); width: 1100px; padding: 64px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE}}</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0E17;
+    --bg2: #111520;
+    --bg3: #161B28;
+    --primary: #00E88A;
+    --primary-rgb: 0,232,138;
+    --secondary: #FF6B6B;
+    --secondary-rgb: 255,107,107;
+    --accent: #4ECBFF;
+    --accent-rgb: 78,203,255;
+    --text: #E8EAF0;
+    --text-muted: #8890A8;
+    --border: rgba(255,255,255,0.08);
+    --border-faint: rgba(255,255,255,0.04);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1080px;
+      margin: 0 auto; background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 13px; line-height: 1.5; }
 
-    header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; border-bottom: 1px solid var(--border); padding-bottom: 32px; }
-    h1 { font-size: 48px; letter-spacing: -0.02em; }
-    .subtitle { color: var(--muted); font-size: 16px; margin-top: 8px; }
-    .badge { background: rgba(0, 229, 199, 0.1); color: var(--primary); padding: 8px 16px; border-radius: 8px; font-family: var(--fmono); font-size: 14px; }
+  /* Stat Poster hero — dominant number + right sidebar */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-main {
+    padding: 40px 36px 32px 48px;
+    border-right: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(var(--primary-rgb),0.06) 0%, transparent 60%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .hero-tag { display: inline-flex; align-items: center; background: rgba(var(--primary-rgb),0.1); border: 1px solid rgba(var(--primary-rgb),0.25); color: var(--primary); font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; margin-bottom: 12px; width: fit-content; }
+  .hero-number { font-family: 'Bebas Neue', sans-serif; font-size: 110px; line-height: 0.85; color: var(--primary); letter-spacing: -2px; }
+  .hero-number-label { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; color: rgba(255,255,255,0.7); margin-top: 4px; margin-bottom: 12px; }
+  .hero-desc { font-size: 12px; color: var(--text-muted); font-weight: 500; max-width: 460px; line-height: 1.55; }
+  .hero-side {
+    padding: 28px 24px 28px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+  }
+  .side-kpi { background: var(--bg3); border: 1px solid var(--border); padding: 12px 16px; position: relative; }
+  .side-kpi::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--primary); }
+  .side-kpi.k2::before { background: var(--accent); }
+  .side-kpi.k3::before { background: var(--secondary); }
+  .sk-val { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: #fff; line-height: 1; }
+  .sk-lbl { font-size: 8.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-top: 3px; }
+  .sk-delta { font-size: 10.5px; font-weight: 600; color: var(--accent); margin-top: 2px; }
+  .sk-delta.neg { color: var(--secondary); }
 
-    /* Main Stats Board */
-    .hero-stats {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px;
-    }
-    .hero-stat-card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
-      padding: 40px; display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden;
-    }
-    .hero-stat-card::after {
-      content: ''; position: absolute; right: -20px; bottom: -20px;
-      width: 120px; height: 120px; border-radius: 50%;
-      background: var(--primary); filter: blur(60px); opacity: 0.15;
-    }
-    .stat-title { font-size: 14px; text-transform: uppercase; font-weight: 700; color: var(--muted); letter-spacing: 0.1em; }
-    .stat-number { font-family: var(--fmono); font-size: 64px; color: var(--text); }
-    .stat-trend { display: flex; align-items: center; gap: 4px; color: var(--primary); font-size: 14px; font-weight: 700; }
+  .section-label { display: flex; align-items: center; gap: 14px; padding: 0 48px 12px; }
+  .section-label-text { font-size: 8.5px; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--primary); white-space: nowrap; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    /* Secondary Grid */
-    .data-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 40px; }
-    .data-card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
-      padding: 24px; display: flex; flex-direction: column; gap: 16px;
-    }
-    .d-header { display: flex; align-items: center; justify-content: space-between; color: var(--muted); }
-    .d-header i { font-size: 24px; }
-    .d-val { font-family: var(--fmono); font-size: 32px; }
+  /* KPI mega-grid */
+  .kpi-mega-grid { padding: 0 48px 28px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+  .kpi-box { background: var(--bg3); border: 1px solid var(--border); padding: 14px 16px; position: relative; }
+  .kpi-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--primary); }
+  .kpi-box.s2::before { background: var(--accent); }
+  .kpi-box.s3::before { background: var(--secondary); }
+  .kb-val { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: #fff; line-height: 1; }
+  .kb-lbl { font-size: 8.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
+  .kb-delta { font-size: 10.5px; font-weight: 600; color: var(--accent); margin-top: 2px; }
+  .kb-delta.neg { color: var(--secondary); }
 
-    /* Progress Bar Chart */
-    .chart-section {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
-      padding: 40px;
-    }
-    .chart-title { font-size: 18px; font-weight: 700; margin-bottom: 32px; }
-    .bar-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
-    .bar-labels { display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); font-family: var(--fmono); }
-    .bar-bg { width: 100%; height: 12px; background: rgba(255,255,255,0.05); border-radius: 6px; overflow: hidden; }
-    .bar-fill { height: 100%; background: var(--primary); border-radius: 6px; }
-  </style>
+  /* Bar chart — horizontal */
+  .bar-chart-wrap { padding: 0 48px 28px; }
+  .bar-chart { background: var(--bg3); border: 1px solid var(--border); padding: 16px 20px; }
+  .bc-row { display: grid; grid-template-columns: 140px 1fr 60px; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .bc-row:last-child { margin-bottom: 0; }
+  .bc-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-align: right; }
+  .bc-track { height: 20px; background: rgba(255,255,255,0.04); border-radius: 2px; overflow: hidden; border: 1px solid var(--border); position: relative; }
+  .bc-fill {
+    height: 100%;
+    background: linear-gradient(to right, rgba(var(--primary-rgb),0.7), rgba(var(--primary-rgb),0.9));
+    border-radius: 2px;
+    min-width: 2px;
+  }
+  .bc-fill.f2 { background: linear-gradient(to right, rgba(var(--accent-rgb),0.7), rgba(var(--accent-rgb),0.9)); }
+  .bc-fill.f3 { background: linear-gradient(to right, rgba(var(--secondary-rgb),0.5), rgba(var(--secondary-rgb),0.7)); }
+  .bc-val { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--primary); text-align: right; }
+  .bc-val.f2 { color: var(--accent); }
+  .bc-val.f3 { color: var(--secondary); }
+
+  .arrow-connector { display: flex; align-items: center; gap: 10px; padding: 10px 48px 20px; }
+  .arrow-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(var(--primary-rgb),0.4), transparent); }
+  .arrow-icon { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(var(--primary-rgb),0.6); padding: 4px 12px; border-radius: 3px; background: rgba(var(--primary-rgb),0.08); border: 1px solid rgba(var(--primary-rgb),0.22); }
+
+  .table-wrap { padding: 0 48px 28px; }
+  .dense-table { width: 100%; border-collapse: collapse; font-size: 12px; border: 1px solid var(--border); }
+  .dense-table thead tr { background: rgba(var(--primary-rgb),0.07); }
+  .dense-table thead th { padding: 8px 12px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); text-align: left; border-bottom: 1px solid rgba(var(--primary-rgb),0.2); }
+  .dense-table td { padding: 7px 12px; vertical-align: middle; font-weight: 500; border-bottom: 1px solid var(--border-faint); }
+  .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .dense-table tbody tr:last-child td { border-bottom: none; }
+  .td-name { font-weight: 700; color: #fff; }
+  .td-num { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--primary); }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 2px; font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .badge-hi { background: rgba(0,232,138,0.12); color: var(--primary); border: 1px solid rgba(0,232,138,0.25); }
+  .badge-md { background: rgba(78,203,255,0.12); color: var(--accent); border: 1px solid rgba(78,203,255,0.25); }
+  .badge-lo { background: rgba(255,107,107,0.12); color: var(--secondary); border: 1px solid rgba(255,107,107,0.25); }
+  .change-pos { color: var(--primary); font-weight: 700; }
+  .change-neg { color: var(--secondary); font-weight: 700; }
+
+  .two-col { padding: 0 48px 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .bullet-panel { background: var(--bg3); border: 1px solid var(--border); padding: 16px 18px; }
+  .bp-title { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .bullet-panel ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .bullet-panel li { display: flex; align-items: flex-start; gap: 7px; font-size: 11.5px; font-weight: 500; line-height: 1.4; }
+  .bullet-panel li::before { content: '▸'; color: var(--primary); font-size: 9px; flex-shrink: 0; margin-top: 2px; }
+  .bullet-panel.alt .bp-title { color: var(--secondary); }
+  .bullet-panel.alt li::before { color: var(--secondary); }
+
+  .callout-strip { padding: 0 48px 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .cb { background: rgba(var(--primary-rgb),0.06); border: 1px solid rgba(var(--primary-rgb),0.18); padding: 14px 16px; border-radius: 2px; }
+  .cb.alt { background: rgba(var(--secondary-rgb),0.06); border-color: rgba(var(--secondary-rgb),0.18); }
+  .cb.acc { background: rgba(var(--accent-rgb),0.06); border-color: rgba(var(--accent-rgb),0.18); }
+  .cb-lbl { font-size: 8.5px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 5px; }
+  .cb.alt .cb-lbl { color: var(--secondary); }
+  .cb.acc .cb-lbl { color: var(--accent); }
+  .cb-txt { font-size: 11.5px; font-weight: 500; line-height: 1.45; }
+
+  .footer { padding: 16px 48px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); background: var(--bg2); }
+  .footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 2px; color: var(--primary); }
+  .footer-note { font-size: 9.5px; color: var(--text-muted); font-weight: 500; }
+  .footer-date { font-size: 9.5px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; }
+</style>
 </head>
 <body>
 
-  <header>
+<div class="hero">
+  <div class="hero-main">
     <div>
-      <h1>Q4 PERFORMANCE</h1>
-      <p class="subtitle">Network analytics and growth metrics.</p>
+      <div class="hero-tag">{{CATEGORY}} · DATA STORY</div>
+      <div class="hero-number">{{BIG_NUMBER}}</div>
+      <div class="hero-number-label">{{BIG_NUMBER_LABEL}}</div>
     </div>
-    <div class="badge">REPORT_ID: 994-Alpha</div>
-  </header>
-
-  <!-- Hero Stats -->
-  <div class="hero-stats">
-    <div class="hero-stat-card">
-      <div class="stat-title">Total Value Locked</div>
-      <div class="stat-number">$1.42B</div>
-      <div class="stat-trend"><i class="ph-bold ph-trend-up"></i> +24.5% QoQ</div>
+    <div class="hero-desc">{{DESCRIPTION}}</div>
+  </div>
+  <div class="hero-side">
+    <div class="side-kpi">
+      <div class="sk-val">{{KPI1_VAL}}</div>
+      <div class="sk-lbl">{{KPI1_LABEL}}</div>
+      <div class="sk-delta">{{KPI1_DELTA}}</div>
     </div>
-    <div class="hero-stat-card" style="border-top: 4px solid var(--secondary);">
-      <div class="stat-title">Active Wallets</div>
-      <div class="stat-number">845K</div>
-      <div class="stat-trend" style="color:var(--secondary);"><i class="ph-bold ph-trend-up"></i> +12% QoQ</div>
+    <div class="side-kpi k2">
+      <div class="sk-val">{{KPI2_VAL}}</div>
+      <div class="sk-lbl">{{KPI2_LABEL}}</div>
+      <div class="sk-delta">{{KPI2_DELTA}}</div>
+    </div>
+    <div class="side-kpi k3">
+      <div class="sk-val">{{KPI3_VAL}}</div>
+      <div class="sk-lbl">{{KPI3_LABEL}}</div>
+      <div class="sk-delta neg">{{KPI3_DELTA}}</div>
     </div>
   </div>
+</div>
 
-  <!-- Secondary Metrics -->
-  <div class="data-grid">
-    <div class="data-card">
-      <div class="d-header"><span>Daily TXs</span> <i class="ph-duotone ph-arrows-left-right"></i></div>
-      <div class="d-val">1.2M</div>
+<div style="padding:28px 48px 8px;">
+  <div class="section-label"><span class="section-label-text">Performance Snapshot</span></div>
+</div>
+<div class="kpi-mega-grid">
+  <div class="kpi-box"><div class="kb-val">{{M1_VAL}}</div><div class="kb-lbl">{{M1_LBL}}</div><div class="kb-delta">{{M1_DELTA}}</div></div>
+  <div class="kpi-box s2"><div class="kb-val">{{M2_VAL}}</div><div class="kb-lbl">{{M2_LBL}}</div><div class="kb-delta">{{M2_DELTA}}</div></div>
+  <div class="kpi-box"><div class="kb-val">{{M3_VAL}}</div><div class="kb-lbl">{{M3_LBL}}</div><div class="kb-delta neg">{{M3_DELTA}}</div></div>
+  <div class="kpi-box s3"><div class="kb-val">{{M4_VAL}}</div><div class="kb-lbl">{{M4_LBL}}</div><div class="kb-delta">{{M4_DELTA}}</div></div>
+</div>
+
+<div style="padding:0 48px 8px;">
+  <div class="section-label"><span class="section-label-text">{{CHART_SECTION_LABEL}}</span></div>
+</div>
+<div class="bar-chart-wrap">
+  <div class="bar-chart">
+    <div class="bc-row">
+      <div class="bc-label">{{BAR1_LABEL}}</div>
+      <div class="bc-track"><div class="bc-fill" style="width:{{BAR1_PCT}}%;"></div></div>
+      <div class="bc-val">{{BAR1_VAL}}</div>
     </div>
-    <div class="data-card">
-      <div class="d-header"><span>Avg Finality</span> <i class="ph-duotone ph-timer"></i></div>
-      <div class="d-val">400ms</div>
+    <div class="bc-row">
+      <div class="bc-label">{{BAR2_LABEL}}</div>
+      <div class="bc-track"><div class="bc-fill f2" style="width:{{BAR2_PCT}}%;"></div></div>
+      <div class="bc-val f2">{{BAR2_VAL}}</div>
     </div>
-    <div class="data-card">
-      <div class="d-header"><span>Gas Cost</span> <i class="ph-duotone ph-gas-pump"></i></div>
-      <div class="d-val">$0.001</div>
+    <div class="bc-row">
+      <div class="bc-label">{{BAR3_LABEL}}</div>
+      <div class="bc-track"><div class="bc-fill" style="width:{{BAR3_PCT}}%;"></div></div>
+      <div class="bc-val">{{BAR3_VAL}}</div>
+    </div>
+    <div class="bc-row">
+      <div class="bc-label">{{BAR4_LABEL}}</div>
+      <div class="bc-track"><div class="bc-fill f2" style="width:{{BAR4_PCT}}%;"></div></div>
+      <div class="bc-val f2">{{BAR4_VAL}}</div>
+    </div>
+    <div class="bc-row">
+      <div class="bc-label">{{BAR5_LABEL}}</div>
+      <div class="bc-track"><div class="bc-fill f3" style="width:{{BAR5_PCT}}%;"></div></div>
+      <div class="bc-val f3">{{BAR5_VAL}}</div>
+    </div>
+    <div class="bc-row">
+      <div class="bc-label">{{BAR6_LABEL}}</div>
+      <div class="bc-track"><div class="bc-fill" style="width:{{BAR6_PCT}}%;"></div></div>
+      <div class="bc-val">{{BAR6_VAL}}</div>
     </div>
   </div>
+</div>
 
-  <!-- Horizontal Bar Chart -->
-  <div class="chart-section">
-    <div class="chart-title">User Allocation by Region</div>
-    
-    <div class="bar-row">
-      <div class="bar-labels"><span>North America</span> <span>45%</span></div>
-      <div class="bar-bg"><div class="bar-fill" style="width: 45%;"></div></div>
-    </div>
-    
-    <div class="bar-row">
-      <div class="bar-labels"><span>Europe</span> <span>30%</span></div>
-      <div class="bar-bg"><div class="bar-fill" style="width: 30%; background: var(--secondary);"></div></div>
-    </div>
-    
-    <div class="bar-row" style="margin-bottom:0;">
-      <div class="bar-labels"><span>APAC</span> <span>25%</span></div>
-      <div class="bar-bg"><div class="bar-fill" style="width: 25%; background: var(--text);"></div></div>
-    </div>
+<div class="arrow-connector">
+  <div class="arrow-line"></div>
+  <div class="arrow-icon">PERIOD COMPARISON</div>
+  <div class="arrow-line"></div>
+</div>
+
+<div style="padding:0 48px 8px;">
+  <div class="section-label"><span class="section-label-text">Historical Data</span></div>
+</div>
+<div class="table-wrap">
+  <table class="dense-table">
+    <thead>
+      <tr>
+        <th>Period</th>
+        <th>{{COL1_LABEL}}</th>
+        <th>{{COL2_LABEL}}</th>
+        <th>{{COL3_LABEL}}</th>
+        <th>{{COL4_LABEL}}</th>
+        <th>Change</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="td-name">{{P1_PERIOD}}</td><td class="td-num">{{P1_C1}}</td><td>{{P1_C2}}</td><td>{{P1_C3}}</td><td>{{P1_C4}}</td><td class="change-pos">{{P1_CHANGE}}</td><td style="color:var(--text-muted);">{{P1_NOTE}}</td></tr>
+      <tr><td class="td-name">{{P2_PERIOD}}</td><td class="td-num">{{P2_C1}}</td><td>{{P2_C2}}</td><td>{{P2_C3}}</td><td>{{P2_C4}}</td><td class="change-pos">{{P2_CHANGE}}</td><td style="color:var(--text-muted);">{{P2_NOTE}}</td></tr>
+      <tr><td class="td-name">{{P3_PERIOD}}</td><td class="td-num">{{P3_C1}}</td><td>{{P3_C2}}</td><td>{{P3_C3}}</td><td>{{P3_C4}}</td><td class="change-neg">{{P3_CHANGE}}</td><td style="color:var(--text-muted);">{{P3_NOTE}}</td></tr>
+      <tr><td class="td-name">{{P4_PERIOD}}</td><td class="td-num">{{P4_C1}}</td><td>{{P4_C2}}</td><td>{{P4_C3}}</td><td>{{P4_C4}}</td><td class="change-pos">{{P4_CHANGE}}</td><td style="color:var(--text-muted);">{{P4_NOTE}}</td></tr>
+      <tr><td class="td-name">{{P5_PERIOD}}</td><td class="td-num">{{P5_C1}}</td><td>{{P5_C2}}</td><td>{{P5_C3}}</td><td>{{P5_C4}}</td><td class="change-pos">{{P5_CHANGE}}</td><td style="color:var(--text-muted);">{{P5_NOTE}}</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="padding:0 48px 8px;">
+  <div class="section-label"><span class="section-label-text">Narrative</span></div>
+</div>
+<div class="two-col">
+  <div class="bullet-panel">
+    <div class="bp-title">Key Drivers</div>
+    <ul>
+      <li>{{DRV1}}</li>
+      <li>{{DRV2}}</li>
+      <li>{{DRV3}}</li>
+      <li>{{DRV4}}</li>
+      <li>{{DRV5}}</li>
+    </ul>
   </div>
+  <div class="bullet-panel alt">
+    <div class="bp-title">Headwinds</div>
+    <ul>
+      <li>{{HW1}}</li>
+      <li>{{HW2}}</li>
+      <li>{{HW3}}</li>
+      <li>{{HW4}}</li>
+      <li>{{HW5}}</li>
+    </ul>
+  </div>
+</div>
+
+<div style="padding:0 48px 8px;">
+  <div class="section-label"><span class="section-label-text">Bottom Line</span></div>
+</div>
+<div class="callout-strip">
+  <div class="cb"><div class="cb-lbl">Main Story</div><div class="cb-txt">{{CALLOUT1}}</div></div>
+  <div class="cb alt"><div class="cb-lbl">Watch Out</div><div class="cb-txt">{{CALLOUT2}}</div></div>
+  <div class="cb acc"><div class="cb-lbl">Outlook</div><div class="cb-txt">{{CALLOUT3}}</div></div>
+</div>
+
+<div class="footer">
+  <div class="footer-brand">{{BRAND}}</div>
+  <div class="footer-note">{{FOOTER_NOTE}}</div>
+  <div class="footer-date">{{DATE}}</div>
+</div>
 
 </body>
 </html>

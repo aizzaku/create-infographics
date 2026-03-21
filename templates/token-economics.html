@@ -2,416 +2,579 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{PROJECT_NAME}} Tokenomics</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Token Economics — Reference Template</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
   <style>
-    /* ══════════════════════════════════════════
-       THEME: Token Economics — Amber Dark (your #1 type)
-       ══════════════════════════════════════════ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     :root {
-      --bg:          #0D0D0D;
-      --bg-secondary:#111111;
-      --surface:     #161616;
-      --primary:     #F5A623;
-      --primary-rgb: 245,166,35;
-      --secondary:   #E8943A;
-      --accent:      #FFD700;
-      --text:        #FFFFFF;
-      --muted:       #8B8B8B;
-      --border:      rgba(255,255,255,0.08);
-      --border-accent: rgba(245,166,35,0.25);
-
+      --bg:        #080808;
+      --bg-card:   #0f0f0f;
+      --bg-row:    rgba(255,255,255,0.02);
+      --primary:   #E99A00;
+      --primary-2: #F6A615;
+      --primary-rgb: 233,154,0;
+      --secondary: #29B7FF;
+      --secondary-rgb: 41,183,255;
+      --text:      #FFFFFF;
+      --muted:     #8B8B8B;
+      --border:    rgba(233,154,0,0.22);
+      --border-faint: rgba(255,255,255,0.08);
+      --glow:      rgba(233,154,0,0.20);
       --font-display: 'Bebas Neue', sans-serif;
-      --font-body:    'Inter', sans-serif;
-      --font-mono:    'Space Mono', monospace;
-
-      --text-hero:    clamp(36px, 5vw,  64px);
-      --text-h1:      clamp(22px, 3vw,  36px);
-      --text-h2:      clamp(16px, 2vw,  22px);
-      --text-body:    clamp(13px, 1.4vw,15px);
-      --text-caption: clamp(10px, 1vw,  12px);
-      --text-stat:    clamp(28px, 4vw,  48px);
-      --text-mono:    clamp(11px, 1.2vw,13px);
-
-      --radius-card:  10px;
-      --radius-sm:    4px;
-      --radius-badge: 20px;
+      --font-body:    'Montserrat', sans-serif;
     }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #080808;
-      display: flex;
-      justify-content: center;
-      padding: 40px 20px;
-      font-family: var(--font-body);
-    }
-
-    .infographic {
       background: var(--bg);
-      color: var(--text);
-      max-width: 1100px;
-      width: 100%;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 0 80px rgba(245,166,35,0.06);
-    }
-
-    /* ── HEADER ─────────────────────────────── */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 32px;
-      border-bottom: 1px solid var(--border);
-    }
-    .header-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .header-logo img { height: 36px; width: auto; }
-    .header-project {
-      font-family: var(--font-display);
-      font-size: 24px;
-      letter-spacing: 0.04em;
-      color: var(--text);
-    }
-    .header-badge {
       font-family: var(--font-body);
-      font-size: 11px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--primary);
-      background: rgba(245,166,35,0.1);
-      border: 1px solid rgba(245,166,35,0.2);
-      padding: 4px 12px;
-      border-radius: var(--radius-badge);
-    }
-
-    /* ── STATS STRIP ─────────────────────────── */
-    .stats-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-bottom: 1px solid var(--border);
-    }
-    .stat-item {
-      padding: 20px 28px;
-      border-right: 1px solid var(--border);
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-value {
-      font-family: var(--font-display);
-      font-size: var(--text-stat);
-      color: var(--primary);
-      line-height: 1;
-      text-shadow: 0 0 20px rgba(245,166,35,0.3);
-    }
-    .stat-label {
-      font-size: var(--text-caption);
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-top: 4px;
-    }
-
-    /* ── CHART + ALLOCATIONS ────────────────── */
-    .allocation-section {
-      display: grid;
-      grid-template-columns: 1fr 300px 1fr;
-      gap: 0;
-      padding: 32px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* Donut chart column */
-    .chart-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .chart-donut-wrapper { position: relative; }
-    .chart-donut { display: block; }
-
-    /* Allocation columns */
-    .alloc-col {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      justify-content: center;
-    }
-    .alloc-col.right { padding-left: 24px; }
-    .alloc-col.left  { padding-right: 24px; }
-
-    .alloc-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-card);
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      transition: border-color 0.3s;
-    }
-    .alloc-card:hover { border-color: var(--border-accent); }
-    .alloc-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .alloc-info { flex: 1; }
-    .alloc-name {
-      font-size: var(--text-caption);
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    .alloc-pct {
-      font-family: var(--font-display);
-      font-size: 22px;
       color: var(--text);
-      line-height: 1.1;
-    }
-    .alloc-amount {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--muted);
-    }
-
-    /* ── VESTING TIMELINE ───────────────────── */
-    .vesting-section {
-      padding: 24px 32px;
-      border-bottom: 1px solid var(--border);
-    }
-    .section-title {
-      font-family: var(--font-display);
-      font-size: var(--text-h2);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 20px;
-      color: var(--muted);
-    }
-    .vesting-rows { display: flex; flex-direction: column; gap: 12px; }
-    .vesting-row {
-      display: grid;
-      grid-template-columns: 140px 1fr 70px;
-      align-items: center;
-      gap: 12px;
-    }
-    .vesting-label {
-      font-size: var(--text-caption);
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .vesting-track {
-      height: 8px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 4px;
-      overflow: visible;
+      width: 1080px;
+      margin: 0 auto;
+      min-height: 1440px;
+      overflow: hidden;
       position: relative;
     }
-    .vesting-fill {
-      height: 100%;
-      border-radius: 4px;
-      box-shadow: 0 0 8px rgba(245,166,35,0.35);
+
+    /* ─── BG geometry ─── */
+    .bg-geo { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .bg-geo::before {
+      content: ''; position: absolute; top: -100px; right: -100px;
+      width: 440px; height: 440px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(233,154,0,0.07) 0%, transparent 70%);
     }
-    .vesting-pct {
-      font-family: var(--font-mono);
-      font-size: var(--text-caption);
-      color: var(--text);
-      text-align: right;
+    .bg-geo::after {
+      content: ''; position: absolute; bottom: 80px; left: -60px;
+      width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(41,183,255,0.05) 0%, transparent 70%);
     }
 
-    /* ── FOOTER ─────────────────────────────── */
+    .canvas { position: relative; z-index: 1; padding: 0 0 36px; }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(160deg, #0e0c08 0%, #080808 60%);
+      border-bottom: 2px solid var(--border);
+      padding: 32px 48px 28px;
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+    .hero-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .logo-lockup { display: flex; align-items: center; gap: 12px; }
+    .logo-box {
+      width: 44px; height: 44px; border-radius: 8px;
+      background: rgba(233,154,0,0.12); border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; color: var(--primary);
+      box-shadow: 0 0 14px var(--glow);
+    }
+    .logo-name { font-family: var(--font-display); font-size: 26px; letter-spacing: 1px; }
+    .logo-name span { color: var(--primary); }
+    .chain-badge {
+      background: rgba(41,183,255,0.1); border: 1px solid rgba(41,183,255,0.3);
+      border-radius: 20px; padding: 5px 14px;
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--secondary); text-transform: uppercase;
+    }
+    .hero-title {
+      font-family: var(--font-display); font-size: 68px; line-height: 0.93;
+      letter-spacing: 1px; color: var(--text); margin-bottom: 6px;
+    }
+    .hero-title span { color: var(--primary); }
+    .hero-sub { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 24px; }
+
+    /* ─── Stat strip ─── */
+    .stat-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .stat-box {
+      background: rgba(233,154,0,0.06); border: 1.5px solid var(--border);
+      border-radius: 8px; padding: 12px 14px; position: relative; overflow: hidden;
+    }
+    .stat-box::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--primary); opacity: 0.7;
+    }
+    .stat-label { font-size: 9px; font-weight: 700; letter-spacing: 1.8px; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+    .stat-value { font-family: var(--font-display); font-size: 34px; line-height: 1; color: var(--primary); }
+    .stat-suffix { font-family: var(--font-body); font-size: 12px; font-weight: 600; color: var(--muted); margin-left: 3px; }
+    .stat-note { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+    /* ─── Section chrome ─── */
+    .section { padding: 28px 48px 0; }
+    .section-label {
+      font-family: var(--font-display); font-size: 11px; letter-spacing: 3px;
+      color: var(--primary); text-transform: uppercase; margin-bottom: 4px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .section-title { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.5px; color: var(--text); margin-bottom: 16px; }
+
+    /* ─── Allocation: pie + table ─── */
+    .alloc-grid { display: grid; grid-template-columns: 200px 1fr; gap: 20px; align-items: start; }
+    .pie-wrap {
+      background: var(--bg-card); border: 1.5px solid var(--border);
+      border-radius: 10px; padding: 16px; display: flex; flex-direction: column; align-items: center;
+    }
+    .pie-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 12px; }
+    .pie-legend { display: flex; flex-direction: column; gap: 5px; margin-top: 12px; width: 100%; }
+    .pie-legend-row { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+    .pie-legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+    /* ─── Dense table ─── */
+    .table-wrap { border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .dense-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .dense-table thead tr { background: rgba(233,154,0,0.07); border-bottom: 1px solid rgba(233,154,0,0.18); }
+    .dense-table th {
+      font-size: 9px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+      color: var(--muted); padding: 8px 10px; text-align: left;
+    }
+    .dense-table th.accent { color: var(--primary); }
+    .dense-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+    .dense-table tbody tr:last-child td { border-bottom: none; }
+    .dense-table td { padding: 7px 10px; color: rgba(255,255,255,0.85); vertical-align: middle; font-weight: 500; }
+    .dense-table td.bold { font-weight: 700; color: var(--text); }
+    .dense-table td.amber { color: var(--primary); font-weight: 700; }
+    .dense-table td.blue  { color: var(--secondary); font-weight: 600; }
+    .dense-table td.muted { color: var(--muted); }
+    .td-dot { display: flex; align-items: center; gap: 7px; }
+    .td-dot-circle { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ─── Arrow connector ─── */
+    .arrow-connector {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 12px 48px 0;
+    }
+    .arrow-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(233,154,0,0.4), transparent); }
+    .arrow-icon { color: var(--primary); font-size: 20px; flex-shrink: 0; }
+    .arrow-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
+
+    /* ─── Vesting section ─── */
+    .vesting-wrap {
+      background: var(--bg-card); border: 1.5px solid var(--border);
+      border-radius: 10px; padding: 16px 20px;
+    }
+    .vesting-intro {
+      font-size: 9px; font-weight: 700; letter-spacing: 2px; color: var(--muted);
+      text-transform: uppercase; margin-bottom: 14px;
+    }
+    .vesting-track { display: flex; align-items: center; margin-bottom: 16px; gap: 0; }
+    .vesting-lock-icon {
+      width: 36px; height: 36px; border-radius: 7px;
+      background: rgba(41,183,255,0.1); border: 1px solid rgba(41,183,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--secondary); font-size: 16px; flex-shrink: 0;
+    }
+    .vesting-connector { width: 12px; height: 2px; background: var(--muted); opacity: 0.3; flex-shrink: 0; }
+    .vesting-blocks { display: flex; gap: 3px; flex: 1; }
+    .vblock {
+      flex: 1; height: 36px; border-radius: 5px;
+      background: rgba(233,154,0,0.10); border: 1px solid rgba(233,154,0,0.18);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8px; font-weight: 700; color: var(--primary); letter-spacing: 0.5px;
+    }
+    .vblock.active { background: rgba(233,154,0,0.28); border-color: var(--primary); box-shadow: 0 0 6px var(--glow); }
+    .vesting-endpoint {
+      margin-left: 4px; background: rgba(233,154,0,0.14); border: 1px solid var(--primary);
+      border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 700; color: var(--primary);
+      flex-shrink: 0; display: flex; align-items: center;
+    }
+    .vesting-rows { display: flex; flex-direction: column; gap: 8px; }
+    .vesting-row { display: flex; align-items: center; gap: 10px; }
+    .vesting-cat { font-size: 11px; font-weight: 600; width: 130px; flex-shrink: 0; }
+    .vesting-bar-bg { flex: 1; height: 7px; background: rgba(255,255,255,0.07); border-radius: 4px; overflow: hidden; }
+    .vesting-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--primary), var(--primary-2)); box-shadow: 0 0 6px var(--glow); }
+    .vesting-dur { font-size: 10px; font-weight: 700; color: var(--primary); width: 32px; text-align: right; flex-shrink: 0; }
+
+    /* ─── Bullet panel ─── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .bullet-panel {
+      background: rgba(255,255,255,0.02); border: 1.5px solid rgba(var(--primary-rgb),0.2);
+      border-radius: 8px; padding: 14px 16px;
+    }
+    .bullet-panel-title { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--primary); margin-bottom: 10px; }
+    .bullet-panel ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .bullet-panel li {
+      font-size: 11.5px; color: rgba(255,255,255,0.80); line-height: 1.45;
+      display: flex; align-items: flex-start; gap: 7px; font-weight: 500;
+    }
+    .bullet-panel li::before { content: '▸'; color: var(--primary); flex-shrink: 0; font-size: 9px; margin-top: 2px; }
+
+    /* ─── Callout boxes ─── */
+    .callouts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .callout {
+      border-left: 2px solid var(--primary); background: rgba(233,154,0,0.05);
+      border-radius: 0 8px 8px 0; padding: 12px 14px;
+    }
+    .callout-term { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; color: var(--primary); text-transform: uppercase; margin-bottom: 6px; }
+    .callout ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .callout li { font-size: 11.5px; color: rgba(255,255,255,0.75); line-height: 1.45; font-weight: 500; display: flex; align-items: flex-start; gap: 6px; }
+    .callout li::before { content: '▸'; color: var(--primary); flex-shrink: 0; font-size: 9px; margin-top: 2px; }
+    .callout li strong { color: var(--text); }
+
+    /* ─── Footer ─── */
     .footer {
-      padding: 16px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 10px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      opacity: 0.6;
+      margin-top: 28px; border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 16px 48px; display: flex; align-items: center; justify-content: space-between;
     }
-
-    /* ── ANIMATIONS ─────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .footer-left { display: flex; align-items: center; gap: 10px; }
+    .footer-logo-box {
+      width: 26px; height: 26px; border-radius: 5px;
+      background: rgba(233,154,0,0.12); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--primary);
     }
-    .header       { animation: fadeUp 0.5s ease 0.0s both; }
-    .stats-strip  { animation: fadeUp 0.5s ease 0.1s both; }
-    .allocation-section { animation: fadeUp 0.5s ease 0.2s both; }
-    .vesting-section    { animation: fadeUp 0.5s ease 0.3s both; }
+    .footer-project-name { font-size: 11px; font-weight: 700; color: var(--text); }
+    .footer-tagline { font-size: 10px; color: var(--muted); }
+    .footer-right { font-size: 10px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
   </style>
 </head>
 <body>
-<div class="infographic">
+  <div class="bg-geo"></div>
+  <div class="canvas">
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="header-logo">
-      <!-- Replace src with actual logo path: <img src="{{LOGO_PATH}}" alt="{{PROJECT_NAME}}"> -->
-      <div class="header-project">{{PROJECT_NAME}}</div>
+    <!-- ─── HERO ─── -->
+    <div class="hero">
+      <div class="hero-top">
+        <div class="logo-lockup">
+          <!-- Replace with actual logo: <img src="logo.png" height="44"> -->
+          <div class="logo-box"><i class="ph-bold ph-hexagon"></i></div>
+          <div class="logo-name">PROJECT <span>TOKEN</span></div>
+        </div>
+        <div class="chain-badge">Ethereum Mainnet</div>
+      </div>
+      <div class="hero-title">TOKEN<br><span>ECONOMICS</span></div>
+      <div class="hero-sub">Supply Distribution · Vesting Schedule · TGE Allocation · Round Details</div>
+      <div class="stat-strip">
+        <div class="stat-box">
+          <div class="stat-label">Total Supply</div>
+          <div class="stat-value">1<span class="stat-suffix">BILLION</span></div>
+          <div class="stat-note">Fixed — no minting</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Initial Price</div>
+          <div class="stat-value">$0.08</div>
+          <div class="stat-note">Seed round valuation</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">FDV at Launch</div>
+          <div class="stat-value">$80<span class="stat-suffix">M</span></div>
+          <div class="stat-note">Fully diluted valuation</div>
+        </div>
+      </div>
     </div>
-    <span class="header-badge">TOKENOMICS</span>
-  </header>
 
-  <!-- STATS STRIP: 3 key metrics across the top -->
-  <div class="stats-strip">
-    <div class="stat-item">
-      <div class="stat-value">{{TOTAL_SUPPLY}}</div>
-      <div class="stat-label">Total Supply</div>
+    <!-- ─── CORE FEATURES ─── -->
+    <div class="section" style="margin-top:24px;">
+      <div class="section-label">Protocol Overview</div>
+      <div class="section-title">CORE FEATURES</div>
+      <div class="two-col">
+        <div class="bullet-panel">
+          <div class="bullet-panel-title">Token Functions</div>
+          <ul>
+            <li>Governance — vote on protocol upgrades &amp; parameters</li>
+            <li>Staking — lock to earn protocol fee distributions</li>
+            <li>Fee discounts — 50% reduction for active stakers</li>
+            <li>Gated access — premium features require minimum hold</li>
+            <li>Liquidity mining — LP positions earn boosted yield</li>
+            <li>Deflationary — buyback &amp; burn from 2% of protocol fees</li>
+          </ul>
+        </div>
+        <div class="bullet-panel" style="border-color:rgba(41,183,255,0.2);">
+          <div class="bullet-panel-title" style="color:var(--secondary);">Protocol Stats</div>
+          <ul>
+            <li>Total Supply: <strong style="color:var(--primary);">1,000,000,000</strong> — hard cap, no minting</li>
+            <li>TGE Circulating: <strong style="color:var(--primary);">~1.2%</strong> — minimal launch sell pressure</li>
+            <li>Staking APY: <strong style="color:var(--secondary);">12–24%</strong> depending on lock duration</li>
+            <li>Burn Rate: <strong style="color:var(--secondary);">2%</strong> of protocol fees — quarterly events</li>
+            <li>Treasury: <strong style="color:var(--primary);">150M tokens</strong> — governance-controlled, multi-sig</li>
+            <li>Audit Status: <strong style="color:#4BF3B2;">CertiK + Trail of Bits</strong> — completed 2024</li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="stat-item">
-      <div class="stat-value">{{TGE_PRICE}}</div>
-      <div class="stat-label">TGE Price</div>
+
+    <!-- ─── ALLOCATION ─── -->
+    <div class="section" style="margin-top:24px;">
+      <div class="section-label">Allocation Breakdown</div>
+      <div class="section-title">TOKEN DISTRIBUTION</div>
+      <div class="alloc-grid">
+
+        <!-- SVG Pie -->
+        <div class="pie-wrap">
+          <div class="pie-label">Supply Split</div>
+          <svg width="168" height="168" viewBox="0 0 220 220">
+            <!-- Ecosystem 35% / 126° : 0° → 126° -->
+            <path d="M110,110 L110,10 A100,100 0 0,1 190.9,168.8 Z" fill="#E99A00" opacity="0.88"/>
+            <!-- Team 20% / 72° : 126° → 198° -->
+            <path d="M110,110 L190.9,168.8 A100,100 0 0,1 79.1,205.1 Z" fill="#C47E00" opacity="0.88"/>
+            <!-- Investors 18% / 64.8° : 198° → 262.8° -->
+            <path d="M110,110 L79.1,205.1 A100,100 0 0,1 10.8,122.4 Z" fill="#29B7FF" opacity="0.80"/>
+            <!-- Treasury 15% / 54° : 262.8° → 316.8° -->
+            <path d="M110,110 L10.8,122.4 A100,100 0 0,1 41.8,37.2 Z" fill="#1A7AAA" opacity="0.80"/>
+            <!-- Public 12% / 43.2° : 316.8° → 360° -->
+            <path d="M110,110 L41.8,37.2 A100,100 0 0,1 110,10 Z" fill="#4C5A6A" opacity="0.88"/>
+            <!-- Donut hole -->
+            <circle cx="110" cy="110" r="46" fill="#080808"/>
+            <text x="110" y="104" text-anchor="middle" fill="#E99A00" font-family="'Bebas Neue',sans-serif" font-size="24">1B</text>
+            <text x="110" y="120" text-anchor="middle" fill="#8B8B8B" font-family="'Montserrat',sans-serif" font-size="8" font-weight="700">TOTAL</text>
+          </svg>
+          <div class="pie-legend">
+            <div class="pie-legend-row"><div class="pie-legend-dot" style="background:#E99A00;"></div><span style="flex:1;color:#ccc;font-size:10px;">Ecosystem</span><span style="font-weight:700;color:#E99A00;font-size:10px;">35%</span></div>
+            <div class="pie-legend-row"><div class="pie-legend-dot" style="background:#C47E00;"></div><span style="flex:1;color:#ccc;font-size:10px;">Team &amp; Advisors</span><span style="font-weight:700;color:#C47E00;font-size:10px;">20%</span></div>
+            <div class="pie-legend-row"><div class="pie-legend-dot" style="background:#29B7FF;"></div><span style="flex:1;color:#ccc;font-size:10px;">Investors</span><span style="font-weight:700;color:#29B7FF;font-size:10px;">18%</span></div>
+            <div class="pie-legend-row"><div class="pie-legend-dot" style="background:#1A7AAA;"></div><span style="flex:1;color:#ccc;font-size:10px;">Treasury</span><span style="font-weight:700;color:#1A7AAA;font-size:10px;">15%</span></div>
+            <div class="pie-legend-row"><div class="pie-legend-dot" style="background:#4C5A6A;"></div><span style="flex:1;color:#ccc;font-size:10px;">Public / IDO</span><span style="font-weight:700;color:#8B8B8B;font-size:10px;">12%</span></div>
+          </div>
+        </div>
+
+        <!-- Allocation dense table -->
+        <div class="table-wrap">
+          <table class="dense-table">
+            <thead>
+              <tr>
+                <th colspan="2" class="accent">Category</th>
+                <th class="accent">%</th>
+                <th class="accent">Tokens</th>
+                <th>Cliff</th>
+                <th>Vesting</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-dot"><div class="td-dot-circle" style="background:#E99A00;"></div></td>
+                <td class="bold">Ecosystem &amp; Community</td>
+                <td class="amber">35%</td>
+                <td class="amber">350M</td>
+                <td class="muted">—</td>
+                <td class="blue">36M linear</td>
+              </tr>
+              <tr>
+                <td class="td-dot"><div class="td-dot-circle" style="background:#C47E00;"></div></td>
+                <td class="bold">Team &amp; Advisors</td>
+                <td class="amber">20%</td>
+                <td class="amber">200M</td>
+                <td class="muted">12M cliff</td>
+                <td class="blue">24M linear</td>
+              </tr>
+              <tr>
+                <td class="td-dot"><div class="td-dot-circle" style="background:#29B7FF;"></div></td>
+                <td class="bold">Investors / Private</td>
+                <td class="amber">18%</td>
+                <td class="amber">180M</td>
+                <td class="muted">6M cliff</td>
+                <td class="blue">18M linear</td>
+              </tr>
+              <tr>
+                <td class="td-dot"><div class="td-dot-circle" style="background:#1A7AAA;"></div></td>
+                <td class="bold">Treasury Reserve</td>
+                <td class="amber">15%</td>
+                <td class="amber">150M</td>
+                <td class="muted">Governance</td>
+                <td class="muted">Discretionary</td>
+              </tr>
+              <tr>
+                <td class="td-dot"><div class="td-dot-circle" style="background:#4C5A6A;"></div></td>
+                <td class="bold">Public / IDO</td>
+                <td class="amber">12%</td>
+                <td class="amber">120M</td>
+                <td class="muted">—</td>
+                <td class="blue">10% TGE + 9M</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
     </div>
-    <div class="stat-item">
-      <div class="stat-value">{{FDV}}</div>
-      <div class="stat-label">FDV</div>
+
+    <!-- ─── ARROW CONNECTOR ─── -->
+    <div class="arrow-connector">
+      <div class="arrow-line"></div>
+      <i class="ph-bold ph-arrow-down arrow-icon" style="transform:rotate(0);"></i>
+      <span class="arrow-label">Allocation → Vesting</span>
+      <div class="arrow-line"></div>
     </div>
+
+    <!-- ─── VESTING TIMELINE ─── -->
+    <div class="section" style="margin-top:14px;">
+      <div class="section-label">Vesting Schedule</div>
+      <div class="section-title">UNLOCK TIMELINE</div>
+      <div class="vesting-wrap">
+        <div class="vesting-intro">Token Generation Event → Monthly Cliff → Linear Unlock → Full Vest</div>
+        <div class="vesting-track">
+          <div class="vesting-lock-icon"><i class="ph-bold ph-lock-key"></i></div>
+          <div class="vesting-connector"></div>
+          <div class="vesting-blocks">
+            <div class="vblock">TGE</div>
+            <div class="vblock">M3</div>
+            <div class="vblock active">M6</div>
+            <div class="vblock active">M12</div>
+            <div class="vblock active">M18</div>
+            <div class="vblock active">M24</div>
+            <div class="vblock active">M30</div>
+            <div class="vblock active">M36</div>
+          </div>
+          <div class="vesting-connector"></div>
+          <div class="vesting-endpoint">100%</div>
+        </div>
+        <div class="vesting-rows">
+          <div class="vesting-row">
+            <div class="vesting-cat">Ecosystem</div>
+            <div class="vesting-bar-bg"><div class="vesting-bar-fill" style="width:100%;"></div></div>
+            <div class="vesting-dur">36M</div>
+          </div>
+          <div class="vesting-row">
+            <div class="vesting-cat">Team</div>
+            <div class="vesting-bar-bg"><div class="vesting-bar-fill" style="width:75%;background:linear-gradient(90deg,#C47E00,#E99A00);"></div></div>
+            <div class="vesting-dur">24M</div>
+          </div>
+          <div class="vesting-row">
+            <div class="vesting-cat">Investors</div>
+            <div class="vesting-bar-bg"><div class="vesting-bar-fill" style="width:50%;background:linear-gradient(90deg,#1A7AAA,#29B7FF);"></div></div>
+            <div class="vesting-dur">18M</div>
+          </div>
+          <div class="vesting-row">
+            <div class="vesting-cat">Public / IDO</div>
+            <div class="vesting-bar-bg"><div class="vesting-bar-fill" style="width:25%;background:linear-gradient(90deg,#3a4855,#4C5A6A);"></div></div>
+            <div class="vesting-dur">9M</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── ROUND DETAILS TABLE ─── -->
+    <div class="section" style="margin-top:24px;">
+      <div class="section-label">Sale Rounds</div>
+      <div class="section-title">ROUND DETAILS</div>
+      <div class="table-wrap">
+        <table class="dense-table">
+          <thead>
+            <tr>
+              <th class="accent">Round</th>
+              <th class="accent">Price</th>
+              <th class="accent">Raise</th>
+              <th class="accent">Allocation</th>
+              <th>TGE Unlock</th>
+              <th>Cliff</th>
+              <th>Vest Period</th>
+              <th>Discount vs IDO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="bold">Seed</td>
+              <td class="amber">$0.03</td>
+              <td>$1.8M</td>
+              <td>6%</td>
+              <td class="muted">0%</td>
+              <td class="muted">12M</td>
+              <td class="blue">24M linear</td>
+              <td style="color:#4BF3B2;">62.5% off</td>
+            </tr>
+            <tr>
+              <td class="bold">Private A</td>
+              <td class="amber">$0.04</td>
+              <td>$2.8M</td>
+              <td>7%</td>
+              <td class="muted">0%</td>
+              <td class="muted">9M</td>
+              <td class="blue">18M linear</td>
+              <td style="color:#4BF3B2;">50% off</td>
+            </tr>
+            <tr>
+              <td class="bold">Private B</td>
+              <td class="amber">$0.055</td>
+              <td>$2.75M</td>
+              <td>5%</td>
+              <td class="muted">0%</td>
+              <td class="muted">6M</td>
+              <td class="blue">12M linear</td>
+              <td style="color:#F6A91A;">31% off</td>
+            </tr>
+            <tr>
+              <td class="bold">Public / IDO</td>
+              <td class="amber">$0.08</td>
+              <td>$9.6M</td>
+              <td>12%</td>
+              <td class="amber">10%</td>
+              <td class="muted">—</td>
+              <td class="blue">9M linear</td>
+              <td class="muted">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ─── TOKEN UTILITY + KEY TERMS ─── -->
+    <div class="section" style="margin-top:24px;">
+      <div class="section-label">Utility &amp; Key Terms</div>
+      <div class="section-title">TOKEN USE CASES</div>
+      <div class="two-col">
+        <div class="bullet-panel">
+          <div class="bullet-panel-title">Token Utility</div>
+          <ul>
+            <li>Governance — vote on protocol parameters &amp; upgrades</li>
+            <li>Staking — lock tokens to earn protocol fee share</li>
+            <li>Fee discounts — 50% fee reduction for active stakers</li>
+            <li>Access — gated features require minimum hold</li>
+            <li>Liquidity mining — provide LP to earn boosted rewards</li>
+            <li>Buyback &amp; burn — 2% of fees → quarterly burn events</li>
+          </ul>
+        </div>
+        <div class="bullet-panel" style="border-color:rgba(41,183,255,0.2);">
+          <div class="bullet-panel-title" style="color:var(--secondary);">Supply Mechanics</div>
+          <ul>
+            <li>Hard cap: 1,000,000,000 tokens — no minting ever</li>
+            <li>TGE circulation: ~12M (1.2%) — low sell pressure at launch</li>
+            <li>Burn mechanism: quarterly via fee buyback program</li>
+            <li>Ecosystem rewards: released gradually over 36 months</li>
+            <li>Treasury: governance-controlled, multi-sig secured</li>
+            <li>Deflationary: net supply decreases as protocol grows</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── CALLOUT BOXES ─── -->
+    <div class="section" style="margin-top:20px;">
+      <div class="callouts">
+        <div class="callout">
+          <div class="callout-term">Circulating Supply at TGE</div>
+          <ul>
+            <li><strong>~12M tokens (1.2%)</strong> enters circulation at TGE</li>
+            <li>Public IDO: 10% unlocked immediately</li>
+            <li>All other categories: cliff → linear vesting</li>
+            <li>Lowest launch sell pressure of comparable projects</li>
+          </ul>
+        </div>
+        <div class="callout" style="border-left-color:var(--secondary);background:rgba(41,183,255,0.05);">
+          <div class="callout-term" style="color:var(--secondary);">Burn &amp; Deflation</div>
+          <ul>
+            <li><strong>2% of protocol fees</strong> → quarterly buyback-and-burn</li>
+            <li>Hard cap: no minting — ever</li>
+            <li>Net supply decreases as protocol revenue grows</li>
+            <li>Burn events announced 14 days in advance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── FOOTER ─── -->
+    <div class="footer">
+      <div class="footer-left">
+        <div class="footer-logo-box"><i class="ph-bold ph-hexagon"></i></div>
+        <div>
+          <div class="footer-project-name">PROJECT TOKEN</div>
+          <div class="footer-tagline">Built on Ethereum · Audited by CertiK</div>
+        </div>
+      </div>
+      <div class="footer-right"><i class="ph ph-globe"></i> projecttoken.io · @ProjectToken</div>
+    </div>
+
   </div>
-
-  <!-- ALLOCATION: Left cards | Donut chart | Right cards -->
-  <div class="allocation-section">
-
-    <!-- LEFT ALLOCATIONS -->
-    <div class="alloc-col left">
-      <div class="alloc-card">
-        <div class="alloc-dot" style="background:#F5A623;"></div>
-        <div class="alloc-info">
-          <div class="alloc-name">Community / Airdrop</div>
-          <div class="alloc-pct">35%</div>
-          <div class="alloc-amount">350M {{TOKEN}}</div>
-        </div>
-      </div>
-      <div class="alloc-card">
-        <div class="alloc-dot" style="background:#00E5A0;"></div>
-        <div class="alloc-info">
-          <div class="alloc-name">Ecosystem Fund</div>
-          <div class="alloc-pct">25%</div>
-          <div class="alloc-amount">250M {{TOKEN}}</div>
-        </div>
-      </div>
-      <div class="alloc-card">
-        <div class="alloc-dot" style="background:#00D4FF;"></div>
-        <div class="alloc-info">
-          <div class="alloc-name">Team & Advisors</div>
-          <div class="alloc-pct">20%</div>
-          <div class="alloc-amount">200M {{TOKEN}}</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- DONUT CHART (SVG inline, r=80, circumference=502.65) -->
-    <!-- Formula: dasharray = pct/100 * 502.65, dashoffset = -cumulative_prev -->
-    <div class="chart-col">
-      <svg viewBox="0 0 200 200" width="260" height="260" class="chart-donut">
-        <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="30"/>
-        <!-- Segment 1: 35% → 175.93 -->
-        <circle cx="100" cy="100" r="80" fill="none" stroke="#F5A623" stroke-width="30"
-          stroke-dasharray="175.93 326.72" stroke-dashoffset="0" transform="rotate(-90 100 100)"/>
-        <!-- Segment 2: 25% → 125.66 -->
-        <circle cx="100" cy="100" r="80" fill="none" stroke="#00E5A0" stroke-width="30"
-          stroke-dasharray="125.66 376.99" stroke-dashoffset="-175.93" transform="rotate(-90 100 100)"/>
-        <!-- Segment 3: 20% → 100.53 -->
-        <circle cx="100" cy="100" r="80" fill="none" stroke="#00D4FF" stroke-width="30"
-          stroke-dasharray="100.53 402.12" stroke-dashoffset="-301.59" transform="rotate(-90 100 100)"/>
-        <!-- Segment 4: 20% → 100.53 -->
-        <circle cx="100" cy="100" r="80" fill="none" stroke="#E63946" stroke-width="30"
-          stroke-dasharray="100.53 402.12" stroke-dashoffset="-402.12" transform="rotate(-90 100 100)"/>
-        <!-- Center -->
-        <circle cx="100" cy="100" r="54" fill="#0D0D0D"/>
-        <text x="100" y="94" text-anchor="middle" font-family="'Inter',sans-serif"
-          font-size="11" fill="#8B8B8B" font-weight="500" letter-spacing="1" text-transform="uppercase">TOKEN</text>
-        <text x="100" y="116" text-anchor="middle" font-family="'Bebas Neue',sans-serif"
-          font-size="26" fill="#FFFFFF" letter-spacing="2">{{TICKER}}</text>
-      </svg>
-    </div>
-
-    <!-- RIGHT ALLOCATIONS -->
-    <div class="alloc-col right">
-      <div class="alloc-card">
-        <div class="alloc-dot" style="background:#E63946;"></div>
-        <div class="alloc-info">
-          <div class="alloc-name">Private Sale</div>
-          <div class="alloc-pct">12%</div>
-          <div class="alloc-amount">120M {{TOKEN}}</div>
-        </div>
-      </div>
-      <div class="alloc-card">
-        <div class="alloc-dot" style="background:#9B5DE5;"></div>
-        <div class="alloc-info">
-          <div class="alloc-name">Public Sale / IDO</div>
-          <div class="alloc-pct">5%</div>
-          <div class="alloc-amount">50M {{TOKEN}}</div>
-        </div>
-      </div>
-      <div class="alloc-card">
-        <div class="alloc-dot" style="background:#FFD700;"></div>
-        <div class="alloc-info">
-          <div class="alloc-name">Liquidity / Reserve</div>
-          <div class="alloc-pct">8%</div>
-          <div class="alloc-amount">80M {{TOKEN}}</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- VESTING SCHEDULE -->
-  <div class="vesting-section">
-    <div class="section-title">
-      <i class="ph ph-lock" style="font-size:16px; color:var(--primary); margin-right:8px; vertical-align:middle;"></i>
-      Vesting Schedule
-    </div>
-    <div class="vesting-rows">
-      <div class="vesting-row">
-        <div class="vesting-label">Community</div>
-        <div class="vesting-track">
-          <div class="vesting-fill" style="width:35%; background:linear-gradient(90deg,#F5A623,#E8943A);"></div>
-        </div>
-        <div class="vesting-pct">TGE 10% → 12M</div>
-      </div>
-      <div class="vesting-row">
-        <div class="vesting-label">Ecosystem</div>
-        <div class="vesting-track">
-          <div class="vesting-fill" style="width:20%; background:linear-gradient(90deg,#00E5A0,#00C87A);"></div>
-        </div>
-        <div class="vesting-pct">6M cliff → 24M</div>
-      </div>
-      <div class="vesting-row">
-        <div class="vesting-label">Team</div>
-        <div class="vesting-track">
-          <div class="vesting-fill" style="width:10%; background:linear-gradient(90deg,#00D4FF,#0099CC);"></div>
-        </div>
-        <div class="vesting-pct">12M cliff → 36M</div>
-      </div>
-      <div class="vesting-row">
-        <div class="vesting-label">Private Sale</div>
-        <div class="vesting-track">
-          <div class="vesting-fill" style="width:25%; background:linear-gradient(90deg,#E63946,#C22030);"></div>
-        </div>
-        <div class="vesting-pct">TGE 5% → 18M</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <span>{{FOOTER_SOURCE}} • {{DATE}}</span>
-    <span>Not financial advice. DYOR.</span>
-  </footer>
-
-</div>
 </body>
 </html>

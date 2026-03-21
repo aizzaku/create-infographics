@@ -5,8 +5,13 @@
 ## Key Statistics
 - **100% of infographics use UPPERCASE labels** — this is your universal signature
 - **Bebas Neue** used in 76/175 infographics (43%) — your dominant display font
-- **Teko** confirmed in 23/175 (13%) — second condensed display, previously underdetected
-- **Inter** used in 162/175 infographics (93%) — your near-universal body font
+- **Teko** confirmed in 23/175 (13%) — second condensed display
+- **Orbitron** confirmed in 13/175 (7%) — techno/sci-fi display
+- **Press Start 2P** confirmed in 8/175 (5%) — pixel/retro (game pieces only)
+- **Bungee** confirmed in 6/175 (3%) — bold block display
+- **Montserrat** used in 100/175 infographics (57%) — your dominant body font
+- **Avenir Next** used in 26/175 (15%) — premium body alternative
+- **Inter** used in 22/175 (13%) — clean body fallback
 - **Heading style:** 90% uppercase, 7% mixed-case, 3% normal
 - **Heading category:** 69% sans-serif, 27% display, 2% serif
 
@@ -18,7 +23,7 @@
 
 1. **ALWAYS use UPPERCASE for section labels, stat labels, and category tags**
 2. **Bebas Neue is your default display font** — use it unless the mood requires something else
-3. **Inter is your default body font** — almost always the right choice
+3. **Montserrat is your default body font** — used in 57% of work. Avenir Next as premium alternative (15%). Inter as a clean fallback (13%).
 4. **Uppercase headings are your signature** — never title-case your main headers
 
 ---
@@ -55,25 +60,29 @@
 ## Your Body Font (Almost Always the Same)
 
 ```
-Inter — used in 93% of your infographics (162/175)
+Montserrat — used in 57% of your infographics (100/175) ← YOUR DEFAULT
+Avenir Next — used in 15% (26/175) — premium feel, great for polished brands
+Inter — used in 13% (22/175) — clean fallback
+Poppins — used in 9% (15/175) — friendly, community-focused
 ```
-It's your workhorse. Clean, readable, universal. Only deviate for special projects:
-- **DM Sans** — slightly softer, more startup-y alternative (use when Inter feels too corporate)
-- **Plus Jakarta Sans** — premium feel, great for reports and polished brands
-- **Open Sans** — accessibility-focused, for wider audience content
-- **Exo 2** — when sci-fi/gaming feel extends to body text
-- **Space Mono** — for data/numbers in tokenomics tables
+Montserrat is your workhorse. Bold weights work well for stats; regular for body. Only deviate for special projects:
+- **Avenir Next** — premium feel, great for reports and polished brands
+- **Inter** — clean fallback when Montserrat feels too wide
+- **DM Sans** — softer, more startup-y alternative
+- **Plus Jakarta Sans** — editorial premium, investor decks
+- **Open Sans** — accessibility-focused, wider audience content
+- **Space Mono** — for data/addresses in tokenomics tables
 
 ---
 
 ## Tested Font Pairings (Your Actual Combinations)
 
-### 1. BEBAS NEUE + INTER (Your Signature — 40%+ of work)
+### 1. BEBAS NEUE + MONTSERRAT (Your Signature — 40%+ of work)
 ```css
 --font-display: 'Bebas Neue', sans-serif;
---font-body: 'Inter', sans-serif;
+--font-body: 'Montserrat', sans-serif;
 ```
-- **Load:** `Bebas+Neue:wght@400&Inter:wght@300;400;500;600;700`
+- **Load:** `Bebas+Neue:wght@400&family=Montserrat:wght@400;500;600;700`
 - **Mood:** bold, professional, crypto-native
 - **Use for:** token-economics, airdrop-guide, crypto-explainer
 
@@ -225,7 +234,7 @@ It's your workhorse. Clean, readable, universal. Only deviate for special projec
   --text-hero: clamp(36px, 5vw, 64px);   /* Main title — Bebas Neue */
   --text-h1: clamp(22px, 3vw, 36px);     /* Section headers */
   --text-h2: clamp(16px, 2vw, 22px);     /* Card titles */
-  --text-body: clamp(13px, 1.4vw, 15px); /* Body — Inter */
+  --text-body: clamp(13px, 1.4vw, 15px); /* Body — Montserrat */
   --text-caption: clamp(10px, 1vw, 12px);/* Labels — UPPERCASE */
   --text-stat: clamp(28px, 4vw, 48px);   /* Big numbers — Bebas Neue */
   --text-mono: clamp(11px, 1.2vw, 13px); /* Data/addresses — mono */

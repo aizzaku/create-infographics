@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{PROJECT_NAME}} — Staking & Yield Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #080808;
+    --bg-card:      #0F0F0F;
+    --bg-section:   #111111;
+    --primary:      #00C9FF;
+    --primary-rgb:  0,201,255;
+    --secondary:    #B98AFF;
+    --secondary-rgb:185,138,255;
+    --accent:       #00E88A;
+    --accent-rgb:   0,232,138;
+    --text:         #FFFFFF;
+    --muted:        #888888;
+    --border:       rgba(255,255,255,0.08);
+    --border-faint: rgba(255,255,255,0.04);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; width: 1080px;
+      margin: 0 auto; }
+
+  /* HERO */
+  .hero { display: grid; grid-template-columns: 1fr 310px; gap: 32px; padding: 40px 48px 36px; background: linear-gradient(135deg, rgba(0,201,255,0.05) 0%, transparent 60%); border-bottom: 2px solid var(--primary); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -60px; right: 200px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(0,201,255,0.09) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 3px; background: rgba(0,201,255,0.10); border: 1px solid rgba(0,201,255,0.28); font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--primary); margin-bottom: 14px; }
+  .hero-eyebrow span { width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: 72px; letter-spacing: 2px; line-height: 0.92; color: var(--text); margin-bottom: 18px; }
+  .hero-title em { color: var(--primary); font-style: normal; }
+  .hero-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .hero-bullets li { display: flex; align-items: flex-start; gap: 8px; font-size: 11.5px; font-weight: 500; color: var(--muted); line-height: 1.4; }
+  .hero-bullets li::before { content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0; }
+  .hero-card { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.22); padding: 20px 18px; align-self: start; }
+  .hero-card-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+  .hero-kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 14px; }
+  .hero-kpi { background: rgba(255,255,255,0.03); padding: 10px 11px; border: 1px solid var(--border-faint); }
+  .hero-kpi-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 1px; color: var(--primary); line-height: 1; }
+  .hero-kpi-val.sec { color: var(--secondary); }
+  .hero-kpi-val.acc { color: var(--accent); }
+  .hero-kpi-lbl { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+  .hero-note { font-size: 10px; font-weight: 500; color: var(--muted); line-height: 1.5; padding-top: 10px; border-top: 1px solid var(--border); }
+
+  /* STAT STRIP */
+  .stat-strip { display: grid; grid-template-columns: repeat(5,1fr); gap: 2px; padding: 20px 48px 28px; }
+  .stat-box { background: var(--bg-card); border: 1px solid var(--border); padding: 12px 14px; position: relative; }
+  .stat-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--primary); }
+  .stat-box.sec::before { background: var(--secondary); }
+  .stat-box.acc::before { background: var(--accent); }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .stat-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .stat-sub { font-size: 9px; color: var(--muted); margin-top: 2px; }
+
+  /* SECTION LABEL */
+  .section-label { display: flex; align-items: center; gap: 14px; font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); padding: 0 48px 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ARROW CONNECTOR */
+  .arrow-connector { display: flex; align-items: center; gap: 10px; padding: 10px 48px 20px; }
+  .arrow-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(var(--primary-rgb),0.4), transparent); }
+  .arrow-icon { display: flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); padding: 4px 12px; border-radius: 3px; background: rgba(var(--primary-rgb),0.08); border: 1px solid rgba(var(--primary-rgb),0.22); }
+
+  /* DENSE TABLE */
+  .table-wrap { margin: 0 48px 28px; border: 1px solid var(--border); overflow: hidden; }
+  .dense-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .dense-table thead tr { background: rgba(var(--primary-rgb),0.07); border-bottom: 1px solid rgba(var(--primary-rgb),0.22); }
+  .dense-table thead th { padding: 9px 12px; text-align: left; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
+  .dense-table tbody tr { border-bottom: 1px solid var(--border-faint); }
+  .dense-table tbody tr:last-child { border-bottom: none; }
+  .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .dense-table td { padding: 7px 12px; vertical-align: middle; font-weight: 500; }
+  .dense-table.sec-head thead tr { background: rgba(var(--secondary-rgb),0.07); border-bottom-color: rgba(var(--secondary-rgb),0.22); }
+  .dense-table.sec-head thead th { color: var(--secondary); }
+  .val-blue   { color: var(--primary);   font-weight: 700; }
+  .val-purple { color: var(--secondary); font-weight: 700; }
+  .val-green  { color: var(--accent);    font-weight: 700; }
+  .val-amber  { color: #FFD166;          font-weight: 700; }
+  .val-muted  { color: var(--muted);     font-weight: 500; }
+  .val-text   { color: var(--text);      font-weight: 500; }
+  .p-tag { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+  .p-blue   { background: rgba(0,201,255,0.10);  color: var(--primary);   border: 1px solid rgba(0,201,255,0.25); }
+  .p-purple { background: rgba(185,138,255,0.10); color: var(--secondary); border: 1px solid rgba(185,138,255,0.25); }
+  .p-green  { background: rgba(0,232,138,0.10);   color: var(--accent);    border: 1px solid rgba(0,232,138,0.25); }
+  .p-amber  { background: rgba(255,209,102,0.10); color: #FFD166;          border: 1px solid rgba(255,209,102,0.25); }
+  .p-red    { background: rgba(217,74,75,0.10);   color: #D94A4B;          border: 1px solid rgba(217,74,75,0.25); }
+
+  /* YIELD FLOW */
+  .yield-flow { display: flex; align-items: stretch; gap: 2px; padding: 0 48px 28px; }
+  .yf-node { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.20); padding: 14px 16px; flex: 1; display: flex; flex-direction: column; gap: 5px; }
+  .yf-node.sec { border-color: rgba(var(--secondary-rgb),0.22); }
+  .yf-node.acc { border-color: rgba(var(--accent-rgb),0.22); }
+  .yf-tag { font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
+  .yf-node.sec .yf-tag { color: var(--secondary); }
+  .yf-node.acc .yf-tag { color: var(--accent); }
+  .yf-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 1px; color: var(--text); line-height: 1; }
+  .yf-apy { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--primary); line-height: 1; }
+  .yf-node.sec .yf-apy { color: var(--secondary); }
+  .yf-node.acc .yf-apy { color: var(--accent); }
+  .yf-desc { font-size: 10.5px; font-weight: 500; color: var(--muted); line-height: 1.4; }
+  .yf-arrow { display: flex; align-items: center; color: var(--primary); font-size: 18px; padding: 0 4px; opacity: 0.6; flex-shrink: 0; }
+
+  /* TIER BAR */
+  .tier-section { padding: 0 48px 28px; }
+  .tier-bar { display: flex; gap: 2px; height: 60px; border: 1px solid var(--border); overflow: hidden; }
+  .tier-seg { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 2px; }
+  .tier-seg-lbl { font-size: 8px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+  .tier-seg-val { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 1px; }
+  .tier-axis { display: flex; font-size: 9px; font-weight: 600; color: var(--muted); margin-top: 4px; gap: 2px; }
+  .tier-axis span { flex: 1; text-align: center; }
+
+  /* BULLET PANELS */
+  .panel-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 48px 28px; }
+  .bullet-panel { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.18); padding: 16px 18px; }
+  .bullet-panel.sec { border-color: rgba(var(--secondary-rgb),0.18); }
+  .bullet-panel.acc { border-color: rgba(var(--accent-rgb),0.18); }
+  .bp-header { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--primary); padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+  .bullet-panel.sec .bp-header { color: var(--secondary); }
+  .bullet-panel.acc .bp-header { color: var(--accent); }
+  .bullet-panel ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .bullet-panel li { display: flex; align-items: flex-start; gap: 7px; font-size: 11.5px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .bullet-panel li::before { content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0; }
+  .bullet-panel.sec li::before { color: var(--secondary); }
+  .bullet-panel.acc li::before { color: var(--accent); }
+  .bullet-panel li span { color: var(--muted); }
+
+  /* CALLOUT STRIP */
+  .callout-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; padding: 0 48px 32px; }
+  .callout-box { padding: 14px 16px; border: 1px solid var(--border); border-left: 3px solid var(--primary); background: var(--bg-section); }
+  .callout-box.sec { border-left-color: var(--secondary); }
+  .callout-box.red { border-left-color: #D94A4B; }
+  .cb-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 6px; }
+  .callout-box.sec .cb-lbl { color: var(--secondary); }
+  .callout-box.red .cb-lbl { color: #D94A4B; }
+  .cb-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .cb-desc { font-size: 11px; font-weight: 500; color: var(--muted); line-height: 1.45; }
+
+  /* FOOTER */
+  .footer { display: flex; align-items: center; justify-content: space-between; padding: 18px 48px; border-top: 1px solid var(--border); background: rgba(var(--primary-rgb),0.02); }
+  .footer-left { display: flex; align-items: center; gap: 12px; }
+  .footer-logo { width: 30px; height: 30px; border-radius: 5px; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 14px; color: #000; }
+  .footer-name { font-size: 12px; font-weight: 700; color: var(--text); letter-spacing: 1px; }
+  .footer-tag  { font-size: 9px; color: var(--muted); font-weight: 500; }
+  .footer-right { display: flex; align-items: center; gap: 14px; }
+  .f-badge { padding: 3px 10px; border-radius: 3px; border: 1px solid var(--border); font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .footer-date { font-size: 10px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span></span>STAKING GUIDE</div>
+      <div class="hero-title">STAKE <em>{{TICKER}}</em><br>EARN YIELD</div>
+      <ul class="hero-bullets">
+        <li>Multiple yield sources: protocol fees + emissions + boosted rewards for long-term stakers</li>
+        <li>{{STAKED_PCT}}% of circulating supply currently staked — {{TOTAL_STAKED}} tokens locked</li>
+        <li>Flexible staking with {{UNBOND_DAYS}}-day unbonding period and no lock-up requirement</li>
+        <li>veToken model available: lock for up to 4 years to boost rewards up to {{MAX_BOOST}}x</li>
+      </ul>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-lbl">Current Staking Stats</div>
+      <div class="hero-kpi-grid">
+        <div class="hero-kpi">
+          <div class="hero-kpi-val">{{BASE_APY}}%</div>
+          <div class="hero-kpi-lbl">Base APY</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val sec">{{MAX_APY}}%</div>
+          <div class="hero-kpi-lbl">Max Boosted</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val acc">{{TOTAL_STAKED}}</div>
+          <div class="hero-kpi-lbl">Total Staked</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val">{{STAKED_PCT}}%</div>
+          <div class="hero-kpi-lbl">% Staked</div>
+        </div>
+      </div>
+      <div class="hero-note">
+        Next reward epoch: {{NEXT_EPOCH}} · Distribution: {{REWARD_FREQ}}
+      </div>
+    </div>
+  </div>
+
+  <!-- STAT STRIP -->
+  <div class="stat-strip">
+    <div class="stat-box">
+      <div class="stat-val">{{BASE_APY}}%</div>
+      <div class="stat-lbl">Base APY</div>
+      <div class="stat-sub">No lock required</div>
+    </div>
+    <div class="stat-box sec">
+      <div class="stat-val">{{MAX_APY}}%</div>
+      <div class="stat-lbl">Max APY</div>
+      <div class="stat-sub">4-year lock + boost</div>
+    </div>
+    <div class="stat-box acc">
+      <div class="stat-val">{{TOTAL_STAKED}}</div>
+      <div class="stat-lbl">Total Staked</div>
+      <div class="stat-sub">{{STAKED_PCT}}% of supply</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val">{{UNBOND_DAYS}}d</div>
+      <div class="stat-lbl">Unbond Period</div>
+      <div class="stat-sub">Flexible staking</div>
+    </div>
+    <div class="stat-box sec">
+      <div class="stat-val">{{MAX_BOOST}}x</div>
+      <div class="stat-lbl">Max Boost</div>
+      <div class="stat-sub">4-year veToken lock</div>
+    </div>
+  </div>
+
+  <!-- YIELD SOURCES FLOW -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ YIELD SOURCES</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">WHERE YIELD COMES FROM</div>
+  <div class="yield-flow">
+    <div class="yf-node">
+      <div class="yf-tag">SOURCE 1</div>
+      <div class="yf-title">Protocol Fees</div>
+      <div class="yf-apy">{{FEE_APY}}%</div>
+      <div class="yf-desc">{{STAKER_SHARE}}% of all swap, borrow, and liquidation fees distributed to stakers</div>
+    </div>
+    <div class="yf-arrow">+</div>
+    <div class="yf-node sec">
+      <div class="yf-tag">SOURCE 2</div>
+      <div class="yf-title">Emissions</div>
+      <div class="yf-apy">{{EMISSION_APY}}%</div>
+      <div class="yf-desc">{{TICKER}} inflation rewards for early stakers, declining {{HALVING_RATE}}% per year</div>
+    </div>
+    <div class="yf-arrow">+</div>
+    <div class="yf-node acc">
+      <div class="yf-tag">SOURCE 3</div>
+      <div class="yf-title">ve Boost</div>
+      <div class="yf-apy">+{{MAX_BOOST}}x</div>
+      <div class="yf-desc">Lock {{TICKER}} for up to 4 years to receive multiplied share of fee distributions</div>
+    </div>
+    <div class="yf-arrow">=</div>
+    <div class="yf-node" style="border-color: rgba(255,209,102,0.30);">
+      <div class="yf-tag" style="color:#FFD166">COMBINED</div>
+      <div class="yf-title">Total Yield</div>
+      <div class="yf-apy" style="color:#FFD166">{{MAX_APY}}%</div>
+      <div class="yf-desc">Maximum combined APY for max-locked veToken holders with fee share</div>
+    </div>
+  </div>
+
+  <!-- YIELD SOURCES TABLE -->
+  <div class="section-label">YIELD SOURCE BREAKDOWN</div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th>Yield Source</th>
+          <th>Type</th>
+          <th>Base APY</th>
+          <th>Max APY (boosted)</th>
+          <th>Paid In</th>
+          <th>Frequency</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="val-text">Protocol fee share</td>
+          <td><span class="p-tag p-blue">REAL YIELD</span></td>
+          <td class="val-blue">{{FEE_APY}}%</td>
+          <td class="val-blue">{{FEE_APY_BOOSTED}}%</td>
+          <td class="val-text">USDC / ETH</td>
+          <td class="val-muted">Weekly</td>
+        </tr>
+        <tr>
+          <td class="val-text">{{TICKER}} emissions</td>
+          <td><span class="p-tag p-purple">INFLATIONARY</span></td>
+          <td class="val-purple">{{EMISSION_APY}}%</td>
+          <td class="val-purple">{{EMISSION_APY_BOOSTED}}%</td>
+          <td class="val-text">{{TICKER}}</td>
+          <td class="val-muted">Per block</td>
+        </tr>
+        <tr>
+          <td class="val-text">LP staking boost</td>
+          <td><span class="p-tag p-green">LIQUIDITY</span></td>
+          <td class="val-green">{{LP_BASE_APY}}%</td>
+          <td class="val-green">{{LP_MAX_APY}}%</td>
+          <td class="val-text">{{TICKER}} + fees</td>
+          <td class="val-muted">Continuous</td>
+        </tr>
+        <tr>
+          <td class="val-text">Treasury yield sharing</td>
+          <td><span class="p-tag p-blue">REAL YIELD</span></td>
+          <td class="val-blue">{{TREASURY_APY}}%</td>
+          <td class="val-blue">{{TREASURY_APY}}%</td>
+          <td class="val-text">ETH / stables</td>
+          <td class="val-muted">Monthly</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- STAKING TIERS TABLE -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ STAKING TIERS</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">TIER STRUCTURE &amp; BENEFITS</div>
+  <div class="table-wrap">
+    <table class="dense-table sec-head">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Min Stake</th>
+          <th>Lock Duration</th>
+          <th>Boost Multiplier</th>
+          <th>Extra Benefits</th>
+          <th>APY Range</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="p-tag p-amber" style="color:#FFD166;background:rgba(255,209,102,0.10);border-color:rgba(255,209,102,0.25)">DIAMOND</span></td>
+          <td class="val-purple">{{DIAMOND_MIN}}</td>
+          <td class="val-muted">4 years</td>
+          <td class="val-amber">{{MAX_BOOST}}x</td>
+          <td class="val-muted">Max voting power + priority liquidation</td>
+          <td class="val-amber">{{DIAMOND_APY_MIN}}–{{MAX_APY}}%</td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-purple">PLATINUM</span></td>
+          <td class="val-purple">{{PLAT_MIN}}</td>
+          <td class="val-muted">2 years</td>
+          <td class="val-purple">{{PLAT_BOOST}}x</td>
+          <td class="val-muted">Governance + early feature access</td>
+          <td class="val-purple">{{PLAT_APY_MIN}}–{{PLAT_APY_MAX}}%</td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-blue">GOLD</span></td>
+          <td class="val-blue">{{GOLD_MIN}}</td>
+          <td class="val-muted">1 year</td>
+          <td class="val-blue">{{GOLD_BOOST}}x</td>
+          <td class="val-muted">Governance + fee discount</td>
+          <td class="val-blue">{{GOLD_APY_MIN}}–{{GOLD_APY_MAX}}%</td>
+        </tr>
+        <tr>
+          <td><span class="p-tag p-green">SILVER</span></td>
+          <td class="val-green">{{SILVER_MIN}}</td>
+          <td class="val-muted">Flexible</td>
+          <td class="val-green">1.25x</td>
+          <td class="val-muted">Basic governance rights</td>
+          <td class="val-green">{{SILVER_APY_MIN}}–{{SILVER_APY_MAX}}%</td>
+        </tr>
+        <tr>
+          <td><span class="p-tag" style="background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid var(--border)">BRONZE</span></td>
+          <td class="val-muted">Any amount</td>
+          <td class="val-muted">Flexible</td>
+          <td class="val-muted">1x (no boost)</td>
+          <td class="val-muted">Base fee share only</td>
+          <td class="val-muted">{{BASE_APY}}%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BULLET PANELS -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ HOW TO STAKE / SLASH CONDITIONS</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">STAKING GUIDE &amp; RISK</div>
+  <div class="panel-row">
+    <div class="bullet-panel">
+      <div class="bp-header">How to Stake</div>
+      <ul>
+        <li><strong>Step 1</strong> <span>— Connect wallet to {{STAKING_URL}} and approve {{TICKER}} spend</span></li>
+        <li><strong>Step 2</strong> <span>— Choose stake amount and lock duration (flexible or 1–4 year)</span></li>
+        <li><strong>Step 3</strong> <span>— Confirm transaction — receive ve{{TICKER}} representing your locked position</span></li>
+        <li><strong>Step 4</strong> <span>— Claim rewards weekly from the "Rewards" tab — auto-compound available</span></li>
+        <li><strong>Unstaking</strong> <span>— Initiate unbonding → wait {{UNBOND_DAYS}} days → withdraw full principal</span></li>
+        <li><strong>Early Exit</strong> <span>— Break lock early with {{EARLY_EXIT_FEE}}% penalty redistributed to stakers</span></li>
+      </ul>
+    </div>
+    <div class="bullet-panel sec">
+      <div class="bp-header">Slashing &amp; Risk Conditions</div>
+      <ul>
+        <li><strong>Validator Downtime</strong> <span>— if delegated to slashable validator, up to {{SLASH_DOWNTIME}}% slashed</span></li>
+        <li><strong>Double Signing</strong> <span>— malicious validator behavior triggers {{SLASH_DOUBLE}}% slash event</span></li>
+        <li><strong>Smart Contract Risk</strong> <span>— staking contracts audited by {{AUDITOR}} but risk remains</span></li>
+        <li><strong>Liquidity Risk</strong> <span>— {{UNBOND_DAYS}}-day unbonding means capital cannot be moved instantly</span></li>
+        <li><strong>Inflationary Dilution</strong> <span>— unstaked holders diluted by {{EMISSION_APY}}% annual emissions</span></li>
+        <li><strong>Coverage</strong> <span>— {{INSURANCE_COVERAGE}} of staked assets covered by protocol insurance fund</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CALLOUT STRIP -->
+  <div class="callout-strip">
+    <div class="callout-box">
+      <div class="cb-lbl">Protocol Security</div>
+      <div class="cb-val">{{INSURANCE_FUND}}</div>
+      <div class="cb-desc">Insurance fund covering staking contract exploits and validator slashing events.</div>
+    </div>
+    <div class="callout-box sec">
+      <div class="cb-lbl">Total Rewards Paid</div>
+      <div class="cb-val">{{TOTAL_REWARDS_PAID}}</div>
+      <div class="cb-desc">Distributed to stakers since protocol launch across all reward sources.</div>
+    </div>
+    <div class="callout-box red">
+      <div class="cb-lbl">Slash History</div>
+      <div class="cb-val">{{SLASH_EVENTS}} Events</div>
+      <div class="cb-desc">Total slashing incidents on record. Protocol has recovered {{SLASH_RECOVERY}}% of slashed funds.</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <div class="footer-logo">{{TICKER_1}}</div>
+      <div>
+        <div class="footer-name">{{PROJECT_NAME}}</div>
+        <div class="footer-tag">{{TAGLINE}}</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="f-badge">{{CHAIN}}</div>
+      <div class="footer-date">{{WEBSITE}}</div>
+    </div>
+  </div>
+
+</body>
+</html>

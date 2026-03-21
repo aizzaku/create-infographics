@@ -1,115 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Timeline — Roadmap / History</title>
-  <!-- Standard Fonts for General Purpose -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
-  <style>
-    /* Design Tokens */
-    :root {
-      --bg: #0D0D0D;
-      --surface: #13151A;
-      --border: rgba(255,255,255,0.08);
-      --primary: #00D4FF;
-      --text: #ffffff;
-      --muted: rgba(255,255,255,0.6);
-      --fd: 'Space Grotesk', sans-serif;
-      --fb: 'Inter', sans-serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE}}</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0E17;
+    --bg2: #111520;
+    --bg3: #161B28;
+    --primary: #B98AFF;
+    --primary-rgb: 185,138,255;
+    --secondary: #00E88A;
+    --secondary-rgb: 0,232,138;
+    --accent: #FFD166;
+    --accent-rgb: 255,209,102;
+    --text: #E8EAF0;
+    --text-muted: #8890A8;
+    --border: rgba(255,255,255,0.08);
+    --border-faint: rgba(255,255,255,0.04);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1080px;
+      margin: 0 auto; background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 13px; line-height: 1.5; }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: var(--fb); width: 1100px; padding: 80px; }
+  .header {
+    padding: 36px 48px 28px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    background: linear-gradient(135deg, rgba(var(--primary-rgb),0.05) 0%, transparent 55%);
+  }
+  .header-tag { display: inline-flex; align-items: center; background: rgba(var(--primary-rgb),0.1); border: 1px solid rgba(var(--primary-rgb),0.25); color: var(--primary); font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; margin-bottom: 12px; }
+  .header-title { font-family: 'Bebas Neue', sans-serif; font-size: 56px; line-height: 0.92; color: #fff; letter-spacing: 1px; margin-bottom: 10px; }
+  .header-title span { color: var(--primary); }
+  .header-sub { font-size: 12px; color: var(--text-muted); font-weight: 500; max-width: 500px; }
+  .header-right { display: flex; flex-direction: column; gap: 6px; justify-content: center; }
+  .hkpi { background: var(--bg3); border: 1px solid var(--border); padding: 10px 16px; text-align: right; min-width: 110px; }
+  .hkpi-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--primary); line-height: 1; }
+  .hkpi-lbl { font-size: 8.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
 
-    header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 80px; }
-    h1 { font-family: var(--fd); font-size: 56px; line-height: 1; margin-bottom: 8px; }
-    .subtitle { color: var(--muted); font-size: 18px; }
+  .section-label { display: flex; align-items: center; gap: 14px; padding: 0 48px 12px; }
+  .section-label-text { font-size: 8.5px; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--primary); white-space: nowrap; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    /* Timeline Structure */
-    .timeline { position: relative; padding-left: 120px; }
-    .timeline::before { content: ''; position: absolute; left: 120px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+  .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; padding: 0 48px 28px; }
+  .stat-box { background: var(--bg3); border: 1px solid var(--border); padding: 14px 16px; position: relative; }
+  .stat-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--primary); }
+  .stat-box.s2::before { background: var(--secondary); }
+  .stat-box.s3::before { background: var(--accent); }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: #fff; line-height: 1; }
+  .stat-label { font-size: 8.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
 
-    .event { position: relative; padding-bottom: 64px; }
-    .event:last-child { padding-bottom: 0; }
+  /* Timeline */
+  .timeline-section { padding: 0 48px 28px; position: relative; }
+  .timeline-track {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .timeline-track::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    background: linear-gradient(to bottom, rgba(var(--primary-rgb),0.6), rgba(var(--primary-rgb),0.1));
+  }
+  .tl-item {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: 16px;
+    padding: 0 0 12px;
+  }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot-col { display: flex; flex-direction: column; align-items: center; padding-top: 2px; z-index: 1; }
+  .tl-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid rgba(var(--primary-rgb),0.5);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tl-dot.done { background: var(--primary); border-color: var(--primary); }
+  .tl-dot.active { background: rgba(var(--primary-rgb),0.2); border-color: var(--primary); box-shadow: 0 0 8px rgba(var(--primary-rgb),0.5); }
+  .tl-dot-inner { width: 8px; height: 8px; border-radius: 50%; background: var(--bg); }
+  .tl-dot.done .tl-dot-inner { background: rgba(255,255,255,0.8); }
+  .tl-body {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    border-left: 3px solid rgba(var(--primary-rgb),0.25);
+  }
+  .tl-body.done { border-left-color: var(--secondary); }
+  .tl-body.active { border-left-color: var(--primary); background: rgba(var(--primary-rgb),0.04); }
+  .tl-body.future { border-left-color: rgba(255,255,255,0.08); }
+  .tl-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
+  .tl-date { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); }
+  .tl-status {
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+  .tl-status.done { background: rgba(0,232,138,0.12); color: var(--secondary); border: 1px solid rgba(0,232,138,0.25); }
+  .tl-status.active { background: rgba(var(--primary-rgb),0.12); color: var(--primary); border: 1px solid rgba(var(--primary-rgb),0.25); }
+  .tl-status.future { background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border); }
+  .tl-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .tl-desc { font-size: 11.5px; color: var(--text-muted); font-weight: 500; line-height: 1.4; margin-bottom: 6px; }
+  .tl-pills { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tl-pill { font-size: 9px; font-weight: 600; padding: 2px 8px; border-radius: 2px; background: rgba(255,255,255,0.04); color: var(--text-muted); border: 1px solid var(--border); }
 
-    /* Date Label */
-    .date {
-      position: absolute; left: -120px; top: 0; width: 100px;
-      text-align: right; font-family: var(--fd); font-size: 14px; font-weight: 700;
-      color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em;
-    }
+  .arrow-connector { display: flex; align-items: center; gap: 10px; padding: 10px 48px 20px; }
+  .arrow-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(var(--primary-rgb),0.4), transparent); }
+  .arrow-icon { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(var(--primary-rgb),0.6); padding: 4px 12px; border-radius: 3px; background: rgba(var(--primary-rgb),0.08); border: 1px solid rgba(var(--primary-rgb),0.22); }
 
-    /* Node */
-    .node {
-      position: absolute; left: -2px; top: 8px; width: 6px; height: 6px;
-      background: var(--primary); border-radius: 50%;
-      box-shadow: 0 0 10px var(--primary);
-    }
+  .table-wrap { padding: 0 48px 28px; }
+  .dense-table { width: 100%; border-collapse: collapse; font-size: 12px; border: 1px solid var(--border); }
+  .dense-table thead tr { background: rgba(var(--primary-rgb),0.07); }
+  .dense-table thead th { padding: 8px 12px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); text-align: left; border-bottom: 1px solid rgba(var(--primary-rgb),0.2); }
+  .dense-table td { padding: 7px 12px; vertical-align: middle; font-weight: 500; border-bottom: 1px solid var(--border-faint); }
+  .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .dense-table tbody tr:last-child td { border-bottom: none; }
+  .td-name { font-weight: 700; color: #fff; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 2px; font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .badge-done { background: rgba(0,232,138,0.12); color: var(--secondary); border: 1px solid rgba(0,232,138,0.25); }
+  .badge-active { background: rgba(var(--primary-rgb),0.12); color: var(--primary); border: 1px solid rgba(var(--primary-rgb),0.25); }
+  .badge-future { background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border); }
+  .badge-hi { background: rgba(255,209,102,0.12); color: var(--accent); border: 1px solid rgba(255,209,102,0.25); }
 
-    /* Content */
-    .content { padding-left: 48px; max-width: 600px; }
-    .content h3 { font-family: var(--fd); font-size: 24px; margin-bottom: 12px; }
-    .content p { color: var(--muted); font-size: 16px; line-height: 1.6; }
+  .two-col { padding: 0 48px 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .bullet-panel { background: var(--bg3); border: 1px solid var(--border); padding: 16px 18px; }
+  .bp-title { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .bullet-panel ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .bullet-panel li { display: flex; align-items: flex-start; gap: 7px; font-size: 11.5px; font-weight: 500; line-height: 1.4; }
+  .bullet-panel li::before { content: '▸'; color: var(--primary); font-size: 9px; flex-shrink: 0; margin-top: 2px; }
+  .bullet-panel.alt .bp-title { color: var(--secondary); }
+  .bullet-panel.alt li::before { color: var(--secondary); }
 
-    /* Tags */
-    .tags { display: flex; gap: 8px; margin-top: 16px; }
-    .tag { font-size: 10px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 4px; color: var(--muted); }
-  </style>
+  .callout-strip { padding: 0 48px 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .cb { background: rgba(var(--primary-rgb),0.06); border: 1px solid rgba(var(--primary-rgb),0.18); padding: 14px 16px; border-radius: 2px; }
+  .cb.alt { background: rgba(var(--secondary-rgb),0.06); border-color: rgba(var(--secondary-rgb),0.18); }
+  .cb-lbl { font-size: 8.5px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 5px; }
+  .cb.alt .cb-lbl { color: var(--secondary); }
+  .cb-txt { font-size: 11.5px; font-weight: 500; line-height: 1.45; }
+
+  .footer { padding: 16px 48px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); background: var(--bg2); }
+  .footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 2px; color: var(--primary); }
+  .footer-note { font-size: 9.5px; color: var(--text-muted); font-weight: 500; }
+  .footer-date { font-size: 9.5px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; }
+</style>
 </head>
 <body>
 
-  <header>
-    <div>
-      <h1>PROJECT ROADMAP</h1>
-      <p class="subtitle">Key milestones and development timeline.</p>
-    </div>
-    <div style="text-align: right; color: var(--muted); font-size: 14px; font-weight: 600;">
-      EST. COMPLETION Q4 2026
-    </div>
-  </header>
+<div class="header">
+  <div>
+    <div class="header-tag">{{CATEGORY}} · TIMELINE</div>
+    <div class="header-title"><span>{{SUBJECT}}</span><br>{{SUBTITLE_LINE}}</div>
+    <div class="header-sub">{{DESCRIPTION}}</div>
+  </div>
+  <div class="header-right">
+    <div class="hkpi"><div class="hkpi-val">{{KPI1_VAL}}</div><div class="hkpi-lbl">{{KPI1_LABEL}}</div></div>
+    <div class="hkpi"><div class="hkpi-val" style="color:var(--secondary);">{{KPI2_VAL}}</div><div class="hkpi-lbl">{{KPI2_LABEL}}</div></div>
+  </div>
+</div>
 
-  <div class="timeline">
-    <!-- Events -->
-    <div class="event">
-      <div class="date">Q1 2026</div>
-      <div class="node"></div>
-      <div class="content">
-        <h3>Foundation & Alpha</h3>
-        <p>Core engine development and initial stress testing with early community contributors.</p>
-        <div class="tags">
-          <span class="tag">Alpha</span>
-          <span class="tag">Security</span>
-        </div>
+<div style="padding:28px 48px 8px;">
+  <div class="section-label"><span class="section-label-text">Overview</span></div>
+</div>
+<div class="stat-strip">
+  <div class="stat-box"><div class="stat-val">{{STAT1_VAL}}</div><div class="stat-label">{{STAT1_LABEL}}</div></div>
+  <div class="stat-box s2"><div class="stat-val">{{STAT2_VAL}}</div><div class="stat-label">{{STAT2_LABEL}}</div></div>
+  <div class="stat-box s3"><div class="stat-val">{{STAT3_VAL}}</div><div class="stat-label">{{STAT3_LABEL}}</div></div>
+  <div class="stat-box"><div class="stat-val">{{STAT4_VAL}}</div><div class="stat-label">{{STAT4_LABEL}}</div></div>
+</div>
+
+<div style="padding:0 48px 8px;">
+  <div class="section-label"><span class="section-label-text">Timeline</span></div>
+</div>
+<div class="timeline-section">
+  <div class="timeline-track">
+    <div class="tl-item">
+      <div class="tl-dot-col"><div class="tl-dot done"><div class="tl-dot-inner"></div></div></div>
+      <div class="tl-body done">
+        <div class="tl-header-row"><span class="tl-date">{{TL1_DATE}}</span><span class="tl-status done">Done</span></div>
+        <div class="tl-title">{{TL1_TITLE}}</div>
+        <div class="tl-desc">{{TL1_DESC}}</div>
+        <div class="tl-pills"><span class="tl-pill">{{TL1_P1}}</span><span class="tl-pill">{{TL1_P2}}</span></div>
       </div>
     </div>
-
-    <div class="event">
-      <div class="date">Q2 2026</div>
-      <div class="node"></div>
-      <div class="content">
-        <h3>SDK Release</h3>
-        <p>Opening up the API to 3rd party developers. Documentation site goes live under docs.example.com.</p>
-        <div class="tags">
-          <span class="tag">DevEx</span>
-          <span class="tag">API</span>
-        </div>
+    <div class="tl-item">
+      <div class="tl-dot-col"><div class="tl-dot done"><div class="tl-dot-inner"></div></div></div>
+      <div class="tl-body done">
+        <div class="tl-header-row"><span class="tl-date">{{TL2_DATE}}</span><span class="tl-status done">Done</span></div>
+        <div class="tl-title">{{TL2_TITLE}}</div>
+        <div class="tl-desc">{{TL2_DESC}}</div>
+        <div class="tl-pills"><span class="tl-pill">{{TL2_P1}}</span><span class="tl-pill">{{TL2_P2}}</span></div>
       </div>
     </div>
-
-    <div class="event">
-      <div class="date">Q3 2026</div>
-      <div class="node"></div>
-      <div class="content">
-        <h3>Integration Web</h3>
-        <p>Major partnership announcements and native integrations with core industry leaders.</p>
-        <div class="tags">
-          <span class="tag">Growth</span>
-          <span class="tag">Partners</span>
-        </div>
+    <div class="tl-item">
+      <div class="tl-dot-col"><div class="tl-dot done"><div class="tl-dot-inner"></div></div></div>
+      <div class="tl-body done">
+        <div class="tl-header-row"><span class="tl-date">{{TL3_DATE}}</span><span class="tl-status done">Done</span></div>
+        <div class="tl-title">{{TL3_TITLE}}</div>
+        <div class="tl-desc">{{TL3_DESC}}</div>
+        <div class="tl-pills"><span class="tl-pill">{{TL3_P1}}</span><span class="tl-pill">{{TL3_P2}}</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot-col"><div class="tl-dot active"><div class="tl-dot-inner"></div></div></div>
+      <div class="tl-body active">
+        <div class="tl-header-row"><span class="tl-date">{{TL4_DATE}}</span><span class="tl-status active">In Progress</span></div>
+        <div class="tl-title">{{TL4_TITLE}}</div>
+        <div class="tl-desc">{{TL4_DESC}}</div>
+        <div class="tl-pills"><span class="tl-pill">{{TL4_P1}}</span><span class="tl-pill">{{TL4_P2}}</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot-col"><div class="tl-dot"><div class="tl-dot-inner"></div></div></div>
+      <div class="tl-body future">
+        <div class="tl-header-row"><span class="tl-date">{{TL5_DATE}}</span><span class="tl-status future">Planned</span></div>
+        <div class="tl-title">{{TL5_TITLE}}</div>
+        <div class="tl-desc">{{TL5_DESC}}</div>
+        <div class="tl-pills"><span class="tl-pill">{{TL5_P1}}</span><span class="tl-pill">{{TL5_P2}}</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot-col"><div class="tl-dot"><div class="tl-dot-inner"></div></div></div>
+      <div class="tl-body future">
+        <div class="tl-header-row"><span class="tl-date">{{TL6_DATE}}</span><span class="tl-status future">Planned</span></div>
+        <div class="tl-title">{{TL6_TITLE}}</div>
+        <div class="tl-desc">{{TL6_DESC}}</div>
+        <div class="tl-pills"><span class="tl-pill">{{TL6_P1}}</span><span class="tl-pill">{{TL6_P2}}</span></div>
       </div>
     </div>
   </div>
+</div>
+
+<div class="arrow-connector">
+  <div class="arrow-line"></div>
+  <div class="arrow-icon">MILESTONE DETAIL</div>
+  <div class="arrow-line"></div>
+</div>
+
+<div style="padding:0 48px 8px;">
+  <div class="section-label"><span class="section-label-text">Milestone Breakdown</span></div>
+</div>
+<div class="table-wrap">
+  <table class="dense-table">
+    <thead>
+      <tr>
+        <th>Milestone</th>
+        <th>Period</th>
+        <th>Category</th>
+        <th>Impact</th>
+        <th>Status</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="td-name">{{MS1_NAME}}</td><td style="color:var(--text-muted);">{{MS1_PERIOD}}</td><td>{{MS1_CAT}}</td><td><span class="badge badge-hi">High</span></td><td><span class="badge badge-done">Done</span></td><td style="color:var(--text-muted);">{{MS1_NOTE}}</td></tr>
+      <tr><td class="td-name">{{MS2_NAME}}</td><td style="color:var(--text-muted);">{{MS2_PERIOD}}</td><td>{{MS2_CAT}}</td><td><span class="badge badge-hi">High</span></td><td><span class="badge badge-done">Done</span></td><td style="color:var(--text-muted);">{{MS2_NOTE}}</td></tr>
+      <tr><td class="td-name">{{MS3_NAME}}</td><td style="color:var(--text-muted);">{{MS3_PERIOD}}</td><td>{{MS3_CAT}}</td><td><span class="badge badge-hi">High</span></td><td><span class="badge badge-active">Active</span></td><td style="color:var(--text-muted);">{{MS3_NOTE}}</td></tr>
+      <tr><td class="td-name">{{MS4_NAME}}</td><td style="color:var(--text-muted);">{{MS4_PERIOD}}</td><td>{{MS4_CAT}}</td><td><span class="badge badge-hi">High</span></td><td><span class="badge badge-future">Planned</span></td><td style="color:var(--text-muted);">{{MS4_NOTE}}</td></tr>
+      <tr><td class="td-name">{{MS5_NAME}}</td><td style="color:var(--text-muted);">{{MS5_PERIOD}}</td><td>{{MS5_CAT}}</td><td><span class="badge badge-future" style="color:var(--accent);border-color:rgba(255,209,102,0.25);background:rgba(255,209,102,0.1);">Med</span></td><td><span class="badge badge-future">Planned</span></td><td style="color:var(--text-muted);">{{MS5_NOTE}}</td></tr>
+      <tr><td class="td-name">{{MS6_NAME}}</td><td style="color:var(--text-muted);">{{MS6_PERIOD}}</td><td>{{MS6_CAT}}</td><td><span class="badge badge-hi">High</span></td><td><span class="badge badge-future">Planned</span></td><td style="color:var(--text-muted);">{{MS6_NOTE}}</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="padding:0 48px 8px;">
+  <div class="section-label"><span class="section-label-text">Context</span></div>
+</div>
+<div class="two-col">
+  <div class="bullet-panel">
+    <div class="bp-title">What's Been Achieved</div>
+    <ul>
+      <li>{{ACH1}}</li>
+      <li>{{ACH2}}</li>
+      <li>{{ACH3}}</li>
+      <li>{{ACH4}}</li>
+      <li>{{ACH5}}</li>
+    </ul>
+  </div>
+  <div class="bullet-panel alt">
+    <div class="bp-title">What's Coming</div>
+    <ul>
+      <li>{{COM1}}</li>
+      <li>{{COM2}}</li>
+      <li>{{COM3}}</li>
+      <li>{{COM4}}</li>
+      <li>{{COM5}}</li>
+    </ul>
+  </div>
+</div>
+
+<div style="padding:0 48px 8px;">
+  <div class="section-label"><span class="section-label-text">Key Signals</span></div>
+</div>
+<div class="callout-strip">
+  <div class="cb"><div class="cb-lbl">Biggest Win</div><div class="cb-txt">{{CALLOUT1}}</div></div>
+  <div class="cb alt"><div class="cb-lbl">Next Catalyst</div><div class="cb-txt">{{CALLOUT2}}</div></div>
+  <div class="cb"><div class="cb-lbl">Watch For</div><div class="cb-txt">{{CALLOUT3}}</div></div>
+</div>
+
+<div class="footer">
+  <div class="footer-brand">{{BRAND}}</div>
+  <div class="footer-note">{{FOOTER_NOTE}}</div>
+  <div class="footer-date">{{DATE}}</div>
+</div>
 
 </body>
 </html>

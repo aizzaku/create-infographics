@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{PROJECT_NAME}} — Token Flywheel</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #080808;
+    --bg-card:      #0F0F0F;
+    --bg-section:   #111111;
+    --primary:      #00E88A;
+    --primary-rgb:  0,232,138;
+    --secondary:    #B98AFF;
+    --secondary-rgb:185,138,255;
+    --accent:       #FFD166;
+    --accent-rgb:   255,209,102;
+    --text:         #FFFFFF;
+    --muted:        #888888;
+    --border:       rgba(255,255,255,0.08);
+    --border-faint: rgba(255,255,255,0.04);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; width: 1080px;
+      margin: 0 auto; }
+
+  /* HERO */
+  .hero {
+    display: grid; grid-template-columns: 1fr 310px; gap: 32px;
+    padding: 40px 48px 36px;
+    background: linear-gradient(135deg, rgba(0,232,138,0.05) 0%, transparent 60%);
+    border-bottom: 2px solid var(--primary);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -60px; right: 200px;
+    width: 260px; height: 260px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,232,138,0.09) 0%, transparent 70%); pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px;
+    border-radius: 3px; background: rgba(0,232,138,0.10); border: 1px solid rgba(0,232,138,0.28);
+    font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--primary); margin-bottom: 14px;
+  }
+  .hero-eyebrow span { width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: 72px; letter-spacing: 2px; line-height: 0.92; color: var(--text); margin-bottom: 18px; }
+  .hero-title em { color: var(--primary); font-style: normal; }
+  .hero-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .hero-bullets li { display: flex; align-items: flex-start; gap: 8px; font-size: 11.5px; font-weight: 500; color: var(--muted); line-height: 1.4; }
+  .hero-bullets li::before { content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0; }
+  .hero-card { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.22); padding: 20px 18px; align-self: start; }
+  .hero-card-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+  .hero-kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 14px; }
+  .hero-kpi { background: rgba(255,255,255,0.03); padding: 10px 11px; border: 1px solid var(--border-faint); }
+  .hero-kpi-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 1px; color: var(--primary); line-height: 1; }
+  .hero-kpi-val.sec { color: var(--secondary); }
+  .hero-kpi-val.acc { color: var(--accent); }
+  .hero-kpi-lbl { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+  .hero-note { font-size: 10px; font-weight: 500; color: var(--muted); line-height: 1.5; padding-top: 10px; border-top: 1px solid var(--border); }
+
+  /* STAT STRIP */
+  .stat-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; padding: 20px 48px 28px; }
+  .stat-box { background: var(--bg-card); border: 1px solid var(--border); padding: 12px 14px; position: relative; }
+  .stat-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--primary); }
+  .stat-box.sec::before { background: var(--secondary); }
+  .stat-box.acc::before { background: var(--accent); }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .stat-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .stat-sub { font-size: 9px; color: var(--muted); margin-top: 2px; }
+
+  /* SECTION LABEL */
+  .section-label { display: flex; align-items: center; gap: 14px; font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); padding: 0 48px 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ARROW CONNECTOR */
+  .arrow-connector { display: flex; align-items: center; gap: 10px; padding: 10px 48px 20px; }
+  .arrow-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(var(--primary-rgb),0.4), transparent); }
+  .arrow-icon { display: flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); padding: 4px 12px; border-radius: 3px; background: rgba(var(--primary-rgb),0.08); border: 1px solid rgba(var(--primary-rgb),0.22); }
+
+  /* FLYWHEEL */
+  .flywheel-section { padding: 0 48px 28px; }
+  .flywheel-container { display: flex; flex-direction: column; gap: 2px; }
+  .flywheel-row { display: flex; gap: 2px; }
+  .flywheel-node {
+    background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.20);
+    padding: 14px 16px; flex: 1; display: flex; flex-direction: column; gap: 4px;
+  }
+  .flywheel-node.sec { border-color: rgba(var(--secondary-rgb),0.22); }
+  .flywheel-node.acc { border-color: rgba(var(--accent-rgb),0.22); }
+  .fn-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: rgba(0,232,138,0.15); line-height: 1; }
+  .flywheel-node.sec .fn-num { color: rgba(185,138,255,0.15); }
+  .flywheel-node.acc .fn-num { color: rgba(255,209,102,0.15); }
+  .fn-title { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text); }
+  .fn-desc { font-size: 10.5px; font-weight: 500; color: var(--muted); line-height: 1.45; }
+  .fn-tag { display: inline-block; margin-top: 8px; padding: 2px 7px; border-radius: 3px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; background: rgba(0,232,138,0.10); border: 1px solid rgba(0,232,138,0.25); color: var(--primary); }
+  .flywheel-node.sec .fn-tag { background: rgba(185,138,255,0.10); border-color: rgba(185,138,255,0.25); color: var(--secondary); }
+  .flywheel-node.acc .fn-tag { background: rgba(255,209,102,0.10); border-color: rgba(255,209,102,0.25); color: var(--accent); }
+  .flywheel-arrow { display: flex; align-items: center; justify-content: center; padding: 6px; color: var(--primary); font-size: 14px; opacity: 0.7; }
+  .flywheel-arrow.row { padding: 0 6px; font-size: 18px; align-self: center; flex-shrink: 0; }
+
+  /* DENSE TABLE */
+  .table-wrap { margin: 0 48px 28px; border: 1px solid var(--border); overflow: hidden; }
+  .dense-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .dense-table thead tr { background: rgba(var(--primary-rgb),0.07); border-bottom: 1px solid rgba(var(--primary-rgb),0.22); }
+  .dense-table thead th { padding: 9px 12px; text-align: left; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
+  .dense-table tbody tr { border-bottom: 1px solid var(--border-faint); }
+  .dense-table tbody tr:last-child { border-bottom: none; }
+  .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .dense-table td { padding: 7px 12px; vertical-align: middle; font-weight: 500; }
+  .val-green  { color: var(--primary);   font-weight: 700; }
+  .val-purple { color: var(--secondary); font-weight: 600; }
+  .val-amber  { color: var(--accent);    font-weight: 700; }
+  .val-muted  { color: var(--muted);     font-weight: 500; }
+  .val-text   { color: var(--text);      font-weight: 500; }
+  .p-tag { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+  .p-green  { background: rgba(0,232,138,0.10);  color: var(--primary);   border: 1px solid rgba(0,232,138,0.25); }
+  .p-purple { background: rgba(185,138,255,0.10); color: var(--secondary); border: 1px solid rgba(185,138,255,0.25); }
+  .p-amber  { background: rgba(255,209,102,0.10); color: var(--accent);    border: 1px solid rgba(255,209,102,0.25); }
+  .p-muted  { background: rgba(255,255,255,0.05); color: var(--muted);     border: 1px solid var(--border); }
+
+  /* BULLET PANELS */
+  .panel-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 48px 28px; }
+  .bullet-panel { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.18); padding: 16px 18px; }
+  .bullet-panel.sec { border-color: rgba(var(--secondary-rgb),0.18); }
+  .bp-header { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--primary); padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+  .bullet-panel.sec .bp-header { color: var(--secondary); }
+  .bullet-panel ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .bullet-panel li { display: flex; align-items: flex-start; gap: 7px; font-size: 11.5px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .bullet-panel li::before { content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0; }
+  .bullet-panel.sec li::before { color: var(--secondary); }
+  .bullet-panel li span { color: var(--muted); }
+
+  /* CALLOUT STRIP */
+  .callout-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; padding: 0 48px 32px; }
+  .callout-box { padding: 14px 16px; border: 1px solid var(--border); border-left: 3px solid var(--primary); background: var(--bg-section); }
+  .callout-box.sec { border-left-color: var(--secondary); }
+  .callout-box.acc { border-left-color: var(--accent); }
+  .cb-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 6px; }
+  .callout-box.sec .cb-lbl { color: var(--secondary); }
+  .callout-box.acc .cb-lbl { color: var(--accent); }
+  .cb-val { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .cb-desc { font-size: 11px; font-weight: 500; color: var(--muted); line-height: 1.45; }
+
+  /* FOOTER */
+  .footer { display: flex; align-items: center; justify-content: space-between; padding: 18px 48px; border-top: 1px solid var(--border); background: rgba(var(--primary-rgb),0.02); }
+  .footer-left { display: flex; align-items: center; gap: 12px; }
+  .footer-logo { width: 30px; height: 30px; border-radius: 5px; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 14px; color: #000; }
+  .footer-name { font-size: 12px; font-weight: 700; color: var(--text); letter-spacing: 1px; }
+  .footer-tag  { font-size: 9px; color: var(--muted); font-weight: 500; }
+  .footer-right { display: flex; align-items: center; gap: 14px; }
+  .f-badge { padding: 3px 10px; border-radius: 3px; border: 1px solid var(--border); font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .footer-date { font-size: 10px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span></span>TOKEN ECONOMICS</div>
+      <div class="hero-title"><em>{{TICKER}}</em><br>FLYWHEEL</div>
+      <ul class="hero-bullets">
+        <li>Protocol revenue is systematically converted into buy pressure and token burns</li>
+        <li>Value accrual loop: Usage → Fees → Buyback → Burn → Deflation → Demand</li>
+        <li>{{BURN_RATE}}% of protocol fees allocated to buyback-and-burn per quarter</li>
+        <li>Stakers capture {{STAKER_SHARE}}% of remaining fee revenue as direct yield</li>
+      </ul>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-lbl">Flywheel Metrics</div>
+      <div class="hero-kpi-grid">
+        <div class="hero-kpi">
+          <div class="hero-kpi-val">{{TOTAL_BURNED}}</div>
+          <div class="hero-kpi-lbl">Total Burned</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val sec">{{PROTOCOL_REV}}</div>
+          <div class="hero-kpi-lbl">Protocol Rev</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val acc">{{STAKER_APY}}%</div>
+          <div class="hero-kpi-lbl">Staker APY</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-val">{{BUYBACK_VOL}}</div>
+          <div class="hero-kpi-lbl">Buyback Vol</div>
+        </div>
+      </div>
+      <div class="hero-note">
+        Fee split: {{BURN_RATE}}% burn · {{STAKER_SHARE}}% stakers · {{DAO_SHARE}}% treasury
+      </div>
+    </div>
+  </div>
+
+  <!-- STAT STRIP -->
+  <div class="stat-strip">
+    <div class="stat-box">
+      <div class="stat-val">{{CIRCULATING_SUPPLY}}</div>
+      <div class="stat-lbl">Circulating Supply</div>
+      <div class="stat-sub">Of {{TOTAL_SUPPLY}} total</div>
+    </div>
+    <div class="stat-box acc">
+      <div class="stat-val">{{BURN_RATE}}%</div>
+      <div class="stat-lbl">Fee Burn Rate</div>
+      <div class="stat-sub">Of all protocol fees</div>
+    </div>
+    <div class="stat-box sec">
+      <div class="stat-val">{{STAKER_APY}}%</div>
+      <div class="stat-lbl">Staker APY</div>
+      <div class="stat-sub">Avg 30-day trailing</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val">{{DAILY_VOLUME}}</div>
+      <div class="stat-lbl">Daily Volume</div>
+      <div class="stat-sub">Driving fee revenue</div>
+    </div>
+  </div>
+
+  <!-- FLYWHEEL DIAGRAM -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">↺ VALUE ACCRUAL LOOP</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">TOKEN FLYWHEEL MECHANISM</div>
+  <div class="flywheel-section">
+    <div class="flywheel-container">
+      <div class="flywheel-row">
+        <div class="flywheel-node">
+          <div class="fn-num">01</div>
+          <div class="fn-title">User Activity</div>
+          <div class="fn-desc">Traders, LPs, and borrowers use the protocol — generating transaction volume and fee revenue</div>
+          <div class="fn-tag">DEMAND</div>
+        </div>
+        <div class="flywheel-arrow row">→</div>
+        <div class="flywheel-node sec">
+          <div class="fn-num">02</div>
+          <div class="fn-title">Fee Collection</div>
+          <div class="fn-desc">Protocol collects {{FEE_RATE}}% on all transactions, directed to the fee treasury contract</div>
+          <div class="fn-tag">REVENUE</div>
+        </div>
+        <div class="flywheel-arrow row">→</div>
+        <div class="flywheel-node acc">
+          <div class="fn-num">03</div>
+          <div class="fn-title">Buyback Engine</div>
+          <div class="fn-desc">{{BURN_RATE}}% of fees used to buy {{TICKER}} on open market via automated buyback contract</div>
+          <div class="fn-tag">BUY PRESSURE</div>
+        </div>
+      </div>
+      <div class="flywheel-arrow" style="text-align:center; font-size:18px; padding: 6px 0; color:var(--primary)">↓ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑</div>
+      <div class="flywheel-row" style="flex-direction:row-reverse">
+        <div class="flywheel-node">
+          <div class="fn-num">06</div>
+          <div class="fn-title">More Users</div>
+          <div class="fn-desc">Rising token price + staking yield attract new users and liquidity providers to the ecosystem</div>
+          <div class="fn-tag">GROWTH</div>
+        </div>
+        <div class="flywheel-arrow row" style="transform:scaleX(-1)">→</div>
+        <div class="flywheel-node sec">
+          <div class="fn-num">05</div>
+          <div class="fn-title">Price Support</div>
+          <div class="fn-desc">Reduced supply + staker demand creates sustained buy-side pressure on secondary markets</div>
+          <div class="fn-tag">SUPPORT</div>
+        </div>
+        <div class="flywheel-arrow row" style="transform:scaleX(-1)">→</div>
+        <div class="flywheel-node acc">
+          <div class="fn-num">04</div>
+          <div class="fn-title">Burn + Distribute</div>
+          <div class="fn-desc">Bought tokens burned (deflationary) · remaining {{STAKER_SHARE}}% distributed to stakers as yield</div>
+          <div class="fn-tag">DEFLATION</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VALUE ACCRUAL TABLE -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ VALUE ACCRUAL SOURCES</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">FEE SOURCE BREAKDOWN</div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th>Revenue Source</th>
+          <th>Fee Rate</th>
+          <th>Est. Daily Revenue</th>
+          <th>Burn Allocation</th>
+          <th>Staker Allocation</th>
+          <th>Frequency</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="val-text">Swap fees</td>
+          <td class="val-green">{{SWAP_FEE}}%</td>
+          <td class="val-green">{{SWAP_DAILY_REV}}</td>
+          <td class="val-amber">{{BURN_RATE}}%</td>
+          <td class="val-purple">{{STAKER_SHARE}}%</td>
+          <td class="val-muted">Per transaction</td>
+        </tr>
+        <tr>
+          <td class="val-text">Borrow interest</td>
+          <td class="val-green">{{BORROW_FEE}}% APR</td>
+          <td class="val-green">{{BORROW_DAILY_REV}}</td>
+          <td class="val-amber">{{BURN_RATE}}%</td>
+          <td class="val-purple">{{STAKER_SHARE}}%</td>
+          <td class="val-muted">Per second (accrual)</td>
+        </tr>
+        <tr>
+          <td class="val-text">Liquidation penalty</td>
+          <td class="val-green">{{LIQ_FEE}}%</td>
+          <td class="val-green">{{LIQ_DAILY_REV}}</td>
+          <td class="val-amber">{{BURN_RATE}}%</td>
+          <td class="val-purple">{{STAKER_SHARE}}%</td>
+          <td class="val-muted">On liquidation event</td>
+        </tr>
+        <tr>
+          <td class="val-text">Flash loan premium</td>
+          <td class="val-green">{{FLASH_FEE}}%</td>
+          <td class="val-green">{{FLASH_DAILY_REV}}</td>
+          <td class="val-amber">{{BURN_RATE}}%</td>
+          <td class="val-purple">{{STAKER_SHARE}}%</td>
+          <td class="val-muted">Per flash loan tx</td>
+        </tr>
+        <tr>
+          <td class="val-text">Protocol-owned liquidity</td>
+          <td class="val-muted">Yield from POL</td>
+          <td class="val-green">{{POL_DAILY_REV}}</td>
+          <td class="val-muted">100%</td>
+          <td class="val-muted">—</td>
+          <td class="val-muted">Continuous yield</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- EMISSION SCHEDULE TABLE -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ EMISSION SCHEDULE</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">TOKEN SUPPLY SCHEDULE</div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th>Period</th>
+          <th>Emissions</th>
+          <th>Est. Burns</th>
+          <th>Net Supply Change</th>
+          <th>Cumulative Burned</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="val-text">Year 1</td>
+          <td class="val-amber">{{Y1_EMISSIONS}}</td>
+          <td class="val-green">{{Y1_BURNS}}</td>
+          <td class="val-green">{{Y1_NET}}</td>
+          <td class="val-muted">{{Y1_CUM_BURNED}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">Year 2</td>
+          <td class="val-amber">{{Y2_EMISSIONS}}</td>
+          <td class="val-green">{{Y2_BURNS}}</td>
+          <td class="val-green">{{Y2_NET}}</td>
+          <td class="val-muted">{{Y2_CUM_BURNED}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">Year 3</td>
+          <td class="val-amber">{{Y3_EMISSIONS}}</td>
+          <td class="val-green">{{Y3_BURNS}}</td>
+          <td class="val-green">{{Y3_NET}}</td>
+          <td class="val-muted">{{Y3_CUM_BURNED}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">Year 4</td>
+          <td class="val-amber">{{Y4_EMISSIONS}}</td>
+          <td class="val-green">{{Y4_BURNS}}</td>
+          <td class="val-green">{{Y4_NET}}</td>
+          <td class="val-muted">{{Y4_CUM_BURNED}}</td>
+        </tr>
+        <tr>
+          <td class="val-text">Year 5+</td>
+          <td class="val-amber">{{Y5_EMISSIONS}}</td>
+          <td class="val-green">{{Y5_BURNS}}</td>
+          <td class="val-green">{{Y5_NET}}</td>
+          <td class="val-muted">{{Y5_CUM_BURNED}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BULLET PANELS -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ DEMAND VS SUPPLY DRIVERS</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">DEMAND &amp; SUPPLY MECHANICS</div>
+  <div class="panel-row">
+    <div class="bullet-panel">
+      <div class="bp-header">Demand Drivers</div>
+      <ul>
+        <li><strong>Fee Payment Discount</strong> <span>— {{FEE_DISCOUNT}}% off fees when paying in {{TICKER}}</span></li>
+        <li><strong>Governance Rights</strong> <span>— staked tokens required to vote on protocol parameters</span></li>
+        <li><strong>Staking Yield</strong> <span>— {{STAKER_APY}}% APY paid in protocol fees, not inflation</span></li>
+        <li><strong>Protocol Access</strong> <span>— boosted limits and priority liquidation for token holders</span></li>
+        <li><strong>Liquidity Mining</strong> <span>— {{LM_APY}}% APY for qualifying LP positions in key pools</span></li>
+      </ul>
+    </div>
+    <div class="bullet-panel sec">
+      <div class="bp-header">Supply Sinks</div>
+      <ul>
+        <li><strong>Buyback &amp; Burn</strong> <span>— {{BURN_RATE}}% of all protocol fees permanently burned</span></li>
+        <li><strong>Governance Lock</strong> <span>— veTokens lock supply for 1–4 years to vote</span></li>
+        <li><strong>Staking Lock</strong> <span>— {{STAKED_PCT}}% of circulating supply currently staked</span></li>
+        <li><strong>Treasury Reserve</strong> <span>— {{TREASURY_PCT}}% of supply held in protocol-owned treasury</span></li>
+        <li><strong>Deflationary Emissions</strong> <span>— emission rate declining {{HALVING_RATE}}% per year</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CALLOUT STRIP -->
+  <div class="callout-strip">
+    <div class="callout-box">
+      <div class="cb-lbl">Burn to Date</div>
+      <div class="cb-val">{{TOTAL_BURNED}}</div>
+      <div class="cb-desc">Permanently removed from circulating supply since protocol launch.</div>
+    </div>
+    <div class="callout-box sec">
+      <div class="cb-lbl">Revenue (TTM)</div>
+      <div class="cb-val">{{TTM_REVENUE}}</div>
+      <div class="cb-desc">Trailing 12-month protocol revenue across all fee sources.</div>
+    </div>
+    <div class="callout-box acc">
+      <div class="cb-lbl">P/F Ratio</div>
+      <div class="cb-val">{{PF_RATIO}}x</div>
+      <div class="cb-desc">Price-to-fees ratio versus comparable DeFi protocols.</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <div class="footer-logo">{{TICKER_1}}</div>
+      <div>
+        <div class="footer-name">{{PROJECT_NAME}}</div>
+        <div class="footer-tag">{{TAGLINE}}</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="f-badge">{{CHAIN}}</div>
+      <div class="footer-date">{{WEBSITE}}</div>
+    </div>
+  </div>
+
+</body>
+</html>

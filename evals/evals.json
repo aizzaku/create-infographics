@@ -1,53 +1,48 @@
 {
   "skill_name": "create-infographics",
+  "version": "v2",
   "evals": [
     {
       "id": 1,
-      "prompt": "Create a dark-mode infographic showing a startup's funding timeline. Company: NovaPay. Milestones: Jan 2020 — Founded, $0. Mar 2021 — Pre-seed, $500K from angel investors. Nov 2021 — Seed, $3.2M led by Sequoia. Aug 2022 — Series A, $18M led by a16z. Feb 2024 — Series B, $55M led by Tiger Global. Format it for LinkedIn.",
-      "expected_output": "A single self-contained HTML file containing a dark-background timeline infographic. All 5 milestones with exact dates and dollar amounts present. LinkedIn dimensions (1200x627px). No fabricated data.",
-      "files": [],
-      "assertions": [
-        "An HTML file is produced containing the infographic",
-        "All five funding milestones are present: Founded ($0), Pre-seed ($500K), Seed ($3.2M), Series A ($18M), Series B ($55M)",
-        "All five dates/periods are represented: Jan 2020, Mar 2021, Nov 2021, Aug 2022, Feb 2024",
-        "All three investor names appear: Sequoia, a16z, Tiger Global (attributed to the correct rounds)",
-        "The infographic uses a dark background (dark mode default when not specified otherwise)",
-        "The design uses a distinctive display font — NOT Inter, Roboto, Arial, or Helvetica as the heading/display font",
-        "Phosphor Icons CDN script is included in the HTML",
-        "No dollar amounts, percentages, or statistics appear that were not provided in the prompt (no fabricated data)"
-      ]
+      "name": "eval-remote-work-dark",
+      "prompt": "Create an infographic. Remote work stats 2024: 74% of workers prefer remote/hybrid, productivity up 18% YoY, office lease cancellations up 31%, top talent turnover 2.4x higher when RTO is mandated.",
+      "expected_output": "Design brief asked, thesis stated, visual concept declared, archetype named, HTML produced with dark background, annotation-first labels, reduction pass run",
+      "files": []
     },
     {
       "id": 2,
-      "prompt": "Make a token economics infographic for our DeFi project 'ArcDAO'. Token: ARC. Total supply: 1,000,000,000. Allocation: Team 15%, Investors 20%, Community Rewards 35%, Treasury 20%, Liquidity 10%. Brand color: #7C3AED (purple). Make it feel premium and crypto-native.",
-      "expected_output": "A self-contained HTML infographic with a donut/pie chart or visual breakdown showing the 5 token allocations with exact percentages. Brand color #7C3AED drives the palette. Crypto-native dark aesthetic.",
-      "files": [],
-      "assertions": [
-        "An HTML file is produced containing the infographic",
-        "All five allocation categories are present: Team (15%), Investors (20%), Community Rewards (35%), Treasury (20%), Liquidity (10%)",
-        "The total supply '1,000,000,000' or '1B' appears in the infographic",
-        "The brand color #7C3AED (purple) or a close approximation is used as the primary accent color",
-        "The token name 'ARC' and project name 'ArcDAO' both appear in the infographic",
-        "The five percentages sum to 100% visually (chart or table representation is complete and internally consistent)",
-        "No allocation percentages, amounts, or vesting terms appear that were not provided in the prompt (no fabricated data)",
-        "The design uses a distinctive display font — NOT Inter, Roboto, Arial, or Helvetica as the heading/display font"
-      ]
+      "name": "eval-saas-mode-c",
+      "prompt": "I want to make an infographic about our SaaS metrics but not sure what style would look best. MRR $240K (+180% YoY), Churn 1.2%, NPS 67, CAC $310, LTV $4,200.",
+      "expected_output": "Mode C triggered, thesis stated, two composition options presented with distinct archetypes and rationale, no HTML until after option selection, HTML produced after selection",
+      "files": []
     },
     {
       "id": 3,
-      "prompt": "I need a shareable infographic summarizing global remote work stats for 2024. Data: 16% of companies are fully remote worldwide. 62% of workers aged 22-65 work remotely at least occasionally. Top reasons people prefer remote: No commute 73%, Flexible schedule 68%, Better work-life balance 61%, Cost savings 42%. Productivity: 77% of remote workers report being more productive. Challenges: 20% struggle with loneliness, 17% with collaboration, 15% with communication. Use a professional dark look.",
-      "expected_output": "A dark-themed HTML infographic summarizing the remote work stats. All statistics faithfully reproduced. Data-story archetype with clear stat hierarchy.",
-      "files": [],
-      "assertions": [
-        "An HTML file is produced containing the infographic",
-        "The top-level stats are present: 16% (fully remote companies), 62% (workers remote at least occasionally), 77% (productivity improvement)",
-        "All four remote preference reasons with correct percentages: No commute 73%, Flexible schedule 68%, Better work-life balance 61%, Cost savings 42%",
-        "All three challenge stats with correct percentages: Loneliness 20%, Collaboration 17%, Communication 15%",
-        "The background is dark (dark mode)",
-        "The design uses a distinctive display font — NOT Inter, Roboto, Arial, or Helvetica as the heading/display font",
-        "Phosphor Icons CDN script is included in the HTML",
-        "No statistics, percentages, or figures appear that were not provided in the prompt (no fabricated data or rounding)"
-      ]
+      "name": "eval-before-after-light",
+      "prompt": "Infographic comparing our team before and after going fully remote. Response time: 4h -> 47min. Bug resolution: 3.2 days -> 1.1 days. Sprint velocity: 34 pts -> 52 pts. Employee satisfaction: 6.2/10 -> 8.7/10. Light background, clean and professional — this is going in a company report.",
+      "expected_output": "Light background used, slope chart selected for before/after data, thesis stated, visual concept declared, HTML produced",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "eval-crypto-tokenomics-light",
+      "prompt": "Create an infographic for our whitepaper. Tokenomics: 1B total supply. Team 30% (24mo vesting, 6mo cliff), Ecosystem Fund 25%, Public Sale 20%, Treasury 15%, Advisors 10%. Light background, Editorial/Clean aesthetic — needs to look credible and institutional.",
+      "expected_output": "Light background, Editorial/Clean aesthetic applied with strict reduction pass, pie/donut or waffle chart for part-of-whole data, vesting details included, thesis stated, visual concept declared",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "eval-defi-launch-dark",
+      "prompt": "Make an infographic for our DeFi protocol launch. TVL $47M, 12,400 unique wallets, best pool APY 340%, 3 security audits passed, $0 exploited to date. Brand color is #00E5CC.",
+      "expected_output": "Brand color #00E5CC used as primary accent, dark background, thesis stated, visual concept declared, archetype named, no fabricated data, HTML produced",
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "eval-nft-mode-c",
+      "prompt": "We're announcing our NFT collection's 1-year performance. Floor price went from 0.3 ETH at mint to 2.4 ETH now. Total trading volume: 8,200 ETH. Unique holders: 3,847. Creator royalties earned: 142 ETH. Not sure what direction to go with the design.",
+      "expected_output": "Mode C triggered, two composition options presented with crypto/NFT-appropriate aesthetics, thesis identifies strongest insight (floor price 8x), HTML produced after option selection",
+      "files": []
     }
   ]
 }

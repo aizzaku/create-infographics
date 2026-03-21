@@ -104,9 +104,27 @@ def export_png(html_path: str, output_path: str, width: int = 1100, scale: int =
         page.goto(url)
         wait_for_render(page)
 
-        # Measure actual content height and resize viewport to match
-        height = page.evaluate("document.documentElement.scrollHeight")
-        page.set_viewport_size({"width": width, "height": height})
+        # Strip browser-preview body styles (padding, min-height, flex centering)
+        # so the screenshot clips tightly to the infographic content with no whitespace.
+        page.add_style_tag(content="""
+            body {
+                padding: 0 !important;
+                margin: 0 !important;
+                min-height: 0 !important;
+                display: block !important;
+                background: transparent !important;
+            }
+            html {
+                background: transparent !important;
+            }
+        """)
+
+        # Measure actual body dimensions (not viewport/html element dimensions).
+        # body.scrollWidth gives the true infographic width regardless of viewport size,
+        # so the PNG is exactly as wide as the content with no blank space on the right.
+        actual_width = page.evaluate("document.body.scrollWidth")
+        height = page.evaluate("document.body.scrollHeight")
+        page.set_viewport_size({"width": actual_width, "height": height})
         wait_for_render(page, extra_ms=200)
 
         page.screenshot(path=output_path, full_page=True)
@@ -115,7 +133,7 @@ def export_png(html_path: str, output_path: str, width: int = 1100, scale: int =
         if serve:
             server.shutdown()
 
-    print(f"PNG exported: {output_path} ({width * scale}x{height * scale} px)")
+    print(f"PNG exported: {output_path} ({actual_width * scale}x{height * scale} px)")
 
 
 def export_pdf(html_path: str, output_path: str, width: int = 1100, serve: bool = True):
@@ -143,12 +161,27 @@ def export_pdf(html_path: str, output_path: str, width: int = 1100, serve: bool 
         page.goto(url)
         wait_for_render(page)
 
-        content_height = page.evaluate("document.documentElement.scrollHeight")
+        # Strip browser-preview body styles so PDF clips to content with no whitespace.
+        page.add_style_tag(content="""
+            body {
+                padding: 0 !important;
+                margin: 0 !important;
+                min-height: 0 !important;
+                display: block !important;
+                background: transparent !important;
+            }
+            html {
+                background: transparent !important;
+            }
+        """)
+
+        actual_width = page.evaluate("document.body.scrollWidth")
+        content_height = page.evaluate("document.body.scrollHeight")
 
         page.pdf(
             path=output_path,
             print_background=True,
-            width=f"{width}px",
+            width=f"{actual_width}px",
             height=f"{content_height}px"
         )
         browser.close()

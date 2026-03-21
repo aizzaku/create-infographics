@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{PROJECT_NAME}} — Stats Poster</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #080808;
+    --bg-card:      #0F0F0F;
+    --bg-section:   #111111;
+    --primary:      #E79A00;
+    --primary-rgb:  231,154,0;
+    --secondary:    #00E88A;
+    --secondary-rgb:0,232,138;
+    --accent:       #4ECBFF;
+    --accent-rgb:   78,203,255;
+    --text:         #FFFFFF;
+    --muted:        #888888;
+    --border:       rgba(255,255,255,0.08);
+    --border-faint: rgba(255,255,255,0.04);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; width: 1080px;
+      margin: 0 auto; }
+
+  /* HERO — STAT POSTER STYLE: ONE DOMINANT STAT */
+  .hero {
+    padding: 48px 48px 36px;
+    background: linear-gradient(135deg, rgba(231,154,0,0.07) 0%, transparent 60%);
+    border-bottom: 2px solid var(--primary);
+    position: relative; overflow: hidden;
+    display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end;
+  }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(231,154,0,0.07) 0%, transparent 70%); pointer-events: none; }
+  .hero-left {}
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 3px; background: rgba(231,154,0,0.10); border: 1px solid rgba(231,154,0,0.28); font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--primary); margin-bottom: 16px; }
+  .hero-eyebrow span { width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
+  .hero-project { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 3px; color: var(--muted); line-height: 1; margin-bottom: 6px; }
+  .hero-big-stat {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 120px; letter-spacing: -2px; line-height: 0.85;
+    color: var(--primary); margin-bottom: 12px;
+  }
+  .hero-stat-label { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 3px; color: var(--text); margin-bottom: 8px; }
+  .hero-stat-sub { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .hero-right { display: flex; flex-direction: column; gap: 2px; min-width: 220px; }
+  .hero-mini-kpi { background: var(--bg-card); border: 1px solid var(--border); padding: 12px 16px; position: relative; }
+  .hero-mini-kpi::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--primary); }
+  .hero-mini-kpi.sec::before { background: var(--secondary); }
+  .hero-mini-kpi.acc::before { background: var(--accent); }
+  .hmk-val { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--text); line-height: 1; margin-bottom: 3px; }
+  .hmk-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+
+  /* SECTION LABEL */
+  .section-label { display: flex; align-items: center; gap: 14px; font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); padding: 0 48px 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ARROW CONNECTOR */
+  .arrow-connector { display: flex; align-items: center; gap: 10px; padding: 10px 48px 20px; }
+  .arrow-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(var(--primary-rgb),0.4), transparent); }
+  .arrow-icon { display: flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); padding: 4px 12px; border-radius: 3px; background: rgba(var(--primary-rgb),0.08); border: 1px solid rgba(var(--primary-rgb),0.22); }
+
+  /* KPI GRID — 9 stats */
+  .kpi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; padding: 20px 48px 28px; }
+  .kpi-box { background: var(--bg-card); border: 1px solid var(--border); padding: 18px 20px; position: relative; }
+  .kpi-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--primary); }
+  .kpi-box.sec::before { background: var(--secondary); }
+  .kpi-box.acc::before { background: var(--accent); }
+  .kpi-val { font-family: 'Bebas Neue', sans-serif; font-size: 42px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .kpi-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .kpi-change { font-size: 10px; font-weight: 700; letter-spacing: 1px; }
+  .up   { color: var(--secondary); }
+  .down { color: #FF6B6B; }
+  .flat { color: var(--muted); }
+
+  /* PERFORMANCE TABLE */
+  .table-wrap { margin: 0 48px 28px; border: 1px solid var(--border); overflow: hidden; }
+  .dense-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .dense-table thead tr { background: rgba(var(--primary-rgb),0.07); border-bottom: 1px solid rgba(var(--primary-rgb),0.22); }
+  .dense-table thead th { padding: 9px 12px; text-align: left; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
+  .dense-table.sec-h thead tr { background: rgba(var(--secondary-rgb),0.07); border-bottom-color: rgba(var(--secondary-rgb),0.22); }
+  .dense-table.sec-h thead th { color: var(--secondary); }
+  .dense-table.acc-h thead tr { background: rgba(var(--accent-rgb),0.07); border-bottom-color: rgba(var(--accent-rgb),0.22); }
+  .dense-table.acc-h thead th { color: var(--accent); }
+  .dense-table tbody tr { border-bottom: 1px solid var(--border-faint); }
+  .dense-table tbody tr:last-child { border-bottom: none; }
+  .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .dense-table td { padding: 7px 12px; vertical-align: middle; font-weight: 500; }
+  .val-amber { color: var(--primary);   font-weight: 700; }
+  .val-green { color: var(--secondary); font-weight: 700; }
+  .val-blue  { color: var(--accent);    font-weight: 700; }
+  .val-muted { color: var(--muted);     font-weight: 500; }
+  .val-text  { color: var(--text);      font-weight: 500; }
+  .val-up    { color: var(--secondary); font-weight: 700; }
+  .val-down  { color: #FF6B6B;          font-weight: 700; }
+  .p-tag { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+  .p-amber  { background: rgba(231,154,0,0.10);  color: var(--primary);   border: 1px solid rgba(231,154,0,0.25); }
+  .p-green  { background: rgba(0,232,138,0.10);   color: var(--secondary); border: 1px solid rgba(0,232,138,0.25); }
+  .p-blue   { background: rgba(78,203,255,0.10);  color: var(--accent);    border: 1px solid rgba(78,203,255,0.25); }
+  .p-red    { background: rgba(255,107,107,0.10); color: #FF6B6B;          border: 1px solid rgba(255,107,107,0.25); }
+
+  /* BULLET PANELS */
+  .panel-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 48px 28px; }
+  .bullet-panel { background: var(--bg-card); border: 1.5px solid rgba(var(--primary-rgb),0.18); padding: 16px 18px; }
+  .bullet-panel.sec { border-color: rgba(var(--secondary-rgb),0.18); }
+  .bp-header { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--primary); padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+  .bullet-panel.sec .bp-header { color: var(--secondary); }
+  .bullet-panel ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .bullet-panel li { display: flex; align-items: flex-start; gap: 7px; font-size: 11.5px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .bullet-panel li::before { content: '▸'; color: var(--primary); font-size: 9px; margin-top: 3px; flex-shrink: 0; }
+  .bullet-panel.sec li::before { color: var(--secondary); }
+  .bullet-panel li span { color: var(--muted); }
+
+  /* CALLOUT STRIP */
+  .callout-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; padding: 0 48px 32px; }
+  .callout-box { padding: 14px 16px; border: 1px solid var(--border); border-left: 3px solid var(--primary); background: var(--bg-section); }
+  .callout-box.sec { border-left-color: var(--secondary); }
+  .callout-box.acc { border-left-color: var(--accent); }
+  .cb-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 6px; }
+  .callout-box.sec .cb-lbl { color: var(--secondary); }
+  .callout-box.acc .cb-lbl { color: var(--accent); }
+  .cb-val { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .cb-desc { font-size: 11px; font-weight: 500; color: var(--muted); line-height: 1.45; }
+
+  /* FOOTER */
+  .footer { display: flex; align-items: center; justify-content: space-between; padding: 18px 48px; border-top: 1px solid var(--border); background: rgba(var(--primary-rgb),0.02); }
+  .footer-left { display: flex; align-items: center; gap: 12px; }
+  .footer-logo { width: 30px; height: 30px; border-radius: 5px; background: var(--primary); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 14px; color: #000; }
+  .footer-name { font-size: 12px; font-weight: 700; color: var(--text); letter-spacing: 1px; }
+  .footer-tag  { font-size: 9px; color: var(--muted); font-weight: 500; }
+  .footer-right { display: flex; align-items: center; gap: 14px; }
+  .f-badge { padding: 3px 10px; border-radius: 3px; border: 1px solid var(--border); font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .footer-date { font-size: 10px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+  <!-- HERO — DOMINANT STAT STYLE -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span></span>{{REPORT_PERIOD}} STATS REPORT</div>
+      <div class="hero-project">{{PROJECT_NAME}}</div>
+      <div class="hero-big-stat">{{KEY_STAT}}</div>
+      <div class="hero-stat-label">{{KEY_STAT_LABEL}}</div>
+      <div class="hero-stat-sub">As of {{REPORT_DATE}} · {{PERIOD_COMPARISON}}</div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-mini-kpi">
+        <div class="hmk-val">{{SECONDARY_STAT_1}}</div>
+        <div class="hmk-lbl">{{SECONDARY_STAT_1_LABEL}}</div>
+      </div>
+      <div class="hero-mini-kpi sec">
+        <div class="hmk-val">{{SECONDARY_STAT_2}}</div>
+        <div class="hmk-lbl">{{SECONDARY_STAT_2_LABEL}}</div>
+      </div>
+      <div class="hero-mini-kpi acc">
+        <div class="hmk-val">{{SECONDARY_STAT_3}}</div>
+        <div class="hmk-lbl">{{SECONDARY_STAT_3_LABEL}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI GRID -->
+  <div class="section-label">KEY PERFORMANCE INDICATORS</div>
+  <div class="kpi-grid">
+    <div class="kpi-box">
+      <div class="kpi-lbl">Total Value Locked</div>
+      <div class="kpi-val">{{TVL}}</div>
+      <div class="kpi-change up">↑ {{TVL_CHANGE}}% vs last period</div>
+    </div>
+    <div class="kpi-box sec">
+      <div class="kpi-lbl">Daily Volume</div>
+      <div class="kpi-val">{{DAILY_VOLUME}}</div>
+      <div class="kpi-change up">↑ {{VOL_CHANGE}}% vs last period</div>
+    </div>
+    <div class="kpi-box acc">
+      <div class="kpi-lbl">Daily Active Users</div>
+      <div class="kpi-val">{{DAILY_USERS}}</div>
+      <div class="kpi-change up">↑ {{USER_CHANGE}}%</div>
+    </div>
+    <div class="kpi-box">
+      <div class="kpi-lbl">Protocol Revenue</div>
+      <div class="kpi-val">{{PROTOCOL_REVENUE}}</div>
+      <div class="kpi-change up">↑ {{REV_CHANGE}}% MoM</div>
+    </div>
+    <div class="kpi-box sec">
+      <div class="kpi-lbl">Token Market Cap</div>
+      <div class="kpi-val">{{MARKET_CAP}}</div>
+      <div class="kpi-change flat">→ {{MCAP_CHANGE}}% vs ATH</div>
+    </div>
+    <div class="kpi-box acc">
+      <div class="kpi-lbl">Total Transactions</div>
+      <div class="kpi-val">{{TOTAL_TXS}}</div>
+      <div class="kpi-change up">↑ {{TX_CHANGE}}% QoQ</div>
+    </div>
+    <div class="kpi-box">
+      <div class="kpi-lbl">Staked Tokens</div>
+      <div class="kpi-val">{{STAKED_PCT}}%</div>
+      <div class="kpi-change up">↑ {{STAKE_CHANGE}}% staked</div>
+    </div>
+    <div class="kpi-box sec">
+      <div class="kpi-lbl">Unique Wallets</div>
+      <div class="kpi-val">{{TOTAL_WALLETS}}</div>
+      <div class="kpi-change up">↑ {{WALLET_CHANGE}}%</div>
+    </div>
+    <div class="kpi-box acc">
+      <div class="kpi-lbl">Ecosystem Partners</div>
+      <div class="kpi-val">{{PARTNERS}}</div>
+      <div class="kpi-change up">+{{PARTNER_NEW}} new</div>
+    </div>
+  </div>
+
+  <!-- PERFORMANCE TABLE -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ MONTHLY BREAKDOWN</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">PERIOD-OVER-PERIOD METRICS</div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>{{PERIOD_1}}</th>
+          <th>{{PERIOD_2}}</th>
+          <th>{{PERIOD_3}}</th>
+          <th>{{PERIOD_4}} (current)</th>
+          <th>Change</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="val-text">TVL</td>
+          <td class="val-muted">{{TVL_P1}}</td>
+          <td class="val-muted">{{TVL_P2}}</td>
+          <td class="val-muted">{{TVL_P3}}</td>
+          <td class="val-amber">{{TVL}}</td>
+          <td class="val-up">↑ {{TVL_CHANGE}}%</td>
+        </tr>
+        <tr>
+          <td class="val-text">Daily Volume</td>
+          <td class="val-muted">{{VOL_P1}}</td>
+          <td class="val-muted">{{VOL_P2}}</td>
+          <td class="val-muted">{{VOL_P3}}</td>
+          <td class="val-amber">{{DAILY_VOLUME}}</td>
+          <td class="val-up">↑ {{VOL_CHANGE}}%</td>
+        </tr>
+        <tr>
+          <td class="val-text">Active Users (daily)</td>
+          <td class="val-muted">{{DAU_P1}}</td>
+          <td class="val-muted">{{DAU_P2}}</td>
+          <td class="val-muted">{{DAU_P3}}</td>
+          <td class="val-green">{{DAILY_USERS}}</td>
+          <td class="val-up">↑ {{USER_CHANGE}}%</td>
+        </tr>
+        <tr>
+          <td class="val-text">Protocol Revenue</td>
+          <td class="val-muted">{{REV_P1}}</td>
+          <td class="val-muted">{{REV_P2}}</td>
+          <td class="val-muted">{{REV_P3}}</td>
+          <td class="val-green">{{PROTOCOL_REVENUE}}</td>
+          <td class="val-up">↑ {{REV_CHANGE}}%</td>
+        </tr>
+        <tr>
+          <td class="val-text">New Wallets</td>
+          <td class="val-muted">{{NW_P1}}</td>
+          <td class="val-muted">{{NW_P2}}</td>
+          <td class="val-muted">{{NW_P3}}</td>
+          <td class="val-blue">{{NEW_WALLETS}}</td>
+          <td class="val-up">↑ {{WALLET_CHANGE}}%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CHAIN BREAKDOWN TABLE -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ CHAIN BREAKDOWN</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">TVL BY NETWORK</div>
+  <div class="table-wrap">
+    <table class="dense-table sec-h">
+      <thead>
+        <tr>
+          <th>Network</th>
+          <th>TVL</th>
+          <th>% of Total</th>
+          <th>Daily Volume</th>
+          <th>Users</th>
+          <th>Trend</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="val-text">Ethereum</td>
+          <td class="val-green">{{ETH_TVL}}</td>
+          <td class="val-amber">{{ETH_PCT}}%</td>
+          <td class="val-muted">{{ETH_VOL}}</td>
+          <td class="val-muted">{{ETH_USERS}}</td>
+          <td class="val-up">↑ {{ETH_TREND}}%</td>
+        </tr>
+        <tr>
+          <td class="val-text">Arbitrum</td>
+          <td class="val-green">{{ARB_TVL}}</td>
+          <td class="val-amber">{{ARB_PCT}}%</td>
+          <td class="val-muted">{{ARB_VOL}}</td>
+          <td class="val-muted">{{ARB_USERS}}</td>
+          <td class="val-up">↑ {{ARB_TREND}}%</td>
+        </tr>
+        <tr>
+          <td class="val-text">Base</td>
+          <td class="val-green">{{BASE_TVL}}</td>
+          <td class="val-amber">{{BASE_PCT}}%</td>
+          <td class="val-muted">{{BASE_VOL}}</td>
+          <td class="val-muted">{{BASE_USERS}}</td>
+          <td class="val-up">↑ {{BASE_TREND}}%</td>
+        </tr>
+        <tr>
+          <td class="val-text">Optimism</td>
+          <td class="val-green">{{OP_TVL}}</td>
+          <td class="val-amber">{{OP_PCT}}%</td>
+          <td class="val-muted">{{OP_VOL}}</td>
+          <td class="val-muted">{{OP_USERS}}</td>
+          <td class="val-muted">→ {{OP_TREND}}%</td>
+        </tr>
+        <tr>
+          <td class="val-text">Other chains</td>
+          <td class="val-green">{{OTHER_TVL}}</td>
+          <td class="val-amber">{{OTHER_PCT}}%</td>
+          <td class="val-muted">{{OTHER_VOL}}</td>
+          <td class="val-muted">{{OTHER_USERS}}</td>
+          <td class="val-up">↑ {{OTHER_TREND}}%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BULLET PANELS -->
+  <div class="arrow-connector">
+    <div class="arrow-line"></div>
+    <div class="arrow-icon">▼ HIGHLIGHTS &amp; MILESTONES</div>
+    <div class="arrow-line"></div>
+  </div>
+
+  <div class="section-label">PERIOD HIGHLIGHTS</div>
+  <div class="panel-row">
+    <div class="bullet-panel">
+      <div class="bp-header">Key Highlights</div>
+      <ul>
+        <li><strong>{{HIGHLIGHT_1}}</strong> <span>— {{HIGHLIGHT_1_DESC}}</span></li>
+        <li><strong>{{HIGHLIGHT_2}}</strong> <span>— {{HIGHLIGHT_2_DESC}}</span></li>
+        <li><strong>{{HIGHLIGHT_3}}</strong> <span>— {{HIGHLIGHT_3_DESC}}</span></li>
+        <li><strong>{{HIGHLIGHT_4}}</strong> <span>— {{HIGHLIGHT_4_DESC}}</span></li>
+        <li><strong>{{HIGHLIGHT_5}}</strong> <span>— {{HIGHLIGHT_5_DESC}}</span></li>
+      </ul>
+    </div>
+    <div class="bullet-panel sec">
+      <div class="bp-header">Notable Milestones</div>
+      <ul>
+        <li><strong>{{MILESTONE_1}}</strong> <span>— {{MILESTONE_1_DESC}}</span></li>
+        <li><strong>{{MILESTONE_2}}</strong> <span>— {{MILESTONE_2_DESC}}</span></li>
+        <li><strong>{{MILESTONE_3}}</strong> <span>— {{MILESTONE_3_DESC}}</span></li>
+        <li><strong>{{MILESTONE_4}}</strong> <span>— {{MILESTONE_4_DESC}}</span></li>
+        <li><strong>{{MILESTONE_5}}</strong> <span>— {{MILESTONE_5_DESC}}</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CALLOUT STRIP -->
+  <div class="callout-strip">
+    <div class="callout-box">
+      <div class="cb-lbl">{{PERIOD_4}} TVL</div>
+      <div class="cb-val">{{TVL}}</div>
+      <div class="cb-desc">{{TVL_CHANGE}}% growth over {{PERIOD_3}}. ATH reached at {{TVL_ATH}}.</div>
+    </div>
+    <div class="callout-box sec">
+      <div class="cb-lbl">Protocol Revenue</div>
+      <div class="cb-val">{{PROTOCOL_REVENUE}}</div>
+      <div class="cb-desc">{{REV_CHANGE}}% MoM growth. Distributed to stakers and treasury.</div>
+    </div>
+    <div class="callout-box acc">
+      <div class="cb-lbl">User Growth</div>
+      <div class="cb-val">{{TOTAL_WALLETS}}</div>
+      <div class="cb-desc">Total unique wallets. {{NEW_WALLETS}} new this period (+{{WALLET_CHANGE}}%).</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <div class="footer-logo">{{TICKER_1}}</div>
+      <div>
+        <div class="footer-name">{{PROJECT_NAME}}</div>
+        <div class="footer-tag">{{TAGLINE}}</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="f-badge">{{CHAIN}}</div>
+      <div class="footer-date">{{WEBSITE}}</div>
+    </div>
+  </div>
+
+</body>
+</html>

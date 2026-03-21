@@ -1,418 +1,587 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{GAME_NAME}} — Overview</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
-  <style>
-    /* ══════════════════════════════════════════
-       THEME: Game Overview — Emerald Gaming
-       ══════════════════════════════════════════ */
-    :root {
-      --bg:          #0A0F0A;
-      --bg-secondary:#0D130D;
-      --surface:     #111A11;
-      --primary:     #00E5A0;
-      --primary-rgb: 0,229,160;
-      --secondary:   #7CFC00;
-      --accent:      #FFD700;
-      --text:        #FFFFFF;
-      --muted:       #7A9A7A;
-      --border:      rgba(0,229,160,0.1);
-      --border-card: rgba(255,255,255,0.07);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Overview — Reference Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+  :root {
+    --bg:          #070707;
+    --bg2:         #0d0d0d;
+    --primary:     #F6A91A;
+    --primary-2:   #FFD060;
+    --primary-rgb: 246,169,26;
+    --secondary:   #A94CFF;
+    --secondary-rgb: 169,76,255;
+    --text:        #FFFFFF;
+    --muted:       #8B8B8B;
+    --border:      rgba(246,169,26,0.20);
+    --border-faint:rgba(255,255,255,0.08);
+    --glow:        rgba(246,169,26,0.22);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    width: 1080px;
+      margin: 0 auto;
+    min-height: 1440px;
+    position: relative;
+    overflow: hidden;
+  }
 
-      --font-display: 'Rajdhani', sans-serif;
-      --font-body:    'Inter', sans-serif;
-      --font-mono:    'JetBrains Mono', monospace;
+  /* ── HERO ──────────────────────────────────────────────────── */
+  .hero {
+    position: relative; height: 380px; overflow: hidden;
+    background: linear-gradient(180deg, rgba(7,7,7,0) 0%, rgba(7,7,7,0.65) 55%, var(--bg) 100%),
+                linear-gradient(135deg, #1a0e00 0%, #0d0520 50%, #070707 100%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 32px 48px;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 440px; height: 440px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(169,76,255,0.16) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: 40px; left: 100px;
+    width: 280px; height: 280px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(246,169,26,0.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-header {
+    position: absolute; top: 28px; left: 48px; right: 48px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .logo-pill {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 7px; padding: 7px 14px;
+  }
+  .logo-dot { width: 26px; height: 26px; border-radius: 5px; background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+  .logo-label { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 1px; }
+  .chain-pill {
+    background: rgba(169,76,255,0.14); border: 1px solid rgba(169,76,255,0.3);
+    border-radius: 5px; padding: 5px 12px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #c97fff;
+  }
+  .hero-tag {
+    display: inline-block; background: rgba(246,169,26,0.14); border: 1px solid rgba(246,169,26,0.38);
+    border-radius: 4px; padding: 4px 10px;
+    font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary);
+    margin-bottom: 12px; width: fit-content;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif; font-size: 80px; line-height: 0.92; letter-spacing: 2px;
+    text-shadow: 0 0 40px rgba(246,169,26,0.28); margin-bottom: 12px;
+  }
+  .hero-title span { color: var(--primary); }
+  .hero-sub { font-size: 12px; font-weight: 500; color: var(--muted); max-width: 560px; line-height: 1.5; }
 
-      --text-hero:    clamp(40px, 5.5vw, 72px);
-      --text-h1:      clamp(20px, 2.8vw, 34px);
-      --text-h2:      clamp(15px, 1.8vw, 20px);
-      --text-body:    clamp(13px, 1.4vw, 15px);
-      --text-caption: clamp(10px, 1vw,  12px);
-      --text-stat:    clamp(26px, 3.5vw, 42px);
+  /* ── STATS STRIP ───────────────────────────────────────────── */
+  .stats-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+    margin: 0 48px 0; border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .stat-block {
+    background: rgba(255,255,255,0.03); padding: 14px 16px; text-align: center;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .stat-block:last-child { border-right: none; }
+  .stat-block::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--primary); opacity: 0.6; }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 1px; color: var(--primary); line-height: 1; display: block; }
+  .stat-val.purple { color: var(--secondary); }
+  .stat-lbl { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 3px; display: block; }
 
-      --radius-card:  10px;
-      --radius-sm:    4px;
-    }
+  /* ── SECTION HEADER ───────────────────────────────────────── */
+  .section { padding: 0 48px; margin-top: 24px; }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 2px; color: var(--text); }
+  .section-line { flex: 1; height: 1px; background: linear-gradient(to right, rgba(246,169,26,0.35), transparent); }
+  .section-badge {
+    font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--primary); border: 1px solid rgba(246,169,26,0.3); border-radius: 4px; padding: 3px 8px;
+  }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* ── DENSE TABLE ──────────────────────────────────────────── */
+  .table-wrap { border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .dense-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .dense-table thead tr { background: rgba(246,169,26,0.08); border-bottom: 1px solid rgba(246,169,26,0.2); }
+  .dense-table th { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); padding: 8px 10px; text-align: left; }
+  .dense-table th.accent { color: var(--primary); }
+  .dense-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .dense-table tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .dense-table tbody tr:last-child td { border-bottom: none; }
+  .dense-table td { padding: 7px 10px; color: rgba(255,255,255,0.82); vertical-align: middle; font-weight: 500; }
+  .dense-table td.bold { font-weight: 700; color: var(--text); }
+  .dense-table td.amber { color: var(--primary); font-weight: 700; }
+  .dense-table td.purple { color: var(--secondary); font-weight: 600; }
+  .dense-table td.green { color: #4BF3B2; font-weight: 700; }
+  .dense-table td.muted { color: var(--muted); }
 
-    body {
-      background: #060908;
-      display: flex;
-      justify-content: center;
-      padding: 40px 20px;
-      font-family: var(--font-body);
-    }
+  .badge-legendary { background: rgba(246,169,26,0.18); border: 1px solid rgba(246,169,26,0.45); color: var(--primary); font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; display: inline-block; box-shadow: 0 0 7px rgba(246,169,26,0.15); }
+  .badge-epic { background: rgba(169,76,255,0.18); border: 1px solid rgba(169,76,255,0.45); color: #c97fff; font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; display: inline-block; }
+  .badge-rare { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; display: inline-block; }
+  .badge-common { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; display: inline-block; }
 
-    .infographic {
-      background: var(--bg);
-      color: var(--text);
-      max-width: 1100px;
-      width: 100%;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 0 80px rgba(0,229,160,0.05);
-    }
+  /* ── GAME LOOP FLOW ──────────────────────────────────────── */
+  .game-loop {
+    display: flex; align-items: center; gap: 0;
+    background: var(--bg2); border: 1.5px solid var(--border);
+    border-radius: 10px; padding: 16px 20px; overflow: hidden;
+  }
+  .loop-node { flex: 1; text-align: center; padding: 8px 6px; }
+  .loop-icon { font-size: 20px; color: var(--primary); margin-bottom: 6px; }
+  .loop-icon.purple { color: var(--secondary); }
+  .loop-label { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text); margin-bottom: 3px; }
+  .loop-sub { font-size: 9.5px; color: var(--muted); font-weight: 500; }
+  .loop-arrow { flex-shrink: 0; width: 28px; text-align: center; color: var(--primary); font-size: 16px; opacity: 0.65; }
+  .loop-arrow.purple { color: var(--secondary); }
 
-    /* ── HERO (split-layout) ─────────────────── */
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      min-height: 220px;
-      position: relative;
-      overflow: hidden;
-      border-bottom: 1px solid var(--border);
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 30% 50%, rgba(0,229,160,0.07) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .hero-content {
-      padding: 40px 40px 40px 44px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 16px;
-    }
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--primary);
-      background: rgba(0,229,160,0.08);
-      border: 1px solid rgba(0,229,160,0.2);
-      padding: 4px 12px;
-      border-radius: 20px;
-      width: fit-content;
-    }
-    .hero h1 {
-      font-family: var(--font-display);
-      font-size: var(--text-hero);
-      font-weight: 700;
-      line-height: 1.0;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-    }
-    .hero h1 span { color: var(--primary); }
-    .hero-bullets {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .hero-bullet {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: var(--text-body);
-      color: var(--muted);
-    }
-    .hero-bullet i { color: var(--primary); font-size: 14px; }
-    .hero-visual {
-      background: linear-gradient(135deg, var(--surface) 0%, #0D1A0D 100%);
-      border-left: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-    /* Replace with actual game art: <img src="{{ART_PATH}}" style="width:100%;height:100%;object-fit:cover;"> */
-    .hero-visual-placeholder {
-      font-size: 80px;
-      opacity: 0.15;
-    }
+  /* ── BULLET PANELS ─────────────────────────────────────────── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .bullet-panel { background: rgba(255,255,255,0.02); border: 1.5px solid rgba(246,169,26,0.20); border-radius: 8px; padding: 14px 16px; }
+  .bullet-panel.purple { border-color: rgba(169,76,255,0.22); }
+  .bullet-panel-title { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--primary); margin-bottom: 10px; }
+  .bullet-panel.purple .bullet-panel-title { color: var(--secondary); }
+  .bullet-panel ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .bullet-panel li { font-size: 11.5px; color: rgba(255,255,255,0.78); line-height: 1.45; display: flex; align-items: flex-start; gap: 7px; font-weight: 500; }
+  .bullet-panel li::before { content: '▸'; color: var(--primary); flex-shrink: 0; font-size: 9px; margin-top: 2px; }
+  .bullet-panel.purple li::before { color: var(--secondary); }
 
-    /* ── STATS BAR ───────────────────────────── */
-    .stats-bar {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      border-bottom: 1px solid var(--border-card);
-    }
-    .stat-item {
-      padding: 18px 24px;
-      border-right: 1px solid var(--border-card);
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-icon {
-      font-size: 16px;
-      color: var(--primary);
-      margin-bottom: 6px;
-    }
-    .stat-value {
-      font-family: var(--font-display);
-      font-size: var(--text-stat);
-      font-weight: 700;
-      color: var(--primary);
-      line-height: 1;
-      text-shadow: 0 0 16px rgba(0,229,160,0.3);
-    }
-    .stat-label {
-      font-size: var(--text-caption);
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      margin-top: 3px;
-    }
+  /* ── ARROW CONNECTOR ────────────────────────────────────────── */
+  .arrow-connector { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 48px 0; }
+  .arrow-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(246,169,26,0.35), transparent); }
+  .arrow-icon { color: var(--primary); font-size: 18px; flex-shrink: 0; }
+  .arrow-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); }
 
-    /* ── FEATURES GRID ───────────────────────── */
-    .features-section {
-      padding: 32px 36px;
-      border-bottom: 1px solid var(--border-card);
-    }
-    .section-heading {
-      font-family: var(--font-display);
-      font-size: var(--text-h1);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 20px;
-      color: var(--muted);
-    }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-    .feature-card {
-      background: var(--surface);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-card);
-      padding: 20px;
-      transition: border-color 0.3s, transform 0.2s;
-    }
-    .feature-card:hover {
-      border-color: var(--border);
-      transform: translateY(-2px);
-    }
-    .feature-card-icon {
-      font-size: 24px;
-      color: var(--primary);
-      margin-bottom: 10px;
-      display: block;
-      filter: drop-shadow(0 0 6px rgba(0,229,160,0.4));
-    }
-    .feature-card h3 {
-      font-family: var(--font-display);
-      font-size: var(--text-h2);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      margin-bottom: 6px;
-    }
-    .feature-card p {
-      font-size: var(--text-body);
-      color: var(--muted);
-      line-height: 1.5;
-    }
+  /* ── REWARDS TIER TABLE ──────────────────────────────────── */
+  .tier-row-gold   td:first-child { color: var(--primary); font-weight: 800; }
+  .tier-row-silver td:first-child { color: #C0C0C0; font-weight: 700; }
+  .tier-row-bronze td:first-child { color: #CD7F32; font-weight: 700; }
+  .reward-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 8px; border-radius: 3px;
+    font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .rb-gold   { background: rgba(246,169,26,0.18); border: 1px solid rgba(246,169,26,0.4); color: var(--primary); }
+  .rb-silver { background: rgba(192,192,192,0.12); border: 1px solid rgba(192,192,192,0.3); color: #C0C0C0; }
+  .rb-bronze { background: rgba(205,127,50,0.14); border: 1px solid rgba(205,127,50,0.32); color: #CD7F32; }
 
-    /* ── HOW TO PLAY ─────────────────────────── */
-    .howto-section {
-      padding: 28px 36px;
-      border-bottom: 1px solid var(--border-card);
-    }
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      position: relative;
-    }
-    .steps::before {
-      content: '';
-      position: absolute;
-      top: 22px;
-      left: 40px;
-      right: 40px;
-      height: 1px;
-      background: linear-gradient(90deg, var(--primary), transparent);
-    }
-    .step {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 0 16px;
-    }
-    .step-num {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: rgba(0,229,160,0.1);
-      border: 1px solid var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--primary);
-      flex-shrink: 0;
-      box-shadow: 0 0 12px rgba(0,229,160,0.2);
-    }
-    .step-label {
-      font-family: var(--font-display);
-      font-size: var(--text-h2);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-    .step-desc {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    /* ── FOOTER ─────────────────────────────── */
-    .footer {
-      padding: 14px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 10px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      opacity: 0.5;
-    }
-
-    /* ── ANIMATIONS ─────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .hero           { animation: fadeUp 0.5s ease 0.0s both; }
-    .stats-bar      { animation: fadeUp 0.5s ease 0.1s both; }
-    .features-section { animation: fadeUp 0.5s ease 0.2s both; }
-    .howto-section  { animation: fadeUp 0.5s ease 0.3s both; }
-  </style>
+  /* ── FOOTER ───────────────────────────────────────────────── */
+  .footer {
+    margin-top: 24px; padding: 16px 48px 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-left { display: flex; align-items: center; gap: 12px; }
+  .footer-logo { width: 30px; height: 30px; border-radius: 7px; background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+  .footer-name { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 1px; }
+  .footer-tagline { font-size: 10px; font-weight: 500; color: var(--muted); margin-top: 1px; }
+  .footer-right { display: flex; align-items: center; gap: 12px; }
+  .footer-tag { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); padding: 3px 9px; border: 1px solid var(--border-faint); border-radius: 4px; }
+</style>
 </head>
 <body>
-<div class="infographic">
 
-  <!-- HERO: Left content + Right game art -->
-  <div class="hero">
-    <div class="hero-content">
-      <span class="hero-tag">
-        <i class="ph ph-game-controller"></i>
-        {{GENRE}} · {{PLATFORM}}
-      </span>
-      <h1>{{GAME_NAME}}<br><span>Overview</span></h1>
-      <div class="hero-bullets">
-        <div class="hero-bullet"><i class="ph-fill ph-check-circle"></i> {{BULLET_1}}</div>
-        <div class="hero-bullet"><i class="ph-fill ph-check-circle"></i> {{BULLET_2}}</div>
-        <div class="hero-bullet"><i class="ph-fill ph-check-circle"></i> {{BULLET_3}}</div>
-      </div>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- HERO                                                         -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-header">
+    <div class="logo-pill">
+      <div class="logo-dot"></div>
+      <span class="logo-label">GAME TITLE</span>
     </div>
-    <div class="hero-visual">
-      <!-- Replace with: <img src="{{GAME_ART}}" style="width:100%;height:100%;object-fit:cover;"> -->
-      <div class="hero-visual-placeholder"><i class="ph ph-sword"></i></div>
-    </div>
+    <span class="chain-pill">SOLANA</span>
   </div>
-
-  <!-- STATS BAR: 4 key metrics -->
-  <div class="stats-bar">
-    <div class="stat-item">
-      <div class="stat-icon"><i class="ph ph-users"></i></div>
-      <div class="stat-value">{{PLAYERS}}</div>
-      <div class="stat-label">Active Players</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-icon"><i class="ph ph-currency-circle-dollar"></i></div>
-      <div class="stat-value">{{TOKEN_PRICE}}</div>
-      <div class="stat-label">Token Price</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-icon"><i class="ph ph-trophy"></i></div>
-      <div class="stat-value">{{REWARD_POOL}}</div>
-      <div class="stat-label">Reward Pool</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-icon"><i class="ph ph-calendar"></i></div>
-      <div class="stat-value">{{SEASON}}</div>
-      <div class="stat-label">Current Season</div>
-    </div>
-  </div>
-
-  <!-- FEATURES: 2×3 card grid -->
-  <div class="features-section">
-    <div class="section-heading">Core Features</div>
-    <div class="features-grid">
-      <div class="feature-card">
-        <i class="ph-duotone ph-sword feature-card-icon"></i>
-        <h3>{{FEATURE_1_TITLE}}</h3>
-        <p>{{FEATURE_1_DESC}}</p>
-      </div>
-      <div class="feature-card">
-        <i class="ph-duotone ph-coins feature-card-icon"></i>
-        <h3>{{FEATURE_2_TITLE}}</h3>
-        <p>{{FEATURE_2_DESC}}</p>
-      </div>
-      <div class="feature-card">
-        <i class="ph-duotone ph-users feature-card-icon"></i>
-        <h3>{{FEATURE_3_TITLE}}</h3>
-        <p>{{FEATURE_3_DESC}}</p>
-      </div>
-      <div class="feature-card">
-        <i class="ph-duotone ph-chart-line-up feature-card-icon"></i>
-        <h3>{{FEATURE_4_TITLE}}</h3>
-        <p>{{FEATURE_4_DESC}}</p>
-      </div>
-      <div class="feature-card">
-        <i class="ph-duotone ph-shield-check feature-card-icon"></i>
-        <h3>{{FEATURE_5_TITLE}}</h3>
-        <p>{{FEATURE_5_DESC}}</p>
-      </div>
-      <div class="feature-card">
-        <i class="ph-duotone ph-globe feature-card-icon"></i>
-        <h3>{{FEATURE_6_TITLE}}</h3>
-        <p>{{FEATURE_6_DESC}}</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- HOW TO PLAY: 4 numbered steps -->
-  <div class="howto-section">
-    <div class="section-heading">How to Play</div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-label">{{STEP_1_TITLE}}</div>
-        <div class="step-desc">{{STEP_1_DESC}}</div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-label">{{STEP_2_TITLE}}</div>
-        <div class="step-desc">{{STEP_2_DESC}}</div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-label">{{STEP_3_TITLE}}</div>
-        <div class="step-desc">{{STEP_3_DESC}}</div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-label">{{STEP_4_TITLE}}</div>
-        <div class="step-desc">{{STEP_4_DESC}}</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <span>{{FOOTER_SOURCE}} • {{DATE}}</span>
-    <span>Not financial advice. DYOR.</span>
-  </footer>
-
+  <div class="hero-tag">Game Overview</div>
+  <h1 class="hero-title">ENTER THE<br><span>ARENA</span></h1>
+  <p class="hero-sub">On-chain strategy RPG — battle for territory, earn rewards, and shape the evolving game economy. 12K NFTs across 5 rarity tiers. Season 1 launching Q3 2025.</p>
 </div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- STATS STRIP                                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="stats-strip" style="margin-top:0;">
+  <div class="stat-block"><span class="stat-val">12K</span><span class="stat-lbl">Total NFTs</span></div>
+  <div class="stat-block"><span class="stat-val purple">5</span><span class="stat-lbl">Rarity Tiers</span></div>
+  <div class="stat-block"><span class="stat-val">Q3 '25</span><span class="stat-lbl">Season Launch</span></div>
+  <div class="stat-block"><span class="stat-val">P2E</span><span class="stat-lbl">Game Model</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- GAME MODES TABLE                                             -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">GAME MODES</h2>
+    <div class="section-line"></div>
+    <span class="section-badge">4 Modes</span>
+  </div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th class="accent">Mode</th>
+          <th class="accent">Type</th>
+          <th class="accent">Entry</th>
+          <th class="accent">Duration</th>
+          <th>Max Players</th>
+          <th>Reward Pool</th>
+          <th>Season Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Territory Battle</td>
+          <td class="amber">PvP Guild</td>
+          <td>Free</td>
+          <td class="muted">Weekly</td>
+          <td>100/guild</td>
+          <td class="amber">$ARENA × 5000</td>
+          <td class="green">×3 multiplier</td>
+        </tr>
+        <tr>
+          <td class="bold">Arena Ranked</td>
+          <td class="amber">PvP Solo</td>
+          <td>50 $ARENA</td>
+          <td class="muted">Daily</td>
+          <td>1v1</td>
+          <td class="amber">2× entry fee</td>
+          <td class="green">×2 multiplier</td>
+        </tr>
+        <tr>
+          <td class="bold">Dungeon Raids</td>
+          <td class="purple">PvE Co-op</td>
+          <td>Free</td>
+          <td class="muted">1–2 hrs</td>
+          <td>3-party</td>
+          <td class="amber">Loot + crafting</td>
+          <td class="green">×1.5 multiplier</td>
+        </tr>
+        <tr>
+          <td class="bold">Season Quest</td>
+          <td class="purple">PvE Solo</td>
+          <td>Free</td>
+          <td class="muted">Seasonal</td>
+          <td>Unlimited</td>
+          <td class="amber">NFT rewards</td>
+          <td class="green">×1 base</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- RARITY MATRIX                                                -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">RARITY MATRIX</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th class="accent">Tier</th>
+          <th class="accent">Supply</th>
+          <th class="accent">% of Total</th>
+          <th class="accent">Base Yield/Day</th>
+          <th>Stat Bonus</th>
+          <th>Battle Power</th>
+          <th>Crafting Tier</th>
+          <th>Floor Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge-legendary">Legendary</span></td>
+          <td class="amber">240</td>
+          <td class="muted">2%</td>
+          <td class="amber">120 $ARENA</td>
+          <td class="green">+40%</td>
+          <td class="amber">3,200+</td>
+          <td class="amber">Master</td>
+          <td>8.5 SOL</td>
+        </tr>
+        <tr>
+          <td><span class="badge-epic">Epic</span></td>
+          <td class="purple">960</td>
+          <td class="muted">8%</td>
+          <td class="amber">60 $ARENA</td>
+          <td class="green">+25%</td>
+          <td class="purple">1,800–3,199</td>
+          <td>Expert</td>
+          <td>2.8 SOL</td>
+        </tr>
+        <tr>
+          <td><span class="badge-rare">Rare</span></td>
+          <td>2,400</td>
+          <td class="muted">20%</td>
+          <td class="amber">30 $ARENA</td>
+          <td class="green">+12%</td>
+          <td>900–1,799</td>
+          <td>Advanced</td>
+          <td>0.9 SOL</td>
+        </tr>
+        <tr>
+          <td><span class="badge-common">Common</span></td>
+          <td>8,400</td>
+          <td class="muted">70%</td>
+          <td class="amber">10 $ARENA</td>
+          <td class="muted">—</td>
+          <td class="muted">&lt;900</td>
+          <td class="muted">Basic</td>
+          <td>0.12 SOL</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- GAME LOOP FLOW                                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="arrow-connector">
+  <div class="arrow-line"></div>
+  <i class="ph-bold ph-arrows-clockwise arrow-icon"></i>
+  <span class="arrow-label">Game Economy Loop</span>
+  <div class="arrow-line"></div>
+</div>
+
+<div class="section" style="margin-top:12px;">
+  <div class="section-header">
+    <h2 class="section-title">PLAY-TO-EARN LOOP</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="game-loop">
+    <div class="loop-node">
+      <div class="loop-icon"><i class="ph-bold ph-sword"></i></div>
+      <div class="loop-label">Battle &amp; Quest</div>
+      <div class="loop-sub">Earn $ARENA daily</div>
+    </div>
+    <div class="loop-arrow"><i class="ph-bold ph-arrow-right"></i></div>
+    <div class="loop-node">
+      <div class="loop-icon purple"><i class="ph-bold ph-hammer"></i></div>
+      <div class="loop-label">Craft &amp; Upgrade</div>
+      <div class="loop-sub">Burn materials for gear</div>
+    </div>
+    <div class="loop-arrow purple"><i class="ph-bold ph-arrow-right"></i></div>
+    <div class="loop-node">
+      <div class="loop-icon"><i class="ph-bold ph-storefront"></i></div>
+      <div class="loop-label">Trade Market</div>
+      <div class="loop-sub">Buy / sell NFT gear</div>
+    </div>
+    <div class="loop-arrow"><i class="ph-bold ph-arrow-right"></i></div>
+    <div class="loop-node">
+      <div class="loop-icon purple"><i class="ph-bold ph-coins"></i></div>
+      <div class="loop-label">Stake &amp; Hold</div>
+      <div class="loop-sub">Boost yield × tier</div>
+    </div>
+    <div class="loop-arrow purple"><i class="ph-bold ph-arrows-clockwise"></i></div>
+    <div class="loop-node">
+      <div class="loop-icon"><i class="ph-bold ph-trophy"></i></div>
+      <div class="loop-label">Season Rewards</div>
+      <div class="loop-sub">Top 100 get NFT drops</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- CRAFTING MATERIALS TABLE                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="arrow-connector">
+  <div class="arrow-line"></div>
+  <i class="ph-bold ph-hammer arrow-icon"></i>
+  <span class="arrow-label">Crafting System</span>
+  <div class="arrow-line"></div>
+</div>
+
+<div class="section" style="margin-top:12px;">
+  <div class="section-header">
+    <h2 class="section-title">MATERIALS &amp; CRAFTING</h2>
+    <div class="section-line"></div>
+    <span class="section-badge">5 Materials</span>
+  </div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th class="accent">Material</th>
+          <th class="accent">Source</th>
+          <th class="accent">Drop Rate</th>
+          <th>Crafting Use</th>
+          <th>Burn Cost</th>
+          <th>Market Floor</th>
+          <th>Stackable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">Iron Ore</td>
+          <td class="muted">Dungeon Raids</td>
+          <td class="amber">45%</td>
+          <td>Basic Gear</td>
+          <td class="amber">5 pieces</td>
+          <td>0.02 SOL</td>
+          <td class="green">Yes / 999</td>
+        </tr>
+        <tr>
+          <td class="bold">Dragon Scale</td>
+          <td class="muted">Boss drops</td>
+          <td class="amber">8%</td>
+          <td>Epic Armor</td>
+          <td class="amber">3 pieces</td>
+          <td>0.8 SOL</td>
+          <td class="green">Yes / 99</td>
+        </tr>
+        <tr>
+          <td class="bold">Void Crystal</td>
+          <td class="purple">Territory Battle</td>
+          <td class="amber">3%</td>
+          <td>Legendary Weapons</td>
+          <td class="amber">1 piece</td>
+          <td>4.2 SOL</td>
+          <td class="green">Yes / 10</td>
+        </tr>
+        <tr>
+          <td class="bold">Arena Token</td>
+          <td class="purple">All game modes</td>
+          <td class="amber">100%</td>
+          <td>Upgrades + Fees</td>
+          <td class="amber">Variable</td>
+          <td class="muted">Market price</td>
+          <td class="green">Yes / unlimited</td>
+        </tr>
+        <tr>
+          <td class="bold">Soul Fragment</td>
+          <td class="muted">PvP kills</td>
+          <td class="amber">12%</td>
+          <td>Character Enhancement</td>
+          <td class="amber">10 pieces</td>
+          <td>0.15 SOL</td>
+          <td class="green">Yes / 200</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SEASON REWARDS TIERS                                         -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">SEASON REWARD TIERS</h2>
+    <div class="section-line"></div>
+    <span class="section-badge">3 Tiers</span>
+  </div>
+  <div class="table-wrap">
+    <table class="dense-table">
+      <thead>
+        <tr>
+          <th class="accent">Tier</th>
+          <th class="accent">Season Points</th>
+          <th class="accent">$ARENA Reward</th>
+          <th>NFT Drop</th>
+          <th>Crafting Bonus</th>
+          <th>Title</th>
+          <th>Next Season Bonus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="tier-row-gold">
+          <td><span class="reward-badge rb-gold">GOLD</span></td>
+          <td class="amber">Top 1% (≥50,000 pts)</td>
+          <td class="amber">25,000 $ARENA</td>
+          <td><span class="badge-legendary">Legendary NFT</span></td>
+          <td class="green">+30% yield</td>
+          <td class="amber">Arena Champion</td>
+          <td class="green">×1.5 multiplier</td>
+        </tr>
+        <tr class="tier-row-silver">
+          <td><span class="reward-badge rb-silver">SILVER</span></td>
+          <td>Top 10% (≥15,000 pts)</td>
+          <td class="amber">8,000 $ARENA</td>
+          <td><span class="badge-epic">Epic NFT</span></td>
+          <td class="green">+15% yield</td>
+          <td>Veteran Warrior</td>
+          <td class="green">×1.25 multiplier</td>
+        </tr>
+        <tr class="tier-row-bronze">
+          <td><span class="reward-badge rb-bronze">BRONZE</span></td>
+          <td class="muted">Top 30% (≥5,000 pts)</td>
+          <td class="amber">2,500 $ARENA</td>
+          <td><span class="badge-rare">Rare NFT</span></td>
+          <td class="green">+5% yield</td>
+          <td class="muted">Battle-Hardened</td>
+          <td class="green">×1.1 multiplier</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- REQUIREMENTS + EARNING MECHANICS                             -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">HOW TO PLAY</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="two-col">
+    <div class="bullet-panel">
+      <div class="bullet-panel-title">Getting Started</div>
+      <ul>
+        <li>Mint or buy at least 1 character NFT from Magic Eden</li>
+        <li>Connect Solana wallet at arena.game/play</li>
+        <li>Choose a guild or create your own (5 members min)</li>
+        <li>Complete tutorial quest to unlock all game modes</li>
+        <li>Stake your NFT to begin earning daily $ARENA yield</li>
+        <li>Enter ranked arena battles to earn season points</li>
+      </ul>
+    </div>
+    <div class="bullet-panel purple">
+      <div class="bullet-panel-title">Earning Mechanics</div>
+      <ul>
+        <li>Daily yield: 10–120 $ARENA based on NFT rarity tier</li>
+        <li>Battle wins: +50% bonus yield for the battle session</li>
+        <li>Territory control: passive $ARENA flow to guild treasury</li>
+        <li>Crafting recipes burn materials → reduce supply</li>
+        <li>Season leaderboard top 100 → exclusive NFT airdrops</li>
+        <li>Referral: earn 5% of referred wallet's first-month yield</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- FOOTER                                                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="footer">
+  <div class="footer-left">
+    <div class="footer-logo"></div>
+    <div>
+      <div class="footer-name">GAME TITLE</div>
+      <div class="footer-tagline">Play · Earn · Own</div>
+    </div>
+  </div>
+  <div class="footer-right">
+    <span class="footer-tag">Solana</span>
+    <span class="footer-tag">Season 1</span>
+    <span class="footer-tag">arena.game</span>
+  </div>
+</div>
+
 </body>
 </html>
